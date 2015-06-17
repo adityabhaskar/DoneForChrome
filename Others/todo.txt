@@ -1,0 +1,30 @@
+GA KEY: UA-xxx
+
+Client ID 468423474195-osak9tu4ud0466hu2nbqscc6r4gfi0c3.apps.googleusercontent.com
+Application ID  icohbfelkjalhnphgmhnkhgelmcfcnba
+
+https://chrome.google.com/webstore/detail/-------------------
+
+?utm_source=qdt%20Options&utm_medium=referral&utm_content=qdtOptionsInline&utm_campaign=qdt_ext
+
+-- NEXT VERSION -- Update: Add publicity image(s) - 440x280
+
+-- NEXT VERSION -- Update: Add screenshots
+
+-- NEXT VERSION -- Bug Fix: Switch from localStorage to chrome.storage.local.get/set
+
+-- NEXT VERSION -- Update: Add bottom bar with links and status space.
+
+-- NEXT VERSION -- New Feature: Save options state in localStorage
+
+
+------------------------
+
+
+ver 0.0.0.1
+
+[DONE] Rename app name and description in messages
+
+[DONE] Create new Manifest.json
+
+-- NEXT VERSION -- Change all resources to reflect js, css, img folders

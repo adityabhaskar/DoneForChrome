@@ -1,0 +1,14 @@
+{
+  "appName": {
+    "message": "quickDoneThis - quickly add to your iDoneThis",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "A quick add extension to add done-s to your iDoneThis account",
+    "description": "The description of the application"
+  },
+  "browserButtonTitle": {
+    "message": "Quick-add to iDoneThis",
+    "description": "The title text for browser button"
+  }
+}
