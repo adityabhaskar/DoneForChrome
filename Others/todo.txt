@@ -11,11 +11,29 @@ https://chrome.google.com/webstore/detail/-------------------
 
 -- NEXT VERSION -- Update: Add screenshots
 
--- NEXT VERSION -- Bug Fix: Switch from localStorage to chrome.storage.local.get/set
-
 -- NEXT VERSION -- Update: Add bottom bar with links and status space.
 
 -- NEXT VERSION -- New Feature: Save options state in localStorage
+
+
+------------------------
+
+
+ver 0.0.0.3
+
+[DONE] Authenticate using chrome.identity
+
+[DONE] Send test message using Gmail API
+
+[DONE] Send *done* to idonethis.com
+
+
+------------------------
+
+
+ver 0.0.0.2
+
+[DONE] Change all resources to reflect js, css, img folders
 
 
 ------------------------
@@ -26,5 +44,3 @@ ver 0.0.0.1
 [DONE] Rename app name and description in messages
 
 [DONE] Create new Manifest.json
-
--- NEXT VERSION -- Change all resources to reflect js, css, img folders

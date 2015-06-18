@@ -1,11 +1,14 @@
 {
-  "version": "0.0.0.2",
+  "version": "0.0.0.3",
   "version_name": "pre-alpha",
   "name": "__MSG_appName__",
   "description": "__MSG_appDescription__",
   "manifest_version": 2,
+  "default_locale": "en",
   "background": {
     "scripts": [
+      "js/lib/base64-mime.js",
+      "js/lib/mime-js.js",
       "js/background.js"
     ]
   },
@@ -17,7 +20,6 @@
     "default_title": "__MSG_browserButtonTitle__",
     "default_popup": "popup.html"
   },
-  "default_locale": "en",
   "icons": {
       "16": "img/icon-16.png",
       "128": "img/icon-128.png"
@@ -28,7 +30,7 @@
   },
   "permissions": [
     "identity",
-    "://*.google.com/*"
+    "*://*.google.com/*"
   ],
   "content_security_policy": "script-src https://*.google.com 'unsafe-eval'; object-src 'self'",
   "oauth2": {
