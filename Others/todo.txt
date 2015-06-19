@@ -19,6 +19,36 @@ https://chrome.google.com/webstore/detail/-------------------
 ------------------------
 
 
+ver 0.0.0.5
+
+-- NEXT VERSION -- New Feature: Omnibox support - "done"
+
+-- NEXT VERSION -- New Feature: keyboard shortcut
+
+-- NEXT VERSION -- Options page: Logout
+
+-- NEXT VERSION -- Options page: iDoneThis username
+
+-- NEXT VERSION -- Options page: iDoneThis team name (if more than one teams)
+
+-- NEXT VERSION -- New Feature: Message parsing before send - @ for team name
+
+
+------------------------
+
+
+ver 0.0.0.4
+
+[DONE] Move authentication to options page
+
+[DONE] Add text field to popup
+
+[DONE] Moved gmail api functions to gmail.js
+
+
+------------------------
+
+
 ver 0.0.0.3
 
 [DONE] Authenticate using chrome.identity

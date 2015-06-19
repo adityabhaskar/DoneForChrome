@@ -1,7 +1,46 @@
 body {
   padding: 20px;
+  color: black;
+  min-width: 32em;
+  min-height: 5em;
 }
 
 .hidden{
   display: none;
 }
+
+.sendingState{
+  /*color: gray;*/
+  opacity: 0.7;
+}
+
+#textLine{
+  white-space: nowrap;
+}
+
+#doneText{
+  width: 25em;
+}
+
+#status{
+  font-size: 13px;
+  color: grey;
+}
+
+#greenTick{
+  color: green;
+  font-size: medium;
+  font-weight: bold;
+}
+
+#redAlert{
+  color: red;
+  font-size: medium;
+  font-weight: bold;
+}
+
+#pendingCircle{
+  content:url("/img/sending.gif");
+  width: 28px;
+}
+

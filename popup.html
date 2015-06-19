@@ -2,14 +2,16 @@
 <html>
     <head>
         <link href="css/popup.css" rel="stylesheet">
-        
-        <script src="js/lib/jquery-2.1.1.min.js"></script>
-        <script src="js/popup.js"></script>
     </head>
     <body>
-        <button id="login">Login</button>
-        <button id="sendMail" class="hidden">Send</button>
-        <p></p>
-        <button id="logout">Logout</button>
+        <div id="textLine">
+            <input type="text" id="doneText">
+            <span id="greenTick" class="hidden">&#x2714;</span>
+            <span id="pendingCircle" class="hidden"></span>
+            <span id="redAlert" class="hidden">!</span>
+        </div>
+        <p id="status">&nbsp;</p>
+        <script src="js/lib/jquery-2.1.1.min.js"></script>
+        <script src="js/popup.js"></script>
     </body>
 </html>
