@@ -14,5 +14,13 @@
   "browserButtonTitle": {
     "message": "Done this!",
     "description": "The title text for browser button"
+  },
+  "errorMessageNoLogin": {
+    "message": "Please sign in...",
+    "description": "The title text for browser button"
+  },
+  "errorMessageNoUsername": {
+    "message": "Please provide your iDoneThis username...",
+    "description": "The title text for browser button"
   }
 }

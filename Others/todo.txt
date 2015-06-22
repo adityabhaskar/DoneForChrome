@@ -1,9 +1,23 @@
+idonethis API:
+
+    client id: moMyF1BsDH_gmLw9S1tFNSsCaFwtzgIVciQvhhuS
+
+    client secret: bNEUdUpysC7NRCu9whgI2lPGjWnpLDzYnV1Yyomlc4WBL43R97184xriqMFsW1naJqZZTKpU-cll16PqqJM82NlUeE2vaa2YUMxntb7Y0NAy-mQopCYGe9ihZGNZcSQ7
+
+    redirect uri(dev): https://hefkfnigbbnhbdpabpliefhkdgpgcfoo.chromiumapp.org/idonethis
+
+    application details: https://idonethis.com/api/oauth2/applications/18/
+
+
+Gmail API:
+
+    Client ID 468423474195-8o6mv7s3b7e7vkef360b9om03ukpl1et.apps.googleusercontent.com
+    Application ID  icohbfelkjalhnphgmhnkhgelmcfcnba
+
+
 GA KEY: UA-xxx
 
-Client ID 468423474195-8o6mv7s3b7e7vkef360b9om03ukpl1et.apps.googleusercontent.com
-Application ID  icohbfelkjalhnphgmhnkhgelmcfcnba
-
-https://chrome.google.com/webstore/detail/-------------------
+https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 
 ?utm_source=qdt%20Options&utm_medium=referral&utm_content=qdtOptionsInline&utm_campaign=qdt_ext
 
@@ -13,7 +27,17 @@ https://chrome.google.com/webstore/detail/-------------------
 
 -- NEXT VERSION -- Update: Add bottom bar with links and status space.
 
--- NEXT VERSION -- New Feature: Save options state in localStorage
+
+------------------------
+
+
+ver 0.0.0.7
+
+-- NEXT VERSION -- New Feature: Omnibox support - "done"
+
+-- NEXT VERSION -- Options page: iDoneThis team name (if more than one teams)
+
+-- NEXT VERSION -- New Feature: Message parsing before send - @ for team name
 
 
 ------------------------
@@ -21,13 +45,11 @@ https://chrome.google.com/webstore/detail/-------------------
 
 ver 0.0.0.6
 
--- NEXT VERSION -- Options page: Logout
+[DONE] Popup - change popup title when not logged in / username not provided
 
--- NEXT VERSION -- Options page: iDoneThis team name (if more than one teams)
+[DONE] Popup - no popup till username isn't provided
 
--- NEXT VERSION -- New Feature: Omnibox support - "done"
-
--- NEXT VERSION -- New Feature: Message parsing before send - @ for team name
+[DONE] Options page: Logout
 
 
 ------------------------

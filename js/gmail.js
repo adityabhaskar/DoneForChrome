@@ -76,13 +76,21 @@ var GMAIL = {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' + localStorage.token);
         xhr.send();
-        localStorage.removeItem("token");
-        apiLoaded = false;
-        console.log("token removed");
+        xhr.onreadystatechange = function() {
+          if(xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+            localStorage.removeItem("token");
+            localStorage.removeItem("idtUsername");
+            apiLoaded = false;
+            console.log("token removed");
+            if(callback) callback();
+          }
+        }
       });
-    else
+    else{
+      localStorage.removeItem("idtUsername");
       if(callback) callback();
-    localStorage.removeItem("idtUsername");
+    }
   },
   
   loadScript: function(url, callback){
