@@ -7,17 +7,17 @@ var GMAIL = {
     chrome.identity.getAuthToken({"interactive": false}, function(token){
       if(token !== undefined){
         console.log("isLoggedIn returned true");
-        localStorage["token"] = token;
+        localStorage.token = token;
         if(successCallback) successCallback();
       } else {
-        console.log("Error in isLoggedIn: ");
-        console.log(chrome.runtime.lastError);
+        console.log("Error in isLoggedIn: " + chrome.runtime.lastError.message);
+        // console.log(chrome.runtime.lastError);
         GMAIL.initLogout(failureCallback);
       }
     });
   },
   
-  initAuth: function(){
+  initAuth: function(successCallback, failureCallback){
     console.log("in init auth");
     
     // check if already authenticated
@@ -33,26 +33,30 @@ var GMAIL = {
           if(err){
             console.log("error on forced auth: ");
             console.log(err);
+            if(failureCallback) failureCallback();
           } else {
             console.log("forced getAuthToken returned with:");
             console.log(interactiveToken);
-            localStorage["token"] = interactiveToken;
-            GMAIL.onAuth();
+            localStorage.token = interactiveToken;
+            GMAIL.onAuth(successCallback);
           }
         });
       } else {
         // already authenticated
         console.log("unforced getAuthToken returned with:");
         console.log(preToken);
-        localStorage["token"] = preToken;
-        GMAIL.onAuth();
+        localStorage.token = preToken;
+        GMAIL.onAuth(successCallback);
       }
     });
   },
 
-  onAuth: function(){
-    window.gapi_onload = GMAIL.loadLibrary;
-    GMAIL.loadScript("https://apis.google.com/js/client.js");
+  onAuth: function(callback){
+    chrome.identity.getProfileUserInfo(function(userInfo){
+      localStorage.fromEmail = userInfo.email;
+      window.gapi_onload = GMAIL.loadLibrary;
+      GMAIL.loadScript("https://apis.google.com/js/client.js", callback);
+    });
   },
   
   loadLibrary: function(){
@@ -65,17 +69,23 @@ var GMAIL = {
   },
   
   initLogout: function(callback){
-    chrome.identity.removeCachedAuthToken({
-      "token": localStorage["token"],
-    }, function(){
-      localStorage.removeItem("token");
-      apiLoaded = false;
-      console.log("token removed");
+    if(localStorage.token !== "" && localStorage.token !== undefined)
+      chrome.identity.removeCachedAuthToken({
+        "token": localStorage.token,
+      }, function(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://accounts.google.com/o/oauth2/revoke?token=' + localStorage.token);
+        xhr.send();
+        localStorage.removeItem("token");
+        apiLoaded = false;
+        console.log("token removed");
+      });
+    else
       if(callback) callback();
-    });
+    localStorage.removeItem("idtUsername");
   },
   
-  loadScript: function(url){
+  loadScript: function(url, callback){
     var request = new XMLHttpRequest();
     
     request.onreadystatechange = function(){
@@ -88,20 +98,20 @@ var GMAIL = {
       }
       
       eval(request.responseText);
+      if(callback) callback();
     };
 
     request.open('GET', url);
     request.send();
   },
   
-  sendEmail: function(doneText,successCallback,failureCallback){
+  sendEmail: function(doneObj,successCallback,failureCallback){
     var originalMail = {
-      // "to": "username@teamname.idonethis.com",
-      "to": "adityabhaskar@personal.idonethis.com",
-      "subject": "I Done This",
-      "fromName": "AB",
-      "from": "adityabhaskar@gmail.com",
-      "body": doneText,
+      "to": doneObj.username+"@"+doneObj.team+".idonethis.com",
+      "subject": "I Done This on " + doneObj.date,
+      "fromName": doneObj.username,
+      "from": doneObj.fromEmail,
+      "body": doneObj.doneText,
       "cids": [],
       "attaches" : []
     };
@@ -125,5 +135,4 @@ var GMAIL = {
     //   console.log(chrome.runtime.lastError);
     // });
   }
-  
 };

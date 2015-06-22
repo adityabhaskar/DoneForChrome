@@ -5,10 +5,19 @@
     </head>
     <body>
       <p id="loginDiv" class="hidden">
-        Connect to your gmail account: <button id="login">Login</button>
+        <label>Connect to your gmail account: </label><button id="login">Login</button>
       </p>
-      <p id="logoutDiv" class="hidden">
-        <button id="logout">Logout</button>
+      <p id="usernameInputDiv">
+        <label for="usernameInput">Your <em><strong>iDoneThis</strong></em> username:
+        <input type="text" id="usernameInput"></label>
+        <span id="usernameHelp" class="hidden">Press <em>Tab</em> or <em>Enter</em> to save.</span>
+        <span id="usernameSaved" class="hidden">Saved.</span>
+      </p>
+<!--       <p id="logoutDiv" class="hidden">
+        <button id="logout" tabindex="-1">Logout</button>
+      </p> -->
+      <p>
+        <a href="http://c306.net/apps">My other apps</a>
       </p>
       <script src="js/lib/jquery-2.1.1.min.js"></script>
       <script src="js/options.js"></script>

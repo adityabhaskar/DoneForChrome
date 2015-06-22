@@ -1,7 +1,8 @@
 {
-  "version": "0.0.0.4",
-  "version_name": "pre-alpha",
+  "version": "0.0.0.5",
+  "version_name": "0.0.0.5 pre-alpha",
   "name": "__MSG_appName__",
+  "short_name": "__MSG_shortName__",
   "description": "__MSG_appDescription__",
   "manifest_version": 2,
   "default_locale": "en",
@@ -12,6 +13,14 @@
       "js/gmail.js",
       "js/background.js"
     ]
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Comma",
+        "mac": "Command+Comma"
+      }
+    }
   },
   "browser_action": {
     "default_icon": {

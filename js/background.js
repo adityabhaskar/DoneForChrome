@@ -11,13 +11,13 @@ chrome.runtime.onInstalled.addListener(function (details){
   if(details.reason === "update") console.log('previousVersion', details.previousVersion);
   
   // For testing only
-  // if(details.reason === "update")
-  //   chrome.tabs.create({
-  //     url: chrome.extension.getURL("options.html"),
-  //     active: true
-  //   },function(tab){
-  //     console.log("In testing, opened settings");
-  //   });
+  if(details.reason === "update")
+    chrome.tabs.create({
+      url: chrome.extension.getURL("options.html"),
+      active: true
+    },function(tab){
+      console.log("In testing, opened settings");
+    });
   // End Testing
 });
 

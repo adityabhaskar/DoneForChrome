@@ -1,14 +1,18 @@
 {
   "appName": {
-    "message": "quickDoneThis - quickly add to your iDoneThis",
+    "message": "Done - quick add to iDoneThis using Gmail",
     "description": "The name of the application"
   },
+  "shortName": {
+    "message": "Done for Gmail",
+    "description": "The short name of the application"
+  },
   "appDescription": {
-    "message": "A quick add extension to add done-s to your iDoneThis account",
+    "message": "Quickly add your Dones to iDoneThis from popup or location bar! Uses Gmail to send dones in the background.",
     "description": "The description of the application"
   },
   "browserButtonTitle": {
-    "message": "Quick-add to iDoneThis",
+    "message": "Done this!",
     "description": "The title text for browser button"
   }
 }

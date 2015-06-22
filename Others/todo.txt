@@ -1,6 +1,6 @@
 GA KEY: UA-xxx
 
-Client ID 468423474195-osak9tu4ud0466hu2nbqscc6r4gfi0c3.apps.googleusercontent.com
+Client ID 468423474195-8o6mv7s3b7e7vkef360b9om03ukpl1et.apps.googleusercontent.com
 Application ID  icohbfelkjalhnphgmhnkhgelmcfcnba
 
 https://chrome.google.com/webstore/detail/-------------------
@@ -19,19 +19,29 @@ https://chrome.google.com/webstore/detail/-------------------
 ------------------------
 
 
-ver 0.0.0.5
-
--- NEXT VERSION -- New Feature: Omnibox support - "done"
-
--- NEXT VERSION -- New Feature: keyboard shortcut
+ver 0.0.0.6
 
 -- NEXT VERSION -- Options page: Logout
 
--- NEXT VERSION -- Options page: iDoneThis username
-
 -- NEXT VERSION -- Options page: iDoneThis team name (if more than one teams)
 
+-- NEXT VERSION -- New Feature: Omnibox support - "done"
+
 -- NEXT VERSION -- New Feature: Message parsing before send - @ for team name
+
+
+------------------------
+
+
+ver 0.0.0.5
+
+[DONE] Options page: iDoneThis username
+
+[DONE] Options page: Gmail address in from
+
+[DONE] Options page: removed Logout button from tab order
+
+[DONE] New Feature: keyboard shortcut - Ctrl+Comma
 
 
 ------------------------

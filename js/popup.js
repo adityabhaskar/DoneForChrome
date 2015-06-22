@@ -21,7 +21,13 @@ function onSend(text){
   $("#pendingCircle").removeClass("hidden");
   $("#status").text("Sending...");
   
-  bgPage.GMAIL.sendEmail(text, function(response){
+  bgPage.GMAIL.sendEmail({
+    doneText: text,
+    username: localStorage.idtUsername,
+    team: localStorage.team || "team",
+    from: localStorage.fromEmail,
+    date: new Date().toDateString()
+  }, function(response){
     // Mailing successful
     
     // clear input text, show green tick (then timeout and clear)
@@ -30,7 +36,7 @@ function onSend(text){
     $("#status").hide().text("Sent.").fadeIn("fast").delay(2000).fadeOut("fast", function(){
       $("#status").text(defaultStatusText).fadeIn("fast");
     });
-    $("#doneText").val("").removeClass("sendingState").removeAttr("disabled");
+    $("#doneText").val("").removeClass("sendingState").removeAttr("disabled").focus();
     
   }, function(reason){
     // Mailing unsuccessful
@@ -46,6 +52,6 @@ function onSend(text){
 }
 
 function textDefault(){
-  $("#doneText").removeClass("sendingState hidden").removeAttr("disabled");
+  $("#doneText").removeClass("sendingState hidden").removeAttr("disabled").focus();
   $("#status").text(defaultStatusText);
 }
