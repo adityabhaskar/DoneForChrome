@@ -10,3 +10,12 @@ body {
   opacity: 0.5;
   pointer-events: none;
 }
+
+#gmailusername{
+  font-weight: bold;
+}
+
+#errorList{
+  font-size: 10px;
+  color: red;
+}

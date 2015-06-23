@@ -1,6 +1,6 @@
 {
-  "version": "0.0.0.6",
-  "version_name": "0.0.0.6 pre-alpha",
+  "version": "0.0.0.7",
+  "version_name": "0.0.0.7 pre-alpha",
   "name": "__MSG_appName__",
   "short_name": "__MSG_shortName__",
   "description": "__MSG_appDescription__",
@@ -40,7 +40,9 @@
   },
   "permissions": [
     "identity",
-    "*://*.google.com/*"
+    "identity.email",
+    "*://*.google.com/*",
+    "notifications"
   ],
   "content_security_policy": "script-src https://*.google.com 'unsafe-eval'; object-src 'self'",
   "oauth2": {

@@ -7,18 +7,24 @@
       <p id="loginDiv" class="hidden">
         <label>Connect to your gmail account: </label><button id="login">Login</button>
       </p>
+      <p id="logoutDiv" class="hidden">
+        <!-- <button id="logout" tabindex="-1">Logout</button> -->
+        You're logged in to Gmail as <span id="gmailusername"></span>. <a href="#logout" id="logout" tabindex="-1">Logout</a>
+      </p>
       <p id="usernameInputDiv">
         <label for="usernameInput">Your <em><strong>iDoneThis</strong></em> username:
         <input type="text" id="usernameInput"></label>
-        <span id="usernameHelp" class="hidden">Press <em>Tab</em> or <em>Enter</em> to save.</span>
+        <span id="usernameHelp" class="hidden">Press <em>Tab</em><!-- or <em>Enter</em>--> to save.</span>
         <span id="usernameSaved" class="hidden">Saved.</span>
       </p>
-      <p id="logoutDiv" class="hidden">
-        <!-- <button id="logout" tabindex="-1">Logout</button> -->
-        <a href="#logout" id="logout" tabindex="-1">Logout</a>
+      <p>
+        <ul id="errorList">
+          <li id="loginErrorListItem">Please sign in to Google to allow sending your <em>done</em>s</li>
+          <li id="usernameErrorListItem">Please provide your idonethis username</li>
+        </ul>
       </p>
       <p>
-        <a href="http://c306.net/apps">My other apps</a>
+        <a href="http://c306.net/apps" target="_blank">My other apps</a>
       </p>
       <script src="js/lib/jquery-2.1.1.min.js"></script>
       <script src="js/options.js"></script>

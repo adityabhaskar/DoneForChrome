@@ -50,7 +50,7 @@ var GMAIL = {
       }
     });
   },
-
+  
   onAuth: function(callback){
     chrome.identity.getProfileUserInfo(function(userInfo){
       localStorage.fromEmail = userInfo.email;
@@ -65,7 +65,7 @@ var GMAIL = {
   
   gmailAPILoaded: function(){
     apiLoaded = true;
-    setupPopup(true);
+    setupExtensionState(true);
   },
   
   initLogout: function(callback){
@@ -81,6 +81,7 @@ var GMAIL = {
             console.log(xhr.responseText);
             localStorage.removeItem("token");
             localStorage.removeItem("idtUsername");
+            localStorage.removeItem("fromEmail");
             apiLoaded = false;
             console.log("token removed");
             if(callback) callback();

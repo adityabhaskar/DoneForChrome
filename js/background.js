@@ -33,17 +33,19 @@ GMAIL.isLoggedIn(function(){
   // Already logged in... check API
   if(GMAIL.apiLoaded)
     // API already loaded... 
-    setupPopup(true);
+    setupExtensionState(true);
   else
     // Load API
     GMAIL.onAuth();
 }, function(){
   // Not logged in... show on browser button, prompting to login
-  setupPopup(false);
+  setupExtensionState(false);
 });
 
 
-function setupPopup(loggedIn){
+function setupExtensionState(loggedIn){
+  chrome.browserAction.onClicked.removeListener(openOptions);
+  chrome.omnibox.onInputEntered.removeListener(sendFromCommand);
   if(loggedIn){
     if(localStorage.idtUsername && localStorage.idtUsername !== ""){
     // logged in, and username available
@@ -51,19 +53,19 @@ function setupPopup(loggedIn){
       chrome.browserAction.setBadgeText({text: ""});
       chrome.browserAction.setBadgeBackgroundColor({color: "#33ff33"});
       chrome.browserAction.setPopup({popup: "popup.html"});
+      chrome.omnibox.setDefaultSuggestion({
+        description: chrome.i18n.getMessage("promptMessage")
+      });
+      chrome.omnibox.onInputEntered.addListener(sendFromCommand);
     } else {
       // logged in, no username available
       chrome.browserAction.setTitle({title: messageStrings.noUsernamePopupTitle});
       chrome.browserAction.setBadgeText({text: "!"});
       chrome.browserAction.setBadgeBackgroundColor({color: "#ff3333"});
       chrome.browserAction.setPopup({popup: ""});
-      chrome.browserAction.onClicked.addListener(function(){
-        chrome.tabs.create({
-          url: chrome.extension.getURL("options.html"),
-          active: true
-        },function(tab){
-          console.log("No username provided, opened settings to log in");
-        });
+      chrome.browserAction.onClicked.addListener(openOptions);
+      chrome.omnibox.setDefaultSuggestion({
+        description: chrome.i18n.getMessage("noUsernameMessage")
       });
     }
   } else {
@@ -72,13 +74,53 @@ function setupPopup(loggedIn){
     chrome.browserAction.setBadgeText({text: "!"});
     chrome.browserAction.setBadgeBackgroundColor({color: "#ff3333"});
     chrome.browserAction.setPopup({popup: ""});
-    chrome.browserAction.onClicked.addListener(function(){
-      chrome.tabs.create({
-        url: chrome.extension.getURL("options.html"),
-        active: true
-      },function(tab){
-        console.log("Not logged in, opened settings to log in");
-      });
+    chrome.browserAction.onClicked.addListener(openOptions);
+    chrome.omnibox.setDefaultSuggestion({
+      description: chrome.i18n.getMessage("noLoginMessage")
     });
   }
+}
+
+function openOptions(){
+  chrome.tabs.create({
+    url: chrome.extension.getURL("options.html"),
+    active: true
+  },function(tab){
+    console.log("Not ready, so opened settings...");
+  });
+}
+
+
+function sendFromCommand(text, disposition){
+  // console.log("meant to be sending email, but I'm doing squat!");
+  // console.log("Text would've been: " + text);
+  // return;
+  // 
+  GMAIL.sendEmail({
+    doneText: text,
+    username: localStorage.idtUsername,
+    team: localStorage.team || "team",
+    from: localStorage.fromEmail,
+    date: new Date().toDateString()
+  }, function(response){
+    // Mailing successful
+    
+    chrome.notifications.create({
+      type: "basic",
+      iconUrl: chrome.extension.getURL("img/icon-128.png"),
+      title: "Done.",
+      message: "Sent to iDoneThis",
+      contextMessage: text
+    }, function(){});
+  }, function(reason){
+    // Mailing unsuccessful
+    
+    chrome.notifications.create({
+      type: "basic",
+      iconUrl: chrome.extension.getURL("img/icon-128.png"),
+      title: "Error!.",
+      message: "'Done' not sent to iDoneThis",
+      contextMessage: text
+    }, function(){});
+  });
 }

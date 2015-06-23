@@ -38,17 +38,18 @@ $(document).ready(function(){
   // username - out of focus event handler
   $("#usernameInput").on("focusout", function(){
     var idtUsername = $("#usernameInput").val();
-    if(idtUsername && idtUsername !== "" & idtUsername !== localStorage.idtUsername){
+    if(idtUsername !== undefined && idtUsername !== localStorage.idtUsername){
       localStorage.idtUsername = idtUsername;
       $("#usernameHelp").fadeOut("fast", function(){
         $("#usernameSaved").fadeIn("fast", function(){
           $("#usernameSaved").delay(5000).fadeOut("fast");
-          bgPage.setupPopup(true);
+            bgPage.setupExtensionState(true);
         });
       });
     } else {
       $("#usernameHelp").fadeOut("fast");
     }
+    updateOptionsPage(true);
   });
 });
 
@@ -58,15 +59,21 @@ function updateOptionsPage(loggedIn){
     $("#loginDiv").addClass("hidden");
     $("#logoutDiv").removeClass("hidden");
     $("#usernameInput").removeAttr("disabled");
+    $("#gmailusername").text(localStorage.fromEmail);
+    $("#loginErrorListItem").fadeOut();
     if(localStorage.idtUsername !== undefined && localStorage.idtUsername !== ""){
       $("#usernameInput").val(localStorage.idtUsername);
+      $("#usernameErrorListItem").fadeOut();
     } else {
       $("#usernameInput").focus();
+      $("#usernameErrorListItem").fadeIn();
     }
   } else {
     $("#loginDiv").removeClass("hidden");
     $("#logoutDiv").addClass("hidden");
     $("#usernameInput").val("").attr("disabled","disabled");
-    bgPage.setupPopup(false);
+    $("#loginErrorListItem").fadeIn();
+    $("#usernameErrorListItem").fadeIn();
+    bgPage.setupExtensionState(false);
   }
 }

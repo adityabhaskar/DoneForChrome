@@ -31,13 +31,25 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 ------------------------
 
 
-ver 0.0.0.7
+ver 0.0.0.8
 
--- NEXT VERSION -- New Feature: Omnibox support - "done"
+-- NEXT VERSION -- New Feature: Integrate with iDoneThis API
+
+-- NEXT VERSION -- Option: Parse @ to identify team names?
+
+-- NEXT VERSION -- New Feature: Message parsing before send - @ for team name
 
 -- NEXT VERSION -- Options page: iDoneThis team name (if more than one teams)
 
--- NEXT VERSION -- New Feature: Message parsing before send - @ for team name
+
+------------------------
+
+
+ver 0.0.0.7
+
+[DONE] Bug Fix: Three options page tabs open when browser action clicked to fill username
+
+[DONE] New Feature: Omnibox support - "done"
 
 
 ------------------------

@@ -15,6 +15,18 @@
     "message": "Done this!",
     "description": "The title text for browser button"
   },
+  "promptMessage": {
+    "message": "What'd you get <match>done</match> today?",
+    "description": "The title text for browser button"
+  },
+  "noLoginMessage": {
+    "message": "Please <match>login</match> in options before you can use this feature.",
+    "description": "The title text for browser button"
+  },
+  "noUsernameMessage": {
+    "message": "Please provide your <match>iDoneThis username</match> in options before you can use this feature.",
+    "description": "The title text for browser button"
+  },
   "errorMessageNoLogin": {
     "message": "Please sign in...",
     "description": "The title text for browser button"
