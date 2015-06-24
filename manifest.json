@@ -1,6 +1,6 @@
 {
-  "version": "0.0.0.7",
-  "version_name": "0.0.0.7 pre-alpha",
+  "version": "0.0.1.1",
+  "version_name": "0.0.1.1 pre-alpha iDoneThis API",
   "name": "__MSG_appName__",
   "short_name": "__MSG_shortName__",
   "description": "__MSG_appDescription__",
@@ -8,9 +8,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "js/lib/base64.js",
-      "js/lib/mime.js",
-      "js/gmail.js",
+      "js/idonethis.js",
       "js/background.js"
     ]
   },
@@ -39,16 +37,8 @@
     "keyword": "done"
   },
   "permissions": [
-    "identity",
-    "identity.email",
-    "*://*.google.com/*",
-    "notifications"
-  ],
-  "content_security_policy": "script-src https://*.google.com 'unsafe-eval'; object-src 'self'",
-  "oauth2": {
-    "client_id": "468423474195-osak9tu4ud0466hu2nbqscc6r4gfi0c3.apps.googleusercontent.com",
-    "scopes": [
-      "https://www.googleapis.com/auth/gmail.compose"
-    ]
-  }
+    "notifications",
+    "storage",
+    "https://idonethis.com/api/*"
+  ]
 }

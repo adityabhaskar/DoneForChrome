@@ -1,16 +1,16 @@
 var bgPage = chrome.extension.getBackgroundPage();
 
 $(document).ready(function(){
-  bgPage.GMAIL.isLoggedIn(function(){
+  bgPage.iDoneThis.isLoggedIn(function(){
     updateOptionsPage(true);
   }, function(){
     updateOptionsPage(false);
   });
   
   // login event handler
-  $("#login").on("click", function(){
+  $("#connect").on("click", function(){
     console.log("init Login");
-    bgPage.GMAIL.initAuth(function(){
+    bgPage.iDoneThis.connect(function(){
       updateOptionsPage(true);
     }, function(){
       updateOptionsPage(false);
@@ -22,58 +22,69 @@ $(document).ready(function(){
     e.preventDefault();
     if(confirm("Are you sure you want to logout?")){
       console.log("init Logout");
-      bgPage.GMAIL.initLogout(function(){
+      bgPage.iDoneThis.logout(function(){
+        $("#idtTokenInput").val("");
         updateOptionsPage(false);
       });
     }
     return false;
   });
   
-  // username - in focus event handler
-  $("#usernameInput").on("focusin", function(){
-    $("#usernameSaved").hide();
-    $("#usernameHelp").fadeIn("fast");
+  // idtToken - in focus event handler
+  $("#idtTokenInput").on("focusin", function(){
+    $("#idtTokenSaved").hide();
+    $("#idtTokenHelp").fadeIn("fast");
   });
   
-  // username - out of focus event handler
-  $("#usernameInput").on("focusout", function(){
-    var idtUsername = $("#usernameInput").val();
-    if(idtUsername !== undefined && idtUsername !== localStorage.idtUsername){
-      localStorage.idtUsername = idtUsername;
-      $("#usernameHelp").fadeOut("fast", function(){
-        $("#usernameSaved").fadeIn("fast", function(){
-          $("#usernameSaved").delay(5000).fadeOut("fast");
-            bgPage.setupExtensionState(true);
+  // idtToken - out of focus event handler
+  $("#idtTokenInput").on("focusout", function(){
+    var idtToken = $("#idtTokenInput").val().trim();
+    if(idtToken !== undefined && idtToken !== localStorage.idtToken){
+      localStorage.idtToken = idtToken;
+      $("#idtTokenHelp").fadeOut("fast", function(){
+        $("#idtTokenSaved").fadeIn("fast", function(){
+          $("#idtTokenSaved").delay(5000).fadeOut("fast");
         });
       });
     } else {
-      $("#usernameHelp").fadeOut("fast");
+      $("#idtTokenHelp").fadeOut("fast");
     }
-    updateOptionsPage(true);
+    updateOptionsPage(false);
   });
+  
+  $("#idtTokenInput").on("input", function(){
+    if($("#idtTokenInput").val().trim() !== ""){
+      $("#connect").removeAttr("disabled");
+    } else {
+      $("#connect").attr("disabled", "disabled");
+    }
+  });
+  
 });
 
 
 function updateOptionsPage(loggedIn){
   if(loggedIn === true){
-    $("#loginDiv").addClass("hidden");
-    $("#logoutDiv").removeClass("hidden");
-    $("#usernameInput").removeAttr("disabled");
-    $("#gmailusername").text(localStorage.fromEmail);
+    $("#connect").addClass("hidden");
+    $("#logout").removeClass("hidden");
     $("#loginErrorListItem").fadeOut();
-    if(localStorage.idtUsername !== undefined && localStorage.idtUsername !== ""){
-      $("#usernameInput").val(localStorage.idtUsername);
-      $("#usernameErrorListItem").fadeOut();
-    } else {
-      $("#usernameInput").focus();
-      $("#usernameErrorListItem").fadeIn();
-    }
+    $("#idtTokenInput").val(localStorage.idtToken).attr("disabled","disabled");
+    $("#idtTokenErrorListItem").fadeIn();
+    bgPage.setupExtensionState(true);
   } else {
-    $("#loginDiv").removeClass("hidden");
-    $("#logoutDiv").addClass("hidden");
-    $("#usernameInput").val("").attr("disabled","disabled");
+    $("#connect").removeClass("hidden");
+    $("#logout").addClass("hidden");
+    $("#idtTokenInput").removeAttr("disabled");
+    if(localStorage.idtToken && localStorage.idtToken !== ""){
+      $("#idtTokenInput").val(localStorage.idtToken);
+      $("#idtTokenErrorListItem").fadeOut();
+      $("#connect").removeAttr("disabled");
+    } else {
+      $("#idtTokenInput").focus();
+      $("#idtTokenErrorListItem").fadeIn();
+      $("#connect").attr("disabled", "disabled");
+    }
     $("#loginErrorListItem").fadeIn();
-    $("#usernameErrorListItem").fadeIn();
     bgPage.setupExtensionState(false);
   }
 }

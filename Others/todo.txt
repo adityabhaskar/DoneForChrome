@@ -1,12 +1,16 @@
 idonethis API:
 
-    client id: moMyF1BsDH_gmLw9S1tFNSsCaFwtzgIVciQvhhuS
+    my Auth Token: 651b692df5ba079fcc693742d71bfa4902b40ea5
 
+    client id: moMyF1BsDH_gmLw9S1tFNSsCaFwtzgIVciQvhhuS
+    
     client secret: bNEUdUpysC7NRCu9whgI2lPGjWnpLDzYnV1Yyomlc4WBL43R97184xriqMFsW1naJqZZTKpU-cll16PqqJM82NlUeE2vaa2YUMxntb7Y0NAy-mQopCYGe9ihZGNZcSQ7
 
     redirect uri(dev): https://hefkfnigbbnhbdpabpliefhkdgpgcfoo.chromiumapp.org/idonethis
-
-    application details: https://idonethis.com/api/oauth2/applications/18/
+    
+    application details: https://idonethis.com/api/oauth2/applications/
+    
+    auth URL: https://idonethis.com/api/oauth2/authorize/?response_type=code&client_id=CLIENT_ID&redirect_uri=REDIRECT_URI
 
 
 Gmail API:
@@ -31,15 +35,31 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 ------------------------
 
 
-ver 0.0.0.8
+ver 0.0.1.2
 
--- NEXT VERSION -- New Feature: Integrate with iDoneThis API
+-- NEXT VERSION -- Option: Show nice username after successful connect
 
--- NEXT VERSION -- Option: Parse @ to identify team names?
+-- NEXT VERSION -- Popup: Show dropdown of teams, with is_personal selected by default (iff more than one team)
 
--- NEXT VERSION -- New Feature: Message parsing before send - @ for team name
+-- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
 
--- NEXT VERSION -- Options page: iDoneThis team name (if more than one teams)
+
+------------------------
+
+
+ver 0.0.1.1
+
+[DONE] New Feature: Integrate with iDoneThis API
+    
+    [DONE] Options: Save auth token
+    
+    [DONE] Options: Connect to check auth token
+    
+    [DONE] Send done using API
+    
+    [DONE] Get teams using API
+    
+    [DONE] Get user data using API
 
 
 ------------------------

@@ -29,16 +29,13 @@ chrome.runtime.onInstalled.addListener(function (details){
 });
 
 
-GMAIL.isLoggedIn(function(){
-  // Already logged in... check API
-  if(GMAIL.apiLoaded)
-    // API already loaded... 
-    setupExtensionState(true);
-  else
-    // Load API
-    GMAIL.onAuth();
+iDoneThis.isLoggedIn(function(){
+  // Already logged in... 
+  setupExtensionState(true);
+  console.log("In bg: logged in");
 }, function(){
   // Not logged in... show on browser button, prompting to login
+  console.log("In bg: not logged in");
   setupExtensionState(false);
 });
 
@@ -46,30 +43,20 @@ GMAIL.isLoggedIn(function(){
 function setupExtensionState(loggedIn){
   chrome.browserAction.onClicked.removeListener(openOptions);
   chrome.omnibox.onInputEntered.removeListener(sendFromCommand);
+  
   if(loggedIn){
-    if(localStorage.idtUsername && localStorage.idtUsername !== ""){
-    // logged in, and username available
-      chrome.browserAction.setTitle({title: messageStrings.defaultPopupTitle});
-      chrome.browserAction.setBadgeText({text: ""});
-      chrome.browserAction.setBadgeBackgroundColor({color: "#33ff33"});
-      chrome.browserAction.setPopup({popup: "popup.html"});
-      chrome.omnibox.setDefaultSuggestion({
-        description: chrome.i18n.getMessage("promptMessage")
-      });
-      chrome.omnibox.onInputEntered.addListener(sendFromCommand);
-    } else {
-      // logged in, no username available
-      chrome.browserAction.setTitle({title: messageStrings.noUsernamePopupTitle});
-      chrome.browserAction.setBadgeText({text: "!"});
-      chrome.browserAction.setBadgeBackgroundColor({color: "#ff3333"});
-      chrome.browserAction.setPopup({popup: ""});
-      chrome.browserAction.onClicked.addListener(openOptions);
-      chrome.omnibox.setDefaultSuggestion({
-        description: chrome.i18n.getMessage("noUsernameMessage")
-      });
-    }
+    
+    chrome.browserAction.setTitle({title: messageStrings.defaultPopupTitle});
+    chrome.browserAction.setBadgeText({text: ""});
+    chrome.browserAction.setBadgeBackgroundColor({color: "#33ff33"});
+    chrome.browserAction.setPopup({popup: "popup.html"});
+    chrome.omnibox.setDefaultSuggestion({
+      description: chrome.i18n.getMessage("promptMessage")
+    });
+    chrome.omnibox.onInputEntered.addListener(sendFromCommand);
+  
   } else {
-    // not logged in
+    
     chrome.browserAction.setTitle({title: messageStrings.noLoginPopupTitle});
     chrome.browserAction.setBadgeText({text: "!"});
     chrome.browserAction.setBadgeBackgroundColor({color: "#ff3333"});
@@ -78,8 +65,10 @@ function setupExtensionState(loggedIn){
     chrome.omnibox.setDefaultSuggestion({
       description: chrome.i18n.getMessage("noLoginMessage")
     });
+  
   }
 }
+
 
 function openOptions(){
   chrome.tabs.create({
@@ -96,31 +85,31 @@ function sendFromCommand(text, disposition){
   // console.log("Text would've been: " + text);
   // return;
   // 
-  GMAIL.sendEmail({
-    doneText: text,
-    username: localStorage.idtUsername,
-    team: localStorage.team || "team",
-    from: localStorage.fromEmail,
-    date: new Date().toDateString()
-  }, function(response){
-    // Mailing successful
+  // iDoneThis.sendEmail({
+  //   doneText: text,
+  //   username: localStorage.idtUsername,
+  //   team: localStorage.team || "team",
+  //   from: localStorage.fromEmail,
+  //   date: new Date().toDateString()
+  // }, function(response){
+  //   // Mailing successful
     
-    chrome.notifications.create({
-      type: "basic",
-      iconUrl: chrome.extension.getURL("img/icon-128.png"),
-      title: "Done.",
-      message: "Sent to iDoneThis",
-      contextMessage: text
-    }, function(){});
-  }, function(reason){
-    // Mailing unsuccessful
+  //   chrome.notifications.create({
+  //     type: "basic",
+  //     iconUrl: chrome.extension.getURL("img/icon-128.png"),
+  //     title: "Done.",
+  //     message: "Sent to iDoneThis",
+  //     contextMessage: text
+  //   }, function(){});
+  // }, function(reason){
+  //   // Mailing unsuccessful
     
-    chrome.notifications.create({
-      type: "basic",
-      iconUrl: chrome.extension.getURL("img/icon-128.png"),
-      title: "Error!.",
-      message: "'Done' not sent to iDoneThis",
-      contextMessage: text
-    }, function(){});
-  });
+  //   chrome.notifications.create({
+  //     type: "basic",
+  //     iconUrl: chrome.extension.getURL("img/icon-128.png"),
+  //     title: "Error!.",
+  //     message: "'Done' not sent to iDoneThis",
+  //     contextMessage: text
+  //   }, function(){});
+  // });
 }

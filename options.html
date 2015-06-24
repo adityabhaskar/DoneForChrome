@@ -4,23 +4,22 @@
       <link href="css/options.css" rel="stylesheet">
     </head>
     <body>
-      <p id="loginDiv" class="hidden">
-        <label>Connect to your gmail account: </label><button id="login">Login</button>
+      <p id="idtTokenInputDiv">Please connect to your iDoneThis account:</p>
+      <p>
+        <span><label for="idtTokenInput">Your <strong>iDoneThis</strong> <a class="specialUnderline" href="https://idonethis.com/api/token/" target="_blank">API token</a>:</label></span>
+        <span><input type="text" id="idtTokenInput"></span>
+        <span id="idtTokenHelp" class="hidden">Press <em>Tab</em> to save.</span>
+        <span id="idtTokenSaved" class="hidden">Saved.</span>
       </p>
-      <p id="logoutDiv" class="hidden">
-        <!-- <button id="logout" tabindex="-1">Logout</button> -->
-        You're logged in to Gmail as <span id="gmailusername"></span>. <a href="#logout" id="logout" tabindex="-1">Logout</a>
-      </p>
-      <p id="usernameInputDiv">
-        <label for="usernameInput">Your <em><strong>iDoneThis</strong></em> username:
-        <input type="text" id="usernameInput"></label>
-        <span id="usernameHelp" class="hidden">Press <em>Tab</em><!-- or <em>Enter</em>--> to save.</span>
-        <span id="usernameSaved" class="hidden">Saved.</span>
+      <p>
+        <span>&nbsp;</span>
+        <button id="connect">Connect</button>
+        <a href="#logout" id="logout" tabindex="-1">Logout</a>
       </p>
       <p>
         <ul id="errorList">
           <li id="loginErrorListItem">Please sign in to Google to allow sending your <em>done</em>s</li>
-          <li id="usernameErrorListItem">Please provide your idonethis username</li>
+          <li id="idtTokenErrorListItem">Please provide your idonethis token</li>
         </ul>
       </p>
       <p>
