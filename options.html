@@ -4,27 +4,35 @@
       <link href="css/options.css" rel="stylesheet">
     </head>
     <body>
-      <p id="idtTokenInputDiv">Please connect to your iDoneThis account:</p>
-      <p>
-        <span><label for="idtTokenInput">Your <strong>iDoneThis</strong> <a class="specialUnderline" href="https://idonethis.com/api/token/" target="_blank">API token</a>:</label></span>
+      <h3 id="idtTokenInputDiv" class="loggedOut">Please connect to your iDoneThis account:</h3>
+      <p class="loggedOut">
+        <span><label for="idtTokenInput">Your <strong>iDoneThis</strong> API token (<a class="specialUnderline" href="https://idonethis.com/api/token/" target="_blank" title="Will need you to be logged in to your account">available here</a>):</label></span>
         <span><input type="text" id="idtTokenInput"></span>
         <span id="idtTokenHelp" class="hidden">Press <em>Tab</em> to save.</span>
         <span id="idtTokenSaved" class="hidden">Saved.</span>
       </p>
-      <p>
+      <p class="loggedOut">
         <span>&nbsp;</span>
         <button id="connect">Connect</button>
+      </p>
+<!--       <ul id="errorList" class="loggedOut">
+        <li id="loginErrorListItem">Please sign in to Google to allow sending your <em>done</em>s</li>
+        <li id="idtTokenErrorListItem">Please provide your idonethis token</li>
+      </ul>
+ -->
+      <p class="loggedIn">
+        Connected to iDoneThis as <strong id="niceName">&nbsp;</strong> (<a href="#" class="specialUnderline" id="usernameSpan" target="_blank">&nbsp;</a>).
+      </p>
+      <p class="loggedIn">
+        Sending <em>done</em>s to <a href="#" target="_blank" class="specialUnderline" id="defaultTeam">&nbsp;</a>.
+      </p>
+      <p class="loggedIn">
         <a href="#logout" id="logout" tabindex="-1">Logout</a>
       </p>
-      <p>
-        <ul id="errorList">
-          <li id="loginErrorListItem">Please sign in to Google to allow sending your <em>done</em>s</li>
-          <li id="idtTokenErrorListItem">Please provide your idonethis token</li>
-        </ul>
-      </p>
-      <p>
+      <div id="footer">
         <a href="http://c306.net/apps" target="_blank">My other apps</a>
-      </p>
+        <a href="https://idonethis.com/" target="_blank">iDoneThis</a>
+      </div>
       <script src="js/lib/jquery-2.1.1.min.js"></script>
       <script src="js/options.js"></script>
     </body>

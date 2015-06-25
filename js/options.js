@@ -1,5 +1,8 @@
 var bgPage = chrome.extension.getBackgroundPage();
 
+var LOGOUT_CONFIRM = chrome.i18n.getMessage("logout_confirm");
+var IDT_URL = "https://iDoneThis.com/home/"
+
 $(document).ready(function(){
   bgPage.iDoneThis.isLoggedIn(function(){
     updateOptionsPage(true);
@@ -20,7 +23,7 @@ $(document).ready(function(){
   // logout event handler
   $("#logout").on("click", function(e){
     e.preventDefault();
-    if(confirm("Are you sure you want to logout?")){
+    if(confirm(LOGOUT_CONFIRM)){
       console.log("init Logout");
       bgPage.iDoneThis.logout(function(){
         $("#idtTokenInput").val("");
@@ -65,26 +68,33 @@ $(document).ready(function(){
 
 function updateOptionsPage(loggedIn){
   if(loggedIn === true){
-    $("#connect").addClass("hidden");
-    $("#logout").removeClass("hidden");
-    $("#loginErrorListItem").fadeOut();
-    $("#idtTokenInput").val(localStorage.idtToken).attr("disabled","disabled");
-    $("#idtTokenErrorListItem").fadeIn();
+    
+    $(".loggedOut").hide();
+    $(".loggedIn").show();
+    
+    $("#niceName").text(localStorage.niceName);
+    $("#usernameSpan").text(localStorage.username).attr("href", IDT_URL);
+    $("#defaultTeam").text(localStorage.defaultTeam).attr("href", localStorage.defaultTeamURL);
+    
     bgPage.setupExtensionState(true);
+    
   } else {
-    $("#connect").removeClass("hidden");
-    $("#logout").addClass("hidden");
+    
+    $(".loggedOut").show();
+    $(".loggedIn").hide();
+    
     $("#idtTokenInput").removeAttr("disabled");
     if(localStorage.idtToken && localStorage.idtToken !== ""){
       $("#idtTokenInput").val(localStorage.idtToken);
-      $("#idtTokenErrorListItem").fadeOut();
+      // $("#idtTokenErrorListItem").fadeOut();
       $("#connect").removeAttr("disabled");
     } else {
       $("#idtTokenInput").focus();
-      $("#idtTokenErrorListItem").fadeIn();
+      // $("#idtTokenErrorListItem").fadeIn();
       $("#connect").attr("disabled", "disabled");
     }
-    $("#loginErrorListItem").fadeIn();
+    // $("#loginErrorListItem").fadeIn();
+    
     bgPage.setupExtensionState(false);
   }
 }

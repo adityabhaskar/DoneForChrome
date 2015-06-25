@@ -1,4 +1,4 @@
-// PocketStore Obj
+// iDoneThis Obj
 var iDoneThis = {
   
   BASE: "https://idonethis.com/api/",
@@ -10,12 +10,6 @@ var iDoneThis = {
   HOOKS: "/hooks/",
   
   isLoggedIn: function(successCallback, failureCallback){
-    // if(localStorage.username && localStorage.username !== ""){
-    //   if(successCallback) successCallback();
-    // } else {
-    //   if(failureCallback) failureCallback();
-    // }
-    // return;
     if(localStorage.idtToken && localStorage.idtToken !== ""){
       var xhr = new XMLHttpRequest();
       xhr.open("GET", iDoneThis.BASE + iDoneThis.VER + iDoneThis.NOOP);
@@ -135,12 +129,24 @@ var iDoneThis = {
       xhr.onreadystatechange = function() {
         if(xhr.readyState == 4){
           if(xhr.status == 200) {
-            console.log(xhr.responseText);
+            // console.log(xhr.responseText);
             var response = JSON.parse(xhr.responseText);
-            console.log(response);
+            // console.log(response);
             if(response.ok === true){
               chrome.storage.local.set({teams: response.results}, function(){
-                console.log("teams recieved: " + response.results.length);
+                // console.log("teams recieved: " + response.results.length);
+                localStorage.defaultTeam = response.results[0].name;
+                localStorage.defaultTeamCode = response.results[0].short_name;
+                localStorage.defaultTeamURL = response.results[0].permalink;
+                
+                for (var i = 0; i < response.results.length; i++) {
+                  if(response.results[i].is_personal === true){
+                    localStorage.defaultTeam = response.results[i].name;
+                    localStorage.defaultTeamCode = response.results[i].short_name;
+                    localStorage.defaultTeamURL = response.results[i].permalink;
+                    break;
+                  }
+                };
                 if(successCallback) successCallback();
               });
             } else {

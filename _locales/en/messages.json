@@ -1,23 +1,23 @@
 {
   "appName": {
-    "message": "Done - quick add to iDoneThis using Gmail",
+    "message": "Done!  Quick log completed tasks to iDoneThis",
     "description": "The name of the application"
   },
   "shortName": {
-    "message": "Done for Gmail",
+    "message": "Done! for iDoneThis",
     "description": "The short name of the application"
   },
   "appDescription": {
-    "message": "Quickly add your Dones to iDoneThis from popup or location bar! Uses Gmail to send dones in the background.",
+    "message": "Quickly add your Dones to iDoneThis from popup or location bar!",
     "description": "The description of the application"
   },
   "browserButtonTitle": {
-    "message": "Done this!",
+    "message": "Done!",
     "description": "The title text for browser button"
   },
   "promptMessage": {
     "message": "What'd you get <match>done</match> today?",
-    "description": "The title text for browser button"
+    "description": "Prompt text for input and omnibox fields"
   },
   "noLoginMessage": {
     "message": "Please <match>login</match> in options before you can use this feature.",
@@ -34,5 +34,45 @@
   "errorMessageNoUsername": {
     "message": "Please provide your iDoneThis username...",
     "description": "The title text for browser button"
+  },
+  "doneNotificationTitle": {
+    "message": "Done!",
+    "description": "The text for notification title"
+  },
+  "doneNotificationMessage": {
+    "message": "Sent to iDoneThis.",
+    "description": "The text for notification title"
+  },
+  "errorNotificationTitle": {
+    "message": "Error!",
+    "description": "The text for notification title"
+  },
+  "errorNotificationMessage": {
+    "message": "'Done' not sent to iDoneThis.",
+    "description": "The text for notification title"
+  },
+  "default_status_text": {
+    "message": "Press Enter to send",
+    "description": "The text for notification title"
+  },
+  "loginerror_status_text": {
+    "message": "Error! Please login.",
+    "description": "The text for notification title"
+  },
+  "sending_status_text": {
+    "message": "Sending...",
+    "description": "The text for notification title"
+  },
+  "sent_status_text": {
+    "message": "Sent.",
+    "description": "The text for notification title"
+  },
+  "error_status_text": {
+    "message": "Error: ",
+    "description": "The text for notification title"
+  },
+  "logout_confirm": {
+    "message": "Are you sure you want to logout?",
+    "description": "The text for notification title"
   }
 }

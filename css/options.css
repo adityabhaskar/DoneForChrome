@@ -11,10 +11,6 @@ body {
   pointer-events: none;
 }
 
-#gmailusername{
-  font-weight: bold;
-}
-
 #errorList{
   font-size: 10px;
   color: red;
@@ -23,4 +19,19 @@ body {
 .specialUnderline{
   text-decoration: none;
   border-bottom: 1px dotted grey;
+}
+
+.loggedIn, .loggedOut{
+  display: none;
+}
+
+#footer{
+  position: absolute;
+  bottom: 0;
+}
+
+#footer a{
+  padding-bottom: 1em;
+  display: inline-block;
+  padding-left: 1em;
 }

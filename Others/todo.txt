@@ -1,16 +1,18 @@
 idonethis API:
 
     my Auth Token: 651b692df5ba079fcc693742d71bfa4902b40ea5
+    
+    Oauth2:
 
-    client id: moMyF1BsDH_gmLw9S1tFNSsCaFwtzgIVciQvhhuS
-    
-    client secret: bNEUdUpysC7NRCu9whgI2lPGjWnpLDzYnV1Yyomlc4WBL43R97184xriqMFsW1naJqZZTKpU-cll16PqqJM82NlUeE2vaa2YUMxntb7Y0NAy-mQopCYGe9ihZGNZcSQ7
+      client id: moMyF1BsDH_gmLw9S1tFNSsCaFwtzgIVciQvhhuS
+      
+      client secret: bNEUdUpysC7NRCu9whgI2lPGjWnpLDzYnV1Yyomlc4WBL43R97184xriqMFsW1naJqZZTKpU-cll16PqqJM82NlUeE2vaa2YUMxntb7Y0NAy-mQopCYGe9ihZGNZcSQ7
 
-    redirect uri(dev): https://hefkfnigbbnhbdpabpliefhkdgpgcfoo.chromiumapp.org/idonethis
-    
-    application details: https://idonethis.com/api/oauth2/applications/
-    
-    auth URL: https://idonethis.com/api/oauth2/authorize/?response_type=code&client_id=CLIENT_ID&redirect_uri=REDIRECT_URI
+      redirect uri(dev): https://hefkfnigbbnhbdpabpliefhkdgpgcfoo.chromiumapp.org/idonethis
+      
+      application details: https://idonethis.com/api/oauth2/applications/
+      
+      auth URL: https://idonethis.com/api/oauth2/authorize/?response_type=code&client_id=CLIENT_ID&redirect_uri=REDIRECT_URI
 
 
 Gmail API:
@@ -35,31 +37,51 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 ------------------------
 
 
+ver 0.0.1.3
+
+  -- NEXT VERSION -- Popup: Show dropdown of teams, with is_personal selected by default (iff more than one team) (or use +teamName)
+  
+  -- NEXT VERSION -- Popup: Show option to change date
+  
+  -- NEXT VERSION -- Extension icons!
+  
+  -- NEXT VERSION -- Offline functionality
+  
+  -- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
+  
+
+------------------------
+
+
 ver 0.0.1.2
 
--- NEXT VERSION -- Option: Show nice username after successful connect
-
--- NEXT VERSION -- Popup: Show dropdown of teams, with is_personal selected by default (iff more than one team)
-
--- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
-
+  [DONE] Option: Show nice username after successful connect
+  
+  [DONE] From omnibox
+  
+  [DONE] Cleanup: Move all strings & constants to variables
+  
+    [DONE] Move all static strings to messages.json
+  
+  [DONE] Update Extension name, description (remove Gmail)
+  
 
 ------------------------
 
 
 ver 0.0.1.1
 
-[DONE] New Feature: Integrate with iDoneThis API
-    
-    [DONE] Options: Save auth token
-    
-    [DONE] Options: Connect to check auth token
-    
-    [DONE] Send done using API
-    
-    [DONE] Get teams using API
-    
-    [DONE] Get user data using API
+  [DONE] New Feature: Integrate with iDoneThis API
+      
+      [DONE] Options: Save auth token
+      
+      [DONE] Options: Connect to check auth token
+      
+      [DONE] Send done using API
+      
+      [DONE] Get teams using API
+      
+      [DONE] Get user data using API
 
 
 ------------------------
@@ -67,9 +89,9 @@ ver 0.0.1.1
 
 ver 0.0.0.7
 
-[DONE] Bug Fix: Three options page tabs open when browser action clicked to fill username
+  [DONE] Bug Fix: Three options page tabs open when browser action clicked to fill username
 
-[DONE] New Feature: Omnibox support - "done"
+  [DONE] New Feature: Omnibox support - "done"
 
 
 ------------------------
@@ -77,11 +99,11 @@ ver 0.0.0.7
 
 ver 0.0.0.6
 
-[DONE] Popup - change popup title when not logged in / username not provided
+  [DONE] Popup - change popup title when not logged in / username not provided
 
-[DONE] Popup - no popup till username isn't provided
+  [DONE] Popup - no popup till username isn't provided
 
-[DONE] Options page: Logout
+  [DONE] Options page: Logout
 
 
 ------------------------
@@ -89,13 +111,13 @@ ver 0.0.0.6
 
 ver 0.0.0.5
 
-[DONE] Options page: iDoneThis username
+  [DONE] Options page: iDoneThis username
 
-[DONE] Options page: Gmail address in from
+  [DONE] Options page: Gmail address in from
 
-[DONE] Options page: removed Logout button from tab order
+  [DONE] Options page: removed Logout button from tab order
 
-[DONE] New Feature: keyboard shortcut - Ctrl+Comma
+  [DONE] New Feature: keyboard shortcut - Ctrl+Comma
 
 
 ------------------------
@@ -103,11 +125,11 @@ ver 0.0.0.5
 
 ver 0.0.0.4
 
-[DONE] Move authentication to options page
+  [DONE] Move authentication to options page
 
-[DONE] Add text field to popup
+  [DONE] Add text field to popup
 
-[DONE] Moved gmail api functions to gmail.js
+  [DONE] Moved gmail api functions to gmail.js
 
 
 ------------------------
@@ -115,11 +137,11 @@ ver 0.0.0.4
 
 ver 0.0.0.3
 
-[DONE] Authenticate using chrome.identity
+  [DONE] Authenticate using chrome.identity
 
-[DONE] Send test message using Gmail API
+  [DONE] Send test message using Gmail API
 
-[DONE] Send *done* to idonethis.com
+  [DONE] Send *done* to idonethis.com
 
 
 ------------------------
@@ -127,7 +149,7 @@ ver 0.0.0.3
 
 ver 0.0.0.2
 
-[DONE] Change all resources to reflect js, css, img folders
+  [DONE] Change all resources to reflect js, css, img folders
 
 
 ------------------------
@@ -135,6 +157,6 @@ ver 0.0.0.2
 
 ver 0.0.0.1
 
-[DONE] Rename app name and description in messages
+  [DONE] Rename app name and description in messages
 
-[DONE] Create new Manifest.json
+  [DONE] Create new Manifest.json

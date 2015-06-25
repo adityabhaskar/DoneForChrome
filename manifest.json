@@ -1,6 +1,6 @@
 {
-  "version": "0.0.1.1",
-  "version_name": "0.0.1.1 pre-alpha iDoneThis API",
+  "version": "0.0.1.2",
+  "version_name": "0.0.1.2 alpha",
   "name": "__MSG_appName__",
   "short_name": "__MSG_shortName__",
   "description": "__MSG_appDescription__",
@@ -16,8 +16,13 @@
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Comma",
-        "mac": "Command+Comma"
-      }
+        "mac": "Command+Comma",
+        "windows": "Ctrl+Comma",
+        "chromeos": "Ctrl+Comma",
+        "linux": "Ctrl+Comma"
+      },
+      "description": "Mark it Done!",
+      "global": true
     }
   },
   "browser_action": {
