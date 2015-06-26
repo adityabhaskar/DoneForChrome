@@ -44,3 +44,14 @@ body {
   width: 28px;
 }
 
+#footer{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#footer a{
+  padding-bottom: 1em;
+  display: inline-block;
+  padding-right: 1em;
+}

@@ -138,6 +138,7 @@ var iDoneThis = {
                 localStorage.defaultTeam = response.results[0].name;
                 localStorage.defaultTeamCode = response.results[0].short_name;
                 localStorage.defaultTeamURL = response.results[0].permalink;
+                localStorage.teamCount = response.results.length;
                 
                 for (var i = 0; i < response.results.length; i++) {
                   if(response.results[i].is_personal === true){

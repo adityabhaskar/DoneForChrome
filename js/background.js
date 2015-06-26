@@ -11,7 +11,7 @@ var messageStrings = {
   };
 
 var UNINSTALL_URL = "http://c306.net/apps#notrack";
-var NOTIFICATION_ICON_URL = chrome.extension.getURL("img/icon-128.png");
+var NOTIFICATION_ICON_URL = chrome.extension.getURL("img/done-128.png");
 var BUTTON_GREEN = "#33ff33";
 var BUTTON_RED = "#ff3333";
 
@@ -26,16 +26,20 @@ chrome.runtime.onInstalled.addListener(function (details){
     chrome.runtime.setUninstallURL(UNINSTALL_URL);
   }
   
-  if(details.reason === "update") console.log('previousVersion', details.previousVersion);
+  if(details.reason === "update"){
+    console.log('previousVersion', details.previousVersion);
+    if(localStorage.username && localStorage.username!=="")
+      iDoneThis.getTeams();
+  } 
   
   // For testing only
-  if(details.reason === "update")
-    chrome.tabs.create({
-      url: chrome.extension.getURL("options.html"),
-      active: true
-    },function(tab){
-      console.log("In testing, opened settings");
-    });
+  // if(details.reason === "update")
+  //   chrome.tabs.create({
+  //     url: chrome.extension.getURL("options.html"),
+  //     active: true
+  //   },function(tab){
+  //     console.log("In testing, opened settings");
+  //   });
   // End Testing
 });
 
@@ -50,10 +54,11 @@ iDoneThis.isLoggedIn(function(){
   setupExtensionState(false);
 });
 
+chrome.omnibox.onInputEntered.addListener(sendFromCommand);
 
 function setupExtensionState(loggedIn){
   chrome.browserAction.onClicked.removeListener(openOptions);
-  chrome.omnibox.onInputEntered.removeListener(sendFromCommand);
+  // chrome.omnibox.onInputEntered.removeListener(sendFromCommand);
   
   if(loggedIn){
     
@@ -63,9 +68,8 @@ function setupExtensionState(loggedIn){
     chrome.browserAction.setPopup({popup: "popup.html"});
     chrome.omnibox.setDefaultSuggestion({
       description: messageStrings.promptMessage
-      // description: chrome.i18n.getMessage("promptMessage")
     });
-    chrome.omnibox.onInputEntered.addListener(sendFromCommand);
+    // chrome.omnibox.onInputEntered.addListener(sendFromCommand);
   
   } else {
     
@@ -76,9 +80,8 @@ function setupExtensionState(loggedIn){
     chrome.browserAction.onClicked.addListener(openOptions);
     chrome.omnibox.setDefaultSuggestion({
       description: messageStrings.noLoginMessage
-      // description: chrome.i18n.getMessage("noLoginMessage")
     });
-  
+    
   }
 }
 
@@ -94,30 +97,44 @@ function openOptions(){
 
 
 function sendFromCommand(text, disposition){
-  iDoneThis.newDone({
-    raw_text: text,
-    team: localStorage.defaultTeamCode,
-    // date: new Date().toDateString()
-  }, function(response){
-    // Mailing successful
-    
-    chrome.notifications.create({
-      type: "basic",
-      iconUrl: NOTIFICATION_ICON_URL,
-      title: messageStrings.doneNotificationTitle,
-      message: messageStrings.doneNotificationMessage,
-      contextMessage: text
-    }, function(){});
-    
-  }, function(reason){
-    // Mailing unsuccessful
-    
+  if(localStorage.username && localStorage.username !== "")
+    iDoneThis.newDone({
+      raw_text: text,
+      team: localStorage.defaultTeamCode,
+      // date: new Date().toDateString()
+    }, function(response){
+      // Mailing successful
+      
+      chrome.notifications.create({
+        type: "basic",
+        iconUrl: NOTIFICATION_ICON_URL,
+        title: messageStrings.doneNotificationMessage,
+        message: text,
+        // contextMessage: 
+      }, function(){});
+      
+    }, function(reason){
+      // Mailing unsuccessful
+      
+      chrome.notifications.create({
+        type: "basic",
+        iconUrl: NOTIFICATION_ICON_URL,
+        title: messageStrings.errorNotificationTitle,
+        message: text,
+        contextMessage: messageStrings.errorNotificationMessage
+        // message: messageStrings.errorNotificationMessage,
+        // contextMessage: text
+      }, function(){});
+    });
+  else {
     chrome.notifications.create({
       type: "basic",
       iconUrl: NOTIFICATION_ICON_URL,
       title: messageStrings.errorNotificationTitle,
-      message: messageStrings.errorNotificationMessage,
-      contextMessage: text
+      message: text,
+      contextMessage: messageStrings.errorNotificationMessage
+      // message: messageStrings.errorNotificationMessage,
+      // contextMessage: text
     }, function(){});
-  });
+  }
 }

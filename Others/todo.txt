@@ -37,17 +37,23 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 ------------------------
 
 
-ver 0.0.1.3
+ver 0.0.1.4
 
   -- NEXT VERSION -- Popup: Show dropdown of teams, with is_personal selected by default (iff more than one team) (or use +teamName)
   
   -- NEXT VERSION -- Popup: Show option to change date
   
-  -- NEXT VERSION -- Extension icons!
-  
   -- NEXT VERSION -- Offline functionality
   
   -- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
+  
+
+------------------------
+
+
+ver 0.0.1.3
+
+  [DONE] Extension icons!
   
 
 ------------------------
