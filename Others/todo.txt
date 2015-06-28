@@ -37,15 +37,25 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 ------------------------
 
 
-ver 0.0.1.4
+ver 0.0.1.5
 
   -- NEXT VERSION -- Popup: Show dropdown of teams, with is_personal selected by default (iff more than one team) (or use +teamName)
   
-  -- NEXT VERSION -- Popup: Show option to change date
+  -- NEXT VERSION -- Icon: Another version with base brighter, checkmark faded
+  
+  -- NEXT VERSION -- Popup: Show option to change date (or just start the done with date in yyyymmdd format)
   
   -- NEXT VERSION -- Offline functionality
   
   -- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
+  
+
+------------------------
+
+
+ver 0.0.1.4
+
+  [DONE] Changed keyboard shortcut to Ctrl+Shift+Z
   
 
 ------------------------
