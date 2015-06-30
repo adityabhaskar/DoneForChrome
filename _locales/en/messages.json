@@ -67,6 +67,14 @@
     "message": "Sent.",
     "description": "The text for notification title"
   },
+  "error_status_title": {
+    "message": "Error: ",
+    "description": "The text for notification title"
+  },
+  "error_default_text": {
+    "message": "Could not send the done. Please try again later",
+    "description": "The text for notification title"
+  },
   "error_status_text": {
     "message": "Error: ",
     "description": "The text for notification title"

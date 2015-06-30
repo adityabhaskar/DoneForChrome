@@ -14,6 +14,7 @@ var UNINSTALL_URL = "http://c306.net/apps#notrack";
 var NOTIFICATION_ICON_URL = chrome.extension.getURL("img/done-128.png");
 var BUTTON_GREEN = "#33ff33";
 var BUTTON_RED = "#ff3333";
+var ALARM_NAME = "teamChecker";
 
 chrome.runtime.onInstalled.addListener(function (details){
   if(details.reason === "install"){
@@ -45,16 +46,34 @@ chrome.runtime.onInstalled.addListener(function (details){
 
 
 iDoneThis.isLoggedIn(function(){
+  console.log("In bg: logged in");
+  
   // Already logged in... 
   setupExtensionState(true);
-  console.log("In bg: logged in");
+  
+  // Update teams
+  iDoneThis.getTeams();
+  
+  // Start once-a-day alarm
+  startAlarms();
+  
+  // On alarm, check for changes in teams - added/removed, etc.
+  chrome.alarms.onAlarm.addListener(function(alarm){
+    if(alarm.name === ALARM_NAME){
+      iDoneThis.getTeams();
+    }
+  });
+  
 }, function(){
-  // Not logged in... show on browser button, prompting to login
   console.log("In bg: not logged in");
+  
+  // Not logged in... show on browser button, prompting to login
   setupExtensionState(false);
 });
 
+// Setup listener for omnibox input
 chrome.omnibox.onInputEntered.addListener(sendFromCommand);
+
 
 function setupExtensionState(loggedIn){
   chrome.browserAction.onClicked.removeListener(openOptions);
@@ -137,4 +156,14 @@ function sendFromCommand(text, disposition){
       // contextMessage: text
     }, function(){});
   }
+}
+
+
+function startAlarms(){
+  chrome.alarms.create({
+    name: ALARM_NAME,
+    alarmInfo: {
+      periodInMinutes: 1440
+    }
+  });
 }

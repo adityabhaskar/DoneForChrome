@@ -15,16 +15,18 @@
         <span>&nbsp;</span>
         <button id="connect">Connect</button>
       </p>
-<!--       <ul id="errorList" class="loggedOut">
-        <li id="loginErrorListItem">Please sign in to Google to allow sending your <em>done</em>s</li>
-        <li id="idtTokenErrorListItem">Please provide your idonethis token</li>
-      </ul>
- -->
       <p class="loggedIn">
         Connected to iDoneThis as <strong id="niceName">&nbsp;</strong> (<a href="#" class="specialUnderline" id="usernameSpan" target="_blank">&nbsp;</a>).
       </p>
       <p class="loggedIn">
         Sending <em>done</em>s to <a href="#" target="_blank" class="specialUnderline" id="defaultTeam">&nbsp;</a>.
+      </p>
+      <p class="loggedIn" id="teams">
+        Select <span class="specialUnderline" title="You can change team for individual dones when sending">default team</span> to send your dones to: <select id="teamSelect">
+        </select>
+      </p>
+      <p class="loggedIn">
+        <button title="If you have more than one teams, or created/joined a new team" id="refreshTeams">Refresh team list</button>
       </p>
       <p class="loggedIn">
         <a href="#logout" id="logout" tabindex="-1">Logout</a>

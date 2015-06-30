@@ -90,19 +90,21 @@ var iDoneThis = {
       xhr.onreadystatechange = function() {
         if(xhr.readyState == 4){
           // if(xhr.status == 200) {
-            console.log(xhr.responseText);
-            // console.log(xhr.response);
-            var response = JSON.parse(xhr.responseText);
-            console.log(response);
-            // if(response.ok === true){
-              // localStorage.username = response.user;
-              console.log("sent.");
-            // }
-            if(response.ok === true && successCallback){ successCallback();
+          console.log(xhr.responseText);
+          // console.log(xhr.response);
+          var response = JSON.parse(xhr.responseText);
+          console.log(response);
+          // if(response.ok === true){
+            // localStorage.username = response.user;
+          console.log("sent.");
+          // }
+          if(response.ok === true){
+            if(successCallback)
+              successCallback(response);
           } else {
             // localStorage.removeItem("username");
             console.log("send failed, recheck auth token");
-            if(failureCallback) failureCallback();
+            if(failureCallback) failureCallback(response);
           }
         }
       }

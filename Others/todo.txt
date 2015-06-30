@@ -27,28 +27,44 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 
 ?utm_source=qdt%20Options&utm_medium=referral&utm_content=qdtOptionsInline&utm_campaign=qdt_ext
 
--- NEXT VERSION -- Update: Add publicity image(s) - 440x280
-
--- NEXT VERSION -- Update: Add screenshots
-
--- NEXT VERSION -- Update: Add bottom bar with links and status space.
-
+  -- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
+  
 
 ------------------------
 
 
-ver 0.0.1.5
+ver 0.0.2.1
 
-  -- NEXT VERSION -- Popup: Show dropdown of teams, with is_personal selected by default (iff more than one team) (or use +teamName)
+  -- NEXT VERSION -- Popup: clean up teams UI
+  
+  -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+  
+  -- NEXT VERSION -- Offline functionality
   
   -- NEXT VERSION -- Icon: Another version with base brighter, checkmark faded
   
   -- NEXT VERSION -- Popup: Show option to change date (or just start the done with date in yyyymmdd format)
   
-  -- NEXT VERSION -- Offline functionality
+  -- NEXT VERSION -- Update: Add publicity image(s) - 440x280
+
+  -- NEXT VERSION -- Update: Add screenshots
+
+
+------------------------
+
+
+ver 0.0.2.0
+
+  [DONE] Removed gmail.js, mime.js and base64.js - pending files from gmail based implementation
   
-  -- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
+  [DONE] Popup: Show dropdown of teams, with is_personal selected by default (iff more than one team) (or use +teamName)
   
+  [DONE] Options: button to refresh teams
+  
+  [DONE] Update: Handle deleted teams still available in UI.
+  
+  [DONE] Options: Set default team
+
 
 ------------------------
 
@@ -81,6 +97,8 @@ ver 0.0.1.2
   
   [DONE] Update Extension name, description (remove Gmail)
   
+  [DONE] Update: Add bottom bar with links and status space.
+
 
 ------------------------
 

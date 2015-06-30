@@ -1,22 +1,26 @@
 <!doctype html>
 <html>
-    <head>
-        <link href="css/popup.css" rel="stylesheet">
-    </head>
-    <body>
-        <div id="textLine">
-            <input type="text" id="doneText" placeholder="What'd you get done today?">
-            <span id="greenTick" class="hidden">&#x2714;</span>
-            <span id="pendingCircle" class="hidden"></span>
-            <span id="redAlert" class="hidden">!</span>
-        </div>
-        <p id="status">&nbsp;</p>
-        <div id="footer">
-          <a href="http://c306.net/apps" target="_blank" alt="My other apps"><img src="img/ab16.png" title="My other apps"></a>
-          <a href="https://idonethis.com/" target="_blank" alt="iDoneThis"><img src="img/idt16.png" title="iDoneThis"></a>
-          <a href="https://twitter.com/adityabhaskar" target="_blank" alt="@adityabhaskar"><img src="img/tw16.png" title="@adityabhaskar"></a>
-        </div>
-        <script src="js/lib/jquery-2.1.1.min.js"></script>
-        <script src="js/popup.js"></script>
-    </body>
+<head>
+  <link href="css/popup.css" rel="stylesheet">
+</head>
+<body>
+  <div id="textLine">
+    <input type="text" id="doneText" placeholder="What'd you get done today?">
+    <span id="greenTick" class="hidden">&#x2714;</span>
+    <span id="pendingCircle" class="hidden"></span>
+    <span id="redAlert" class="hidden">!</span>
+  </div>
+  <p id="status">&nbsp;</p>
+  <div id="teams">
+    <select id="teamSelect">
+    </select>
+  </div>
+  <div id="footer">
+    <a href="http://c306.net/apps" target="_blank" alt="My other apps"><img src="img/ab16.png" title="My other apps"></a>
+    <a href="https://idonethis.com/" target="_blank" alt="iDoneThis"><img src="img/idt16.png" title="iDoneThis"></a>
+    <a href="https://twitter.com/adityabhaskar" target="_blank" alt="@adityabhaskar"><img src="img/tw16.png" title="@adityabhaskar"></a>
+  </div>
+  <script src="js/lib/jquery-2.1.1.min.js"></script>
+  <script src="js/popup.js"></script>
+</body>
 </html>

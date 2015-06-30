@@ -55,3 +55,9 @@ body {
   display: inline-block;
   padding-right: 1em;
 }
+
+#teams{
+  display: none;
+  max-width: 80%
+}
+

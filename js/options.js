@@ -33,6 +33,11 @@ $(document).ready(function(){
     return false;
   });
   
+  // refreshTeams event handler
+  $("#refreshTeams").on("click", function(e){
+    bgPage.iDoneThis.getTeams(updateTeams);
+  });
+  
   // idtToken - in focus event handler
   $("#idtTokenInput").on("focusin", function(){
     $("#idtTokenSaved").hide();
@@ -63,6 +68,20 @@ $(document).ready(function(){
     }
   });
   
+  $("#teamSelect").on("change", function(){
+    console.log("New default team: " + this.value);
+    
+    // Save new selected team as default
+    var selectedTeam = JSON.parse(this.value);
+    localStorage.defaultTeam = selectedTeam.name;
+    localStorage.defaultTeamCode = selectedTeam.short_name;
+    localStorage.defaultTeamURL = selectedTeam.permalink;
+    
+    // Update team name on options page to reflect new default team.
+    $("#defaultTeam").delay(250).text(localStorage.defaultTeam).attr("href", localStorage.defaultTeamURL);
+    $(this).blur();
+  });
+  
 });
 
 
@@ -74,7 +93,9 @@ function updateOptionsPage(loggedIn){
     
     $("#niceName").text(localStorage.niceName);
     $("#usernameSpan").text(localStorage.username).attr("href", IDT_URL);
-    $("#defaultTeam").text(localStorage.defaultTeam).attr("href", localStorage.defaultTeamURL);
+    
+    // populate teams
+    updateTeams();
     
     bgPage.setupExtensionState(true);
     
@@ -96,5 +117,36 @@ function updateOptionsPage(loggedIn){
     // $("#loginErrorListItem").fadeIn();
     
     bgPage.setupExtensionState(false);
+  }
+}
+
+
+function updateTeams(callback){
+  if(localStorage.teamCount > 1){
+    chrome.storage.local.get("teams", function(st){
+      if(st && st.teams && st.teams.length > 0){
+        var teamSelect = $("#teamSelect");
+        var o;
+        
+        teamSelect.html("");
+        
+        for (var i = 0; i < st.teams.length; i++) {
+          o = new Option(st.teams[i].name, JSON.stringify({
+            name: st.teams[i].name,
+            short_name: st.teams[i].short_name,
+            permalink: st.teams[i].permalink
+          }));
+          if(st.teams[i].is_personal) o.selected = true;
+          teamSelect.append(o);
+        }
+        
+        if(st.teams.length > 1)
+          $("#teams").css("display", "inherit");
+      }
+      
+      $("#defaultTeam").text(localStorage.defaultTeam).attr("href", localStorage.defaultTeamURL);
+      
+      if(callback) callback();
+    });
   }
 }
