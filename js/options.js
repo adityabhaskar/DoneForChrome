@@ -148,5 +148,8 @@ function updateTeams(callback){
       
       if(callback) callback();
     });
+  } else {
+    $("#defaultTeam").text(localStorage.defaultTeam).attr("href", localStorage.defaultTeamURL);
+    $("#teams").css("display", "none");
   }
 }

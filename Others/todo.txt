@@ -33,7 +33,7 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 ------------------------
 
 
-ver 0.0.2.1
+ver 0.0.2.2
 
   -- NEXT VERSION -- Popup: clean up teams UI
   
@@ -49,6 +49,14 @@ ver 0.0.2.1
 
   -- NEXT VERSION -- Update: Add screenshots
 
+
+------------------------
+
+
+ver 0.0.2.1
+
+  [DONE] Bug Fix: team select wasn't clearing out on options page even when teamCount = 1
+  
 
 ------------------------
 
