@@ -61,3 +61,6 @@ body {
   max-width: 80%
 }
 
+#dateDiv{
+  display: none;
+}

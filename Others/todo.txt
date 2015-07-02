@@ -33,23 +33,47 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 ------------------------
 
 
-ver 0.0.2.2
-
-  -- NEXT VERSION -- Popup: clean up teams UI
-  
-  -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+ver 0.0.4.0
   
   -- NEXT VERSION -- Offline functionality
   
   -- NEXT VERSION -- Icon: Another version with base brighter, checkmark faded
   
-  -- NEXT VERSION -- Popup: Show option to change date (or just start the done with date in yyyymmdd format)
-  
   -- NEXT VERSION -- Update: Add publicity image(s) - 440x280
 
   -- NEXT VERSION -- Update: Add screenshots
 
+  -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+  
+  
+------------------------
 
+
+ver 0.0.3.1
+  
+  -- NEXT VERSION -- Popup: Show 'Send' button if date and/or team selector are shown, remove 'Press enter to send' quote
+  
+  -- NEXT VERSION -- Popup: clean up teams & date UI
+  
+  
+------------------------
+
+
+ver 0.0.3.0
+  
+  [DONE] Popup: Specigy date by starting the done with date in yyyymmdd/yyyy-mm-dd format
+  
+  [DONE] Popup: Show field to specify date
+  
+  [DONE] Popup: If date in selector != today, use that, don't parse message. Else, parse from message.
+  
+  [DONE] Bug Fix: In options, set team dropdown to default team initially
+  
+  [DONE] Minor: Set tabindex=-1 for all links in popup
+  
+  [DONE] Popup: clean up options UI
+  
+  
 ------------------------
 
 

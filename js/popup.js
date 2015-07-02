@@ -7,6 +7,8 @@ var SENDING_STATUS_TEXT = chrome.i18n.getMessage("sending_status_text");
 var SENT_STATUS_TEXT = chrome.i18n.getMessage("sent_status_text");
 var ERROR_STATUS_TITLE = chrome.i18n.getMessage("error_status_title");
 var ERROR_DEFAULT_TEXT = chrome.i18n.getMessage("error_default_text");
+var DATE_REGEX = /^((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(0229)) /;
+// /^(?:((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(02)(29))|(yesterday)|(tomorrow)) /;
 
 $(document).ready(function(){
   // populate suggest list with team names
@@ -20,14 +22,17 @@ $(document).ready(function(){
         teamSelect.append(o);
       }
       
-      if(st.teams.length > 1)
+      if(st.teams.length > 1 && localStorage.showTeamSelector === "true")
         $("#teams").css("display", "inherit");
     }
   });
   
+  if(localStorage.showDateSelector === "true")
+    $("#dateDiv").css("display", "inherit");
+  
   // Show disabled input is not logged in
   bgPage.iDoneThis.isLoggedIn(textDefault, function(){
-    $("#doneText").addClass("sendingState").attr("disabled","disabled");
+    $("#doneText, #done_date").addClass("sendingState").attr("disabled","disabled");
     $("#status").text(LOGINERROR_STATUS_TEXT);
   });
   
@@ -38,20 +43,43 @@ $(document).ready(function(){
       onSend($("#doneText").val());
     }
   });
+  
+  $("#done_date").val(yyyymmdd(new Date()));
 });
 
 function onSend(text){
   // lighten input text, show rotating circle & text
-  $("#doneText").addClass("sendingState").attr("disabled","disabled");
+  $("#doneText, #done_date").addClass("sendingState").attr("disabled","disabled");
   $("#pendingCircle").removeClass("hidden");
   $("#status").text(SENDING_STATUS_TEXT);
   
+  var doneObj = {
+    team: $("#teamSelect").val() || localStorage.defaultTeamCode
+  }
+  
+  var done_date = $("#done_date").val();
+  
+  if(done_date !== yyyymmdd(new Date())){
+  // if date in Date selector is not today, use that date
+    doneObj["done_date"] = done_date;
+    doneObj["raw_text"] = text;
+  
+  } else {
+  // if date in Date selector is today, check for dates in string
+    var doneDateArr = checkForDates(text);
     
-  bgPage.iDoneThis.newDone({
-    raw_text: text,
-    team: $("#teamSelect").val() || localStorage.defaultTeamCode,
-    // date: new Date().toDateString()
-  }, function(response){
+    if(doneDateArr && doneDateArr.length > 0){
+      // date found in string
+      doneObj["done_date"] = doneDateArr[0];
+      doneObj["raw_text"] = doneDateArr[1];
+      $("#done_date").val(doneDateArr[0])
+    } else {
+      // no date provided
+      doneObj["raw_text"] = text;
+    }
+  }
+    
+  bgPage.iDoneThis.newDone(doneObj, function(response){
     // Mailing successful
     
     // clear input text, show green tick (then timeout and clear)
@@ -60,7 +88,9 @@ function onSend(text){
     $("#status").hide().text(SENT_STATUS_TEXT).fadeIn("fast").delay(2000).fadeOut("fast", function(){
       $("#status").text(DEFAULT_STATUS_TEXT).fadeIn("fast");
     });
-    $("#doneText").val("").removeClass("sendingState").removeAttr("disabled").focus();
+    
+    $("#doneText").val("").removeClass("sendingState").removeAttr("disabled").focus();;
+    $("#done_date").val(yyyymmdd(new Date())).removeClass("sendingState").removeAttr("disabled");
     
   }, function(response){
     // Mailing unsuccessful
@@ -79,6 +109,30 @@ function onSend(text){
 }
 
 function textDefault(){
-  $("#doneText").removeClass("sendingState hidden").removeAttr("disabled").focus();
+  $("#doneText, #done_date").removeClass("sendingState hidden").removeAttr("disabled")
+  $("#doneText").focus();
   $("#status").text(DEFAULT_STATUS_TEXT);
+}
+
+function checkForDates(doneText){
+  var m = doneText.match(DATE_REGEX);
+  var dashCount = 0;
+  if(m && m[1]){
+    if(m[3]) 
+      dashCount++;
+    if(m[5] || m[11] || m[8] || m[14]) 
+      dashCount++;
+    
+    return [(m[2] || m[13]) + "-"+
+       (m[4] || m[7] || m[10] || m[15]) + "-"+
+       (m[6] || m[9] || m[12] || m[16]), doneText.substr(9+dashCount, doneText.length-9-dashCount)];
+  }
+}
+
+
+function yyyymmdd(date){
+  var yyyy = date.getFullYear().toString();
+  var mm = (date.getMonth()+1).toString(); // getMonth() is zero-based
+  var dd  = date.getDate().toString();
+  return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" +  (dd[1]?dd:"0"+dd[0]); // padding
 }

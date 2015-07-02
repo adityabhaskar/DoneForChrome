@@ -19,6 +19,7 @@ body {
 .specialUnderline{
   text-decoration: none;
   border-bottom: 1px dotted grey;
+  cursor: pointer;
 }
 
 .loggedIn, .loggedOut{

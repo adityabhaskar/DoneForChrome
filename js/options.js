@@ -60,6 +60,7 @@ $(document).ready(function(){
     updateOptionsPage(false);
   });
   
+  // Disable/Enable Connect button when token field is empty/not
   $("#idtTokenInput").on("input", function(){
     if($("#idtTokenInput").val().trim() !== ""){
       $("#connect").removeAttr("disabled");
@@ -68,9 +69,8 @@ $(document).ready(function(){
     }
   });
   
+  // Change default team
   $("#teamSelect").on("change", function(){
-    console.log("New default team: " + this.value);
-    
     // Save new selected team as default
     var selectedTeam = JSON.parse(this.value);
     localStorage.defaultTeam = selectedTeam.name;
@@ -80,6 +80,19 @@ $(document).ready(function(){
     // Update team name on options page to reflect new default team.
     $("#defaultTeam").delay(250).text(localStorage.defaultTeam).attr("href", localStorage.defaultTeamURL);
     $(this).blur();
+  });
+  
+  // Showing and saving showDateSelector value
+  $("#showDateSelector").prop("checked", localStorage.showDateSelector === "true");
+  $("#showDateSelector").on("change", function(){
+    localStorage.showDateSelector = this.checked;
+  });
+  
+  
+  // Showing and saving showTeamSelector value
+  $("#showTeamSelector").prop("checked", localStorage.showTeamSelector === "true");
+  $("#showTeamSelector").on("change", function(){
+    localStorage.showTeamSelector = this.checked;
   });
   
 });
@@ -136,7 +149,7 @@ function updateTeams(callback){
             short_name: st.teams[i].short_name,
             permalink: st.teams[i].permalink
           }));
-          if(st.teams[i].is_personal) o.selected = true;
+          if(st.teams[i].short_name === localStorage.defaultTeamCode) o.selected = true;
           teamSelect.append(o);
         }
         

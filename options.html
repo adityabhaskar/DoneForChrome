@@ -6,7 +6,7 @@
     <body>
       <h3 id="idtTokenInputDiv" class="loggedOut">Please connect to your iDoneThis account:</h3>
       <p class="loggedOut">
-        <span><label for="idtTokenInput">Your <strong>iDoneThis</strong> API token (<a class="specialUnderline" href="https://idonethis.com/api/token/" target="_blank" title="Will need you to be logged in to your account">available here</a>):</label></span>
+        <span><label for="idtTokenInput">Your <strong>iDoneThis</strong> API token (<a class="specialUnderline" href="https://idonethis.com/api/token/" target="_blank" title="Will need you to be logged in to your account">Get it here</a>):</label></span>
         <span><input type="text" id="idtTokenInput"></span>
         <span id="idtTokenHelp" class="hidden">Press <em>Tab</em> to save.</span>
         <span id="idtTokenSaved" class="hidden">Saved.</span>
@@ -16,7 +16,17 @@
         <button id="connect">Connect</button>
       </p>
       <p class="loggedIn">
+        <h4>Account</h4>
+      </p>
+      <p class="loggedIn">
         Connected to iDoneThis as <strong id="niceName">&nbsp;</strong> (<a href="#" class="specialUnderline" id="usernameSpan" target="_blank">&nbsp;</a>).
+      </p>
+      <p class="loggedIn">
+        <a href="#logout" id="logout" tabindex="-1">Logout</a>
+      </p>
+      <p class="loggedIn">
+        <hr size="1"/>
+        <h4>Teams</h4>
       </p>
       <p class="loggedIn">
         Sending <em>done</em>s to <a href="#" target="_blank" class="specialUnderline" id="defaultTeam">&nbsp;</a>.
@@ -24,12 +34,18 @@
       <p class="loggedIn" id="teams">
         Select <span class="specialUnderline" title="You can change team for individual dones when sending">default team</span> to send your dones to: <select id="teamSelect">
         </select>
+        <p>
+        <label for="showTeamSelector"><input type="checkbox" id="showTeamSelector">Show team selector in pop-up.</label><!--  <span title="You can specify date without the selector - start your done with a date in yyyy-mm-dd format." class="specialUnderline">&#x24D8;</span> --></p>
       </p>
       <p class="loggedIn">
         <button title="If you have more than one teams, or created/joined a new team" id="refreshTeams">Refresh team list</button>
       </p>
       <p class="loggedIn">
-        <a href="#logout" id="logout" tabindex="-1">Logout</a>
+        <hr size="1"/>
+        <h4>Dates</h4>
+      </p>
+      <p class="loggedIn">
+        <label for="showDateSelector"><input type="checkbox" id="showDateSelector">Show date selector in pop-up.</label> <span title="You can specify date without the selector - start your done with a date in yyyy-mm-dd format." class="specialUnderline">&#x24D8;</span>
       </p>
       <div id="footer">
         <a href="http://c306.net/apps" target="_blank" alt="My other apps"><img src="img/ab16.png" title="My other apps"></a>
