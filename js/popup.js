@@ -17,6 +17,7 @@ $(document).ready(function(){
       var teamSelect = $("#teamSelect");
       var o;
       for (var i = 0; i < st.teams.length; i++) {
+        // o = new Option((st.teams[i].name.length > 15 ? st.teams[i].name.substr(0,14): st.teams[i].name), st.teams[i].short_name);
         o = new Option(st.teams[i].name, st.teams[i].short_name);
         if(st.teams[i].short_name === localStorage.defaultTeamCode) o.selected = true;
         teamSelect.append(o);
@@ -26,6 +27,23 @@ $(document).ready(function(){
         $("#teams").css("display", "inherit");
     }
   });
+  
+  $("#changeTeam").on("click", function(){
+    var changeTeamText = this.text;
+    if(changeTeamText === "(Change)"){
+      $("#teamSelectorDiv").css("display", "inherit");
+      this.text = "Hide";
+    } else {
+      $("#teamSelectorDiv").css("display", "none");
+      this.text = "(Change)";
+    }
+  });
+  
+  $("#selectedTeam").text(localStorage.defaultTeam);
+  $("#teamSelect").on("change", function(){
+    $("#selectedTeam").text($("#teamSelect option:selected").text());
+  });
+  
   
   if(localStorage.showDateSelector === "true")
     $("#dateDiv").css("display", "inherit");
@@ -37,6 +55,7 @@ $(document).ready(function(){
   });
   
   // send on 'enter'
+  $("#done_date").val(yyyymmdd(new Date()));
   $("#doneText").keyup(function(e){
     var code = (e.keyCode ? e.keyCode : e.which);
     if(code == 13) { //Enter keycode
@@ -44,7 +63,6 @@ $(document).ready(function(){
     }
   });
   
-  $("#done_date").val(yyyymmdd(new Date()));
 });
 
 function onSend(text){

@@ -61,6 +61,23 @@ body {
   max-width: 80%
 }
 
+#teamSelect{
+  width: 50%
+}
+
 #dateDiv{
+  display: none;
+  /*text-align: right;*/
+}
+
+
+.specialUnderline{
+  text-decoration: none;
+  border-bottom: 1px dotted grey;
+  cursor: pointer;
+}
+
+
+#teamSelectorDiv{
   display: none;
 }

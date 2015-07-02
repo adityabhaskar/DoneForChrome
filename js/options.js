@@ -79,7 +79,7 @@ $(document).ready(function(){
     
     // Update team name on options page to reflect new default team.
     $("#defaultTeam").delay(250).text(localStorage.defaultTeam).attr("href", localStorage.defaultTeamURL);
-    $(this).blur();
+    // $(this).blur();
   });
   
   // Showing and saving showDateSelector value

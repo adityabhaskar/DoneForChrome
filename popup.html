@@ -10,14 +10,16 @@
     <span id="pendingCircle" class="hidden"></span>
     <span id="redAlert" class="hidden">!</span>
   </div>
-  <p id="status">&nbsp;</p>
   <div id="dateDiv">
     <input type="date" id="done_date">
   </div>
+  <p id="status">&nbsp;</p>
   <div id="teams">
-    <p></p>
-    Team: <select id="teamSelect">
-    </select>
+    <small>Sending to <strong id="selectedTeam">...</strong>. <a class="specialUnderline" id="changeTeam">(Change)</a></small>
+    <p id="teamSelectorDiv">
+      Team: <select id="teamSelect">
+      </select>
+    </p>
   </div>
   <div id="footer">
     <a href="http://c306.net/apps" target="_blank" alt="My other apps" tabindex="-1"><img src="img/ab16.png" title="My other apps"></a>

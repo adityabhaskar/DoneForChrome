@@ -49,11 +49,21 @@ ver 0.0.4.0
 ------------------------
 
 
+ver 0.0.3.2
+  
+  -- NEXT VERSION -- Popup: clean up date UI
+    
+  -- NEXT VERSION -- Popup: Show 'Send' button if date selector is shown, remove 'Press enter to send' quote
+  
+  
+------------------------
+
+
 ver 0.0.3.1
   
-  -- NEXT VERSION -- Popup: Show 'Send' button if date and/or team selector are shown, remove 'Press enter to send' quote
-  
-  -- NEXT VERSION -- Popup: clean up teams & date UI
+  [DONE] Popup: clean up teams UI
+    
+  [DONE] Popup: handle unusually long team names
   
   
 ------------------------
