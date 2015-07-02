@@ -10,6 +10,8 @@ var ERROR_DEFAULT_TEXT = chrome.i18n.getMessage("error_default_text");
 var DATE_REGEX = /^((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(0229)) /;
 // /^(?:((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(02)(29))|(yesterday)|(tomorrow)) /;
 
+var showSend = false;
+
 $(document).ready(function(){
   // populate suggest list with team names
   chrome.storage.local.get("teams", function(st){
@@ -45,8 +47,11 @@ $(document).ready(function(){
   });
   
   
-  if(localStorage.showDateSelector === "true")
-    $("#dateDiv").css("display", "inherit");
+  if(localStorage.showDateSelector === "true"){
+    $("#dateDiv, #sendDiv").css("display", "inherit");
+    $("#status").css("display", "none");
+    showSend = true;
+  }
   
   // Show disabled input is not logged in
   bgPage.iDoneThis.isLoggedIn(textDefault, function(){
@@ -59,9 +64,29 @@ $(document).ready(function(){
   $("#doneText").keyup(function(e){
     var code = (e.keyCode ? e.keyCode : e.which);
     if(code == 13) { //Enter keycode
-      onSend($("#doneText").val());
+      var doneText = $("#doneText").val().trim();
+      if(doneText.length > 0)
+        onSend($("#doneText").val());
+      else{
+        // highlight #doneText
+        $("#doneText").val("").focus();
+      }
+    // Attempt at updating the date field if Text begins with a date - abandoned
+    // } else {
+    //   if(/^(\d{8})|(\d{4}\-\d{2}\-\d{2}) /.test(this.value))
+    //     console.log("date...");
     }
   });
+  
+  $("#send").on("click", function(){
+    var doneText = $("#doneText").val().trim();
+    if(doneText.length > 0)
+      onSend(doneText);
+    else{
+      // highlight #doneText
+      $("#doneText").val("").focus();
+    }
+  })
   
 });
 
@@ -104,7 +129,8 @@ function onSend(text){
     $("#pendingCircle").addClass("hidden");
     $("#greenTick").fadeIn("fast").delay(2000).fadeOut("fast");
     $("#status").hide().text(SENT_STATUS_TEXT).fadeIn("fast").delay(2000).fadeOut("fast", function(){
-      $("#status").text(DEFAULT_STATUS_TEXT).fadeIn("fast");
+      if(showSend === false)
+        $("#status").text(DEFAULT_STATUS_TEXT).fadeIn("fast");
     });
     
     $("#doneText").val("").removeClass("sendingState").removeAttr("disabled").focus();;
@@ -123,6 +149,9 @@ function onSend(text){
       $("#status").hide().text(ERROR_STATUS_TITLE + response.errors.team[0]).fadeIn("fast"); //no team error message
     else
       $("#status").hide().text(ERROR_STATUS_TITLE + ERROR_DEFAULT_TITLE).fadeIn("fast"); //default error message
+    if(showSend === false){
+      $("#status").delay(2000).fadeOut("slow");
+    }
   });
 }
 

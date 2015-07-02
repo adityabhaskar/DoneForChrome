@@ -5,27 +5,17 @@ body {
   min-height: 5em;
 }
 
-.hidden{
-  display: none;
-}
-
-.sendingState{
-  /*color: gray;*/
-  opacity: 0.7;
-}
 
 #textLine{
   white-space: nowrap;
 }
 
-#doneText{
-  width: 25em;
-}
 
 #status{
-  font-size: 13px;
+  font-size: 11px;
   color: grey;
 }
+
 
 #greenTick{
   color: green;
@@ -33,16 +23,19 @@ body {
   font-weight: bold;
 }
 
+
 #redAlert{
   color: red;
   font-size: medium;
   font-weight: bold;
 }
 
+
 #pendingCircle{
   content:url("/img/sending.gif");
   width: 28px;
 }
+
 
 #footer{
   position: absolute;
@@ -50,24 +43,67 @@ body {
   right: 0;
 }
 
+
 #footer a{
   padding-bottom: 1em;
   display: inline-block;
   padding-right: 1em;
 }
 
+
 #teams{
   display: none;
   max-width: 80%
 }
 
+
 #teamSelect{
   width: 50%
 }
 
+
 #dateDiv{
   display: none;
+  margin-top: 1em;
   /*text-align: right;*/
+}
+
+
+#doneText{
+  height: 15px;
+  width: calc(100% - 4em);
+}
+
+
+#done_date{
+  height: 15px;
+  max-width: 11em;
+  padding: 1px;
+}
+
+
+#teamSelectorDiv{
+  display: none;
+}
+
+
+#sendDiv{
+  display: none;
+  position: relative;
+  top: -21px;
+  right: 4em;
+  text-align: right;
+}
+
+
+.hidden{
+  display: none;
+}
+
+
+.sendingState{
+  /*color: gray;*/
+  opacity: 0.7;
 }
 
 
@@ -75,9 +111,4 @@ body {
   text-decoration: none;
   border-bottom: 1px dotted grey;
   cursor: pointer;
-}
-
-
-#teamSelectorDiv{
-  display: none;
 }
