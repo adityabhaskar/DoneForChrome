@@ -10,7 +10,7 @@ var messageStrings = {
     "noLoginMessage": chrome.i18n.getMessage("noLoginMessage"),
   };
 
-var UNINSTALL_URL = "http://c306.net/apps#notrack";
+var UNINSTALL_URL = "http://c306.net/whygo.html?src=qdt";
 var NOTIFICATION_ICON_URL = chrome.extension.getURL("img/done-128.png");
 var BUTTON_GREEN = "#33ff33";
 var BUTTON_RED = "#ff3333";
@@ -160,10 +160,7 @@ function sendFromCommand(text, disposition){
 
 
 function startAlarms(){
-  chrome.alarms.create({
-    name: ALARM_NAME,
-    alarmInfo: {
-      periodInMinutes: 1440
-    }
+  chrome.alarms.create(ALARM_NAME, {
+    periodInMinutes: 1440
   });
 }

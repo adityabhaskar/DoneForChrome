@@ -33,9 +33,7 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 ------------------------
 
 
-ver 0.0.4.0
-  
-  -- NEXT VERSION -- Offline functionality
+ver X.X.X.X
   
   -- NEXT VERSION -- Icon: Another version with base brighter, checkmark faded
   
@@ -44,6 +42,24 @@ ver 0.0.4.0
   -- NEXT VERSION -- Update: Add screenshots
 
   -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+  
+  
+------------------------
+
+
+ver 0.0.4.0
+  
+  -- NEXT VERSION -- Offline functionality
+  
+  
+------------------------
+
+
+ver 0.0.3.3
+  
+  [DONE] Changed uninstall url
+  
+  [DONE] Fixed getTeams alarm bug
   
   
 ------------------------
