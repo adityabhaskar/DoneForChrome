@@ -1,12 +1,17 @@
 var bgPage = chrome.extension.getBackgroundPage();
-// chrome.i18n.getMessage("browserButtonTitle");
 
-var DEFAULT_STATUS_TEXT = chrome.i18n.getMessage("default_status_text");
-var LOGINERROR_STATUS_TEXT = chrome.i18n.getMessage("loginerror_status_text");
-var SENDING_STATUS_TEXT = chrome.i18n.getMessage("sending_status_text");
-var SENT_STATUS_TEXT = chrome.i18n.getMessage("sent_status_text");
-var ERROR_STATUS_TITLE = chrome.i18n.getMessage("error_status_title");
-var ERROR_DEFAULT_TEXT = chrome.i18n.getMessage("error_default_text");
+var CONNECTION_CHECKER_ALARM = "connectionChecker";
+
+var messageStrings = {
+  offline_saved_status_text: chrome.i18n.getMessage("offline_saved_status_text"),
+  default_status_text: chrome.i18n.getMessage("default_status_text"),
+  loginerror_status_text: chrome.i18n.getMessage("loginerror_status_text"),
+  sending_status_text: chrome.i18n.getMessage("sending_status_text"),
+  sent_status_text: chrome.i18n.getMessage("sent_status_text"),
+  error_status_title: chrome.i18n.getMessage("error_status_title"),
+  error_default_text: chrome.i18n.getMessage("error_default_text"),
+}
+
 var DATE_REGEX = /^((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(0229)) /;
 // /^(?:((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(02)(29))|(yesterday)|(tomorrow)) /;
 
@@ -14,7 +19,7 @@ var showSend = false;
 
 $(document).ready(function(){
   // populate suggest list with team names
-  chrome.storage.local.get("teams", function(st){
+  ls.get("teams", function(st){
     if(st && st.teams && st.teams.length > 0){
       var teamSelect = $("#teamSelect");
       var o;
@@ -56,7 +61,7 @@ $(document).ready(function(){
   // Show disabled input is not logged in
   bgPage.iDoneThis.isLoggedIn(textDefault, function(){
     $("#doneText, #done_date").addClass("sendingState").attr("disabled","disabled");
-    $("#status").text(LOGINERROR_STATUS_TEXT);
+    $("#status").text(messageStrings.loginerror_status_text);
   });
   
   // send on 'enter'
@@ -93,16 +98,17 @@ $(document).ready(function(){
 function onSend(text){
   // lighten input text, show rotating circle & text
   $("#doneText, #done_date").addClass("sendingState").attr("disabled","disabled");
-  $("#pendingCircle").removeClass("hidden");
-  $("#status").text(SENDING_STATUS_TEXT);
+  $("#sendingDog").removeClass("hidden");
+  $("#status").text(messageStrings.sending_status_text);
   
   var doneObj = {
-    team: $("#teamSelect").val() || localStorage.defaultTeamCode
+    team: $("#teamSelect").val() || localStorage.defaultTeamCode,
+    done_date: yyyymmdd(new Date())
   }
   
   var done_date = $("#done_date").val();
   
-  if(done_date !== yyyymmdd(new Date())){
+  if(done_date !== doneObj.done_date){
   // if date in Date selector is not today, use that date
     doneObj["done_date"] = done_date;
     doneObj["raw_text"] = text;
@@ -126,11 +132,11 @@ function onSend(text){
     // Mailing successful
     
     // clear input text, show green tick (then timeout and clear)
-    $("#pendingCircle").addClass("hidden");
+    $("#sendingDog").addClass("hidden");
     $("#greenTick").fadeIn("fast").delay(2000).fadeOut("fast");
-    $("#status").hide().text(SENT_STATUS_TEXT).fadeIn("fast").delay(2000).fadeOut("fast", function(){
+    $("#status").hide().text(messageStrings.sent_status_text).fadeIn("fast").delay(2000).fadeOut("fast", function(){
       if(showSend === false)
-        $("#status").text(DEFAULT_STATUS_TEXT).fadeIn("fast");
+        $("#status").text(messageStrings.default_status_text).fadeIn("fast");
     });
     
     $("#doneText").val("").removeClass("sendingState").removeAttr("disabled").focus();;
@@ -140,25 +146,41 @@ function onSend(text){
     // Mailing unsuccessful
     
     // darken input text, show red exclamation sign
-    $("#pendingCircle").addClass("hidden");
+    $("#sendingDog").addClass("hidden");
     $("#redAlert").fadeIn("fast");
     $("#doneText").removeClass("sendingState").removeAttr("disabled");
     
     // show error message in dim, small font below
     if(response && response.errors && response.errors.team && response.errors.team.length > 0)
-      $("#status").hide().text(ERROR_STATUS_TITLE + response.errors.team[0]).fadeIn("fast"); //no team error message
+      $("#status").hide().text(messageStrings.error_status_title + response.errors.team[0]).fadeIn("fast"); //no team error message
     else
-      $("#status").hide().text(ERROR_STATUS_TITLE + ERROR_DEFAULT_TITLE).fadeIn("fast"); //default error message
+      $("#status").hide().text(messageStrings.error_status_title + messageStrings.error_default_title).fadeIn("fast"); //default error message
     if(showSend === false){
       $("#status").delay(2000).fadeOut("slow");
     }
+  }, function(){
+    // Saved offline
+    
+    // clear input text, show timer tick (then timeout and clear)
+    $("#sendingDog").addClass("hidden");
+    $("#savedOfflineIcon").fadeIn("fast").delay(3000).fadeOut("fast");
+    $("#status").hide().text(messageStrings.offline_saved_status_text).fadeIn("fast").delay(3000).fadeOut("fast", function(){
+      if(showSend === false)
+        $("#status").text(messageStrings.default_status_text).fadeIn("fast");
+    });
+    
+    $("#doneText").val("").removeClass("sendingState").removeAttr("disabled").focus();;
+    $("#done_date").val(yyyymmdd(new Date())).removeClass("sendingState").removeAttr("disabled");
+    chrome.alarms.create(CONNECTION_CHECKER_ALARM, {
+      periodInMinutes: Math.round(Math.random()*5) // check reconnection in 0-5 mins
+    });
   });
 }
 
 function textDefault(){
   $("#doneText, #done_date").removeClass("sendingState hidden").removeAttr("disabled")
+  $("#status").text(messageStrings.default_status_text);
   $("#doneText").focus();
-  $("#status").text(DEFAULT_STATUS_TEXT);
 }
 
 function checkForDates(doneText){

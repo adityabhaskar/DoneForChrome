@@ -28,12 +28,21 @@ body {
   color: red;
   font-size: medium;
   font-weight: bold;
+  padding-left: 0.25em;
 }
 
 
-#pendingCircle{
+#sendingDog{
   content:url("/img/sending.gif");
   width: 28px;
+  vertical-align: text-bottom;
+}
+
+
+#savedOfflineIcon{
+  content:url("/img/saved_offline.png");
+  padding-left: 0.25em;
+  vertical-align: text-bottom;
 }
 
 

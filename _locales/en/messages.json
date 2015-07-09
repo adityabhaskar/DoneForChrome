@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Done!  Quick log completed tasks to iDoneThis",
+    "message": "Done! Simple extension for posting to iDoneThis",
     "description": "The name of the application"
   },
   "shortName": {
@@ -41,7 +41,15 @@
   },
   "doneNotificationMessage": {
     "message": "Sent to iDoneThis.",
+    "description": "The text for notification message"
+  },
+  "offlineSavedNotificationTitle": {
+    "message": "Saved offline",
     "description": "The text for notification title"
+  },
+  "offlineSavedNotificationMessage": {
+    "message": "Done will be synced to iDoneThis when online",
+    "description": "The text for notification message"
   },
   "errorNotificationTitle": {
     "message": "Error!",
@@ -49,23 +57,39 @@
   },
   "errorNotificationMessage": {
     "message": "'Done' not sent to iDoneThis.",
+    "description": "The text for notification message"
+  },
+  "loginReqiredNotificationTitle": {
+    "message": "Error!",
     "description": "The text for notification title"
+  },
+  "loginReqiredNotificationMessage": {
+    "message": "Please connect to iDoneThis in options to send Dones",
+    "description": "The text for notification message"
+  },
+  "syncedNotificationMessage": {
+    "message": "Dones saved offline were successfully sent.",
+    "description": "The text for notification message"
   },
   "default_status_text": {
     "message": "Press Enter to send",
-    "description": "The text for notification title"
+    "description": "Default text for popup status space"
   },
   "loginerror_status_text": {
     "message": "Error! Please login.",
-    "description": "The text for notification title"
+    "description": "Login Error text for popup status space"
   },
   "sending_status_text": {
     "message": "Sending...",
-    "description": "The text for notification title"
+    "description": "Sending state text for popup status space"
   },
   "sent_status_text": {
     "message": "Sent.",
-    "description": "The text for notification title"
+    "description": "Successfully sent text for popup status space"
+  },
+  "offline_saved_status_text": {
+    "message": "Saved offline. Will be sent when connected again.",
+    "description": "Saved offline text for popup status space"
   },
   "error_status_title": {
     "message": "Error: ",
@@ -77,7 +101,7 @@
   },
   "error_status_text": {
     "message": "Error: ",
-    "description": "The text for notification title"
+    "description": "Error text for popup status space"
   },
   "logout_confirm": {
     "message": "Are you sure you want to logout?",
