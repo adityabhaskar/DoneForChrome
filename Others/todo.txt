@@ -35,35 +35,40 @@ https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 
 ver X.X.X.X
   
-  -- NEXT VERSION -- Icon: Another version with base brighter, checkmark faded
-  
   -- NEXT VERSION -- Update: Add publicity image(s) - 440x280
 
   -- NEXT VERSION -- Update: Add screenshots
 
   -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
 
+  
+------------------------
+
+
+ver 0.0.4.2
+  
   -- NEXT VERSION -- Always show the team + change button
 
   -- NEXT VERSION -- Date selector - a link that says "today" or "2015-12-12" and when you click the link you can change the date to post to
 
-  -- NEXT VERSION -- The options screen show explicitly state that it's a 3rd party extension not affiliated with iDoneThis.
+  -- NEXT VERSION -- The options screen show explicitly state that it's a 3rd party extension not affiliated with iDoneThis - "This is an unofficial, 3rd party extension and uses iDoneThis API, but has no formal affiliation with iDoneThis."
 
   -- NEXT VERSION -- The options screen could of course look a bit nicer
 
   -- NEXT VERSION -- easy way to get back to the options screen from the pop-up
 
+  -- NEXT VERSION -- If offline, change icon colour?
   
+  -- NEXT VERSION -- Show offline status in popup?
+    
   
 ------------------------
 
 
 ver 0.0.4.1
   
-  -- NEXT VERSION -- If offline, change icon colour?
+  [DONE] Icon: New icon - round, transparent checkbox with tick through
   
-  -- NEXT VERSION -- Show offline status in popup?
-    
   
 ------------------------
 
@@ -85,7 +90,7 @@ ver 0.0.4.0
     [DONE] If added to offline list from popup, update status text & icon
     
     [DONE] When offline items synced, show notification
-    
+  
   
 ------------------------
 
