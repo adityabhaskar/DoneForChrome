@@ -53,6 +53,16 @@ ver 0.0.6.0
 ------------------------
 
 
+ver 0.0.5.1
+  
+  [DONE] Bug Fix: When selector is open, on successful send, the 'Press enter to send' message is shown briefly, instead of 'sent successfull'
+  
+  [DONE] Update: If selectors are open when message is sent, close them and show 'sending'
+
+  
+------------------------
+
+
 ver 0.0.5.0
   
   [DONE] Always show the team + change button

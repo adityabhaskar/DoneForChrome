@@ -162,6 +162,10 @@ function onSend(text){
   $("#doneText, #done_date, #teamSelect").addClass("sendingState").attr("disabled","disabled");
   $("#sendingDog").show();
   $("#status").text(messageStrings.sending_status_text);
+  sendVisible = 1;
+  showSend(false, function(){
+    $("#teamSelectorDiv, #dateSelectorDiv").hide();
+  });
   
   var doneObj = {
     team: selectedTeam.code,
@@ -189,9 +193,9 @@ function onSend(text){
     $("#status").hide().text(messageStrings.sent_status_text).fadeIn("fast").delay(2000).fadeOut("fast", function(){
       if(sendVisible === 0)
         $("#status").text(messageStrings.default_status_text).fadeIn("fast");
+      textDefault();
     });
     
-    textDefault();
   }, function(response){
     // Mailing unsuccessful
     
@@ -217,13 +221,13 @@ function onSend(text){
     $("#status").hide().text(messageStrings.offline_saved_status_text).fadeIn("fast").delay(3000).fadeOut("fast", function(){
       if(sendVisible === 0)
         $("#status").text(messageStrings.default_status_text).fadeIn("fast");
+      textDefault();
     });
     
     chrome.alarms.create(CONNECTION_CHECKER_ALARM, {
       periodInMinutes: Math.round(Math.random()*5) // check reconnection in 0-5 mins
     });
     
-    textDefault();
   });
 }
 
