@@ -1,29 +1,12 @@
 body {
-  padding: 20px;
-}
-
-.hidden{
-  display: none;
-}
-
-.disabled{
-  opacity: 0.5;
-  pointer-events: none;
+  font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, Geneva, 'Open Sans', sans-serif;
+  /*padding: 20px;*/
+  /*transition: background-color 0.5s ease;*/
 }
 
 #errorList{
   font-size: 10px;
   color: red;
-}
-
-.specialUnderline{
-  text-decoration: none;
-  border-bottom: 1px dotted grey;
-  cursor: pointer;
-}
-
-.loggedIn, .loggedOut{
-  display: none;
 }
 
 #footer{
@@ -39,4 +22,92 @@ body {
 
 #teamSelect{
   max-width: 20em;
+}
+
+
+.selected a{
+  color: rgb(48, 57, 66) !important;
+}
+
+.settings-separater{
+  border-bottom: 1px solid #CCC;
+}
+
+.hidden{
+  display: none;
+}
+
+.disabled{
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.specialUnderline{
+  text-decoration: none;
+  border-bottom: 1px dotted grey;
+  cursor: pointer;
+}
+
+.loggedIn, .loggedOut{
+  display: none;
+}
+
+
+#cx-edit-help-content {
+  /*width: 33.9%;*/
+  width: 30em;
+  float: left;
+  position: relative;
+}
+
+#cx-edit-help-content>div {
+  display: none;
+  /*margin: 0 0 0 1em;*/
+  padding: 0 0 0 1em;
+  border-left: 1px solid rgb(102, 102, 102);
+  position: absolute;
+  color: rgb(102, 102, 102);
+}
+
+.settings-sections {
+  float: left;
+  /*width: 66%;*/
+  width: calc(80% - 25em);
+}
+
+.settings-sections section{
+  padding-bottom: 1em;
+}
+
+#cx-edit-help-content>div p{
+  margin-top: 0;
+}
+
+.settings-sections button{
+  width: 14em;
+}
+
+.settings-sections select{
+  width: 20em;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.savedStatus{
+  color: blue;
+  display: none;
+}
+
+.info{
+  display:inline-block;
+  border-radius: 0.5em;
+  background-color: lightblue;
+  width: 1em;
+}
+
+.highlighted{
+  background-color: gainsboro; /*darkseagreen*/
 }

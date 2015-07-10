@@ -114,5 +114,25 @@
   "logout_confirm": {
     "message": "Are you sure you want to logout?",
     "description": "The text for notification title"
+  },
+  "accountHelp": {
+    "message": "<p>Connect to the Pocket account that you want to use with the extension.</p><p>When logged in, shows the account name in use, and number of unread items in your list.</p>",
+    "description": "Help text for account section of settings"
+  },
+  "teamsSectionHelp": {
+    "message": "<p></p>",
+    "description": "Help text for teamsSection section of settings"
+  },
+  "disclaimerSectionHelp": {
+    "message": "<p></p>",
+    "description": "Help text for disclaimerSection section of settings"
+  },
+  "feedbackSectionHelp": {
+    "message": "<p>Please use this form to share your feedback and inputs on the extension.</p>",
+    "description": "Help text for feedbackSection section of settings"
+  },
+  "meHelp": {
+    "message": "<p>Hi!</p><p>I'm Adi.</p><p>I'm an engineer and an MBA by education, a management consultant by what I've done longest, a runner-cycist-swimmer-hiker by what I enjoy as punishment, and too much of a dog person, according to most dogs.</p><p>I also like staying (loosely) in touch with those old programming skills I learnt in undergrad over a decade back. So, in my spare time, I develop extensions and apps for Chrome - mainly around some need I have or, in case of <a href='https://chrome.google.com/webstore/detail/clutter-free-prevent-dupl/iipjdmnoigaobkamfhnojmglcdbnfaaf' target='_blank'>one particular extension</a>, a need that <a href='http://twitter.com/adityabhaskar' target='_blank'>@Zee</a> had.</p><p>Catch me on Twitter (<a href='http://twitter.com/adityabhaskar' target='_blank'>@adityabhaskar</a>) if you've got any feedback, or just want to chat.</p><p>I'm also at <a href='http://twitter.com/middlering' target='_blank'>@middlering</a>, if you want to talk about running, cycling, swimming, hiking, or not loving your dog too much.</p><p>Cheers!</p>",
+    "description": "Help text for me section of settings"
   }
 }

@@ -46,17 +46,29 @@ ver X.X.X.X
 ------------------------
 
 
-ver 0.0.6.1
+ver 0.0.6.2
   
-  -- NEXT VERSION -- Update js to activate all functionality
-  
-  -- NEXT VERSION -- Merge css
-  
-  -- NEXT VERSION -- Clean up html, css, js files
+  -- NEXT VERSION -- Help messages in messages.json
   
   -- NEXT VERSION -- Write tips.html file details
   
   -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+
+  
+------------------------
+
+
+ver 0.0.6.1
+  
+  [DONE] Update js to activate all functionality
+  
+  [DONE] Merge css
+  
+  [DONE] Clean up options-new.html
+  
+  [DONE] Clean up options.css
+  
+  [DONE] Clean up options.js
 
   
 ------------------------

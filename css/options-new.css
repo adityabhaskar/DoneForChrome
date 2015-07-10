@@ -90,11 +90,6 @@ body {
   cursor: pointer;
 }
 
-.savedStatus{
-  color: blue;
-  display: none;
-}
-
 #updateFrequency{
   width: 3em;
   text-align: right;
@@ -107,6 +102,11 @@ body {
 
 .noUnderline{
   text-decoration: none;
+}
+
+.savedStatus{
+  color: blue;
+  display: none;
 }
 
 .info{
