@@ -103,6 +103,14 @@
     "message": "Error: ",
     "description": "Error text for popup status space"
   },
+  "change_team_link_text": {
+    "message": "(Change)",
+    "description": ""
+  },
+  "cancel_change_team_link_text": {
+    "message": "Cancel",
+    "description": ""
+  },
   "logout_confirm": {
     "message": "Are you sure you want to logout?",
     "description": "The text for notification title"

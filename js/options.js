@@ -82,19 +82,6 @@ $(document).ready(function(){
     // $(this).blur();
   });
   
-  // Showing and saving showDateSelector value
-  $("#showDateSelector").prop("checked", localStorage.showDateSelector === "true");
-  $("#showDateSelector").on("change", function(){
-    localStorage.showDateSelector = this.checked;
-  });
-  
-  
-  // Showing and saving showTeamSelector value
-  $("#showTeamSelector").prop("checked", localStorage.showTeamSelector === "true");
-  $("#showTeamSelector").on("change", function(){
-    localStorage.showTeamSelector = this.checked;
-  });
-  
 });
 
 

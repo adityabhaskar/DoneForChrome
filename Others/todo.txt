@@ -39,27 +39,43 @@ ver X.X.X.X
 
   -- NEXT VERSION -- Update: Add screenshots
 
+  
+------------------------
+
+
+ver 0.0.6.0
+  
+  -- NEXT VERSION -- Format options page
+  
   -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
 
   
 ------------------------
 
 
-ver 0.0.4.2
+ver 0.0.5.0
   
-  -- NEXT VERSION -- Always show the team + change button
-
-  -- NEXT VERSION -- Date selector - a link that says "today" or "2015-12-12" and when you click the link you can change the date to post to
-
-  -- NEXT VERSION -- The options screen show explicitly state that it's a 3rd party extension not affiliated with iDoneThis - "This is an unofficial, 3rd party extension and uses iDoneThis API, but has no formal affiliation with iDoneThis."
-
-  -- NEXT VERSION -- The options screen could of course look a bit nicer
-
-  -- NEXT VERSION -- easy way to get back to the options screen from the pop-up
-
-  -- NEXT VERSION -- If offline, change icon colour?
+  [DONE] Always show the team + change button
   
-  -- NEXT VERSION -- Show offline status in popup?
+    [DONE] Team selector - onChange, hide selector automatically
+    
+    [DONE] Team selector link only if teams > 1
+  
+  [DONE] Cancelled: Add pencil edit icons next to date & team
+  
+  [DONE] Date selector - a link that says "today" or "2015-12-12" and when you click the link you can change the date to post to
+  
+  [DONE] Show separator only when selectors are shown
+  
+  [DONE] Show send button only when selectors are shown
+  
+  [DONE] If date != today/tomorrow/yesterday, add 'On'
+  
+  [DONE] easy way to get back to the options screen from the pop-up
+  
+  [DONE] The options screen show explicitly state that it's a 3rd party extension not affiliated with iDoneThis - "This is an unofficial, 3rd party extension and uses iDoneThis API, but has no formal affiliation with iDoneThis."
+  
+  [DONE] New Icon - Smoothen edges of circle
     
   
 ------------------------
