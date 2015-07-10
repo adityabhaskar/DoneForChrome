@@ -1,0 +1,121 @@
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, Geneva, 'Open Sans', sans-serif;
+  /*transition: background-color 0.5s ease;*/
+}
+
+.selected a{
+  color: rgb(48, 57, 66) !important;
+}
+
+.settings-separater{
+  border-bottom: 1px solid #CCC;
+}
+
+
+#cx-edit-help-content {
+  /*width: 33.9%;*/
+  width: 30em;
+  float: left;
+  position: relative;
+}
+
+#cx-edit-help-content>div {
+  display: none;
+  /*margin: 0 0 0 1em;*/
+  padding: 0 0 0 1em;
+  border-left: 1px solid rgb(102, 102, 102);
+  position: absolute;
+  color: rgb(102, 102, 102);
+}
+
+.settings-sections {
+  float: left;
+  /*width: 66%;*/
+  width: calc(80% - 25em);
+}
+
+.settings-sections section{
+  padding-bottom: 1em;
+}
+
+#cx-edit-help-content>div p{
+  margin-top: 0;
+}
+
+.settings-sections button{
+  width: 14em;
+}
+
+.settings-sections select{
+  width: 20em;
+}
+
+#whitelistSelect{
+  width: 30em;
+}
+
+#whitelistInput{
+  width: 18em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+
+#extList li{
+  list-style-type: square;
+  line-height: 1.5em;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hide {
+  display:none;
+}
+
+#signOutForm #username,
+#signOutForm #count {
+  text-decoration: none;
+  color: darkgreen;
+  font-weight: 600;
+  border-bottom: 1px dotted darkgreen;
+}
+
+#readSomething {
+  text-decoration: none;
+  color: blue;
+  border-bottom: 1px dotted blue;
+  cursor: pointer;
+}
+
+.savedStatus{
+  color: blue;
+  display: none;
+}
+
+#updateFrequency{
+  width: 3em;
+  text-align: right;
+}
+
+.macAlt{
+  border-bottom: 1px dotted black;
+  cursor: help;
+}
+
+.noUnderline{
+  text-decoration: none;
+}
+
+.info{
+  display:inline-block;
+  border-radius: 0.5em;
+  background-color: lightblue;
+  width: 1em;
+}
+
+.highlighted{
+  background-color: gainsboro; /*darkseagreen*/
+}

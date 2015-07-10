@@ -25,7 +25,10 @@ GA KEY: UA-xxx
 
 https://chrome.google.com/webstore/detail/icohbfelkjalhnphgmhnkhgelmcfcnba
 
-?utm_source=qdt%20Options&utm_medium=referral&utm_content=qdtOptionsInline&utm_campaign=qdt_ext
+?utm_source=qdt%20Options&utm_medium=referral&utm_campaign=qdt_ext
+&utm_content=qdtOptionsInline
+
+https://docs.google.com/forms/d/1Io6iamQ5Xlw7FoaffRo_tpGPfw_9GvtT4BaAk7wx3UE/viewform?entry.1545185881=Done!+-+Extension+for+iDoneThis&entry.1097111967&entry.1652780603&entry.1210432706=When+I've+got+nothing+else+to+do&entry.1609176506&entry.1997047510=Email+me+when+this+issue+is+resolved
 
   -- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
   
@@ -43,11 +46,27 @@ ver X.X.X.X
 ------------------------
 
 
-ver 0.0.6.0
+ver 0.0.6.1
   
-  -- NEXT VERSION -- Format options page
+  -- NEXT VERSION -- Update js to activate all functionality
+  
+  -- NEXT VERSION -- Merge css
+  
+  -- NEXT VERSION -- Clean up html, css, js files
+  
+  -- NEXT VERSION -- Write tips.html file details
   
   -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+
+  
+------------------------
+
+
+ver 0.0.6.0
+  
+  [DONE] Format options page
+
+  [DONE] Create tips page
 
   
 ------------------------
