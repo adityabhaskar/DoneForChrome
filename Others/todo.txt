@@ -38,6 +38,14 @@ https://docs.google.com/forms/d/1Io6iamQ5Xlw7FoaffRo_tpGPfw_9GvtT4BaAk7wx3UE/vie
 
 ver X.X.X.X
   
+  -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+
+  
+------------------------
+
+
+ver 0.0.6.3
+  
   -- NEXT VERSION -- Update: Add publicity image(s) - 440x280
 
   -- NEXT VERSION -- Update: Add screenshots
@@ -48,12 +56,14 @@ ver X.X.X.X
 
 ver 0.0.6.2
   
-  -- NEXT VERSION -- Help messages in messages.json
+  [DONE] Help messages in messages.json
   
-  -- NEXT VERSION -- Write tips.html file details
+  [DONE] Write tips.html file details
   
-  -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
-
+  [DONE] Replace refences to options.html
+  
+  [DONE] Open options pages using chrome.runtime.openOptionsPage
+  
   
 ------------------------
 

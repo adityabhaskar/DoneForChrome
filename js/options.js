@@ -10,7 +10,7 @@ $(document).ready(function(){
   $("#extName").text(appName);
   $("title").text("Options - " + appName);
   
-  bgPage.iDoneThis.isLoggedIn(function(){
+  bgPage.iDoneThis.isLoggedIn(false, function(){
     updateOptionsPage(true);
   }, function(){
     updateOptionsPage(false);

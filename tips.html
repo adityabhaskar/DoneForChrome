@@ -4,8 +4,7 @@
     <!-- Replace this with your extension's title. -->
     <title>Options - Done!</title>
     <link rel="stylesheet" type="text/css" href="css/lib/options.css" />
-    <link rel="stylesheet" type="text/css" href="css/options-new.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="css/options.css" /> -->
+    <link rel="stylesheet" type="text/css" href="css/options.css" />
     <script type="text/javascript" src="js/lib/options-setup.js"></script>
   </head>
   <body>
@@ -17,7 +16,7 @@
         <li><a id="extShortName" target="_blank">&nbsp;</a></li>
         <li>
           <ul>
-            <li><a href="options-new.html">Settings</a></li>
+            <li><a href="options.html">Settings</a></li>
           </ul>
         </li>
         <li class="selected">
@@ -35,48 +34,32 @@
     </header>
     <!-- Replace everything below this point with your extension's options. -->
     
-<!--     <div class="settings-sections">
-      <section id="account">
-        <h3>iDoneThis Account</h3>
-        
-        <form id="signOutForm" class="loggedOut">
-          <span><label for="idtTokenInput">Your <strong>iDoneThis API token</strong> (<a class="specialUnderline" href="https://idonethis.com/api/token/" target="_blank" title="Will need you to be logged in to your account">Get it here</a>):</label></span>
-          <span><input type="text" id="idtTokenInput"></span>
-          <span id="idtTokenHelp" class="hidden">Press <em>Tab</em> to save.</span>
-          <span id="idtTokenSaved" class="hidden">Saved.</span>
-          <p>
-            <button id="connect">Connect</button>
-          </p>
-        </form>
-        
-        <form id="signOutForm" class="loggedIn">
-          <p>Connected to iDoneThis as <strong id="niceName">&nbsp;</strong> (<a href="#" class="specialUnderline" id="usernameSpan" target="_blank">&nbsp;</a>).</p>
-          <button href="#logout" id="logout" tabindex="-1">Disconnect</button>
+    <div class="settings-sections">
+      <section>
+        <h3>Log tasks from location bar / omnibox</h3>
+        <p>Log your tasks without opening even popup. Simply, go to the location bar and type '<strong>Done </strong>' followed by your task. Providing a date in the yyyy-mm-dd format after 'Done' will add the done task to that specific date.</p>
+        <p>E.g. <em>'Done 2015-07-12 Finished final beta of Done extension #sideprojects'</em> will add this task to my default iDoneThis team, on Sunday 12 July, with text 'Finished final beta of Done extension #sideprojects' and tag it as a <em>#sideproject</em>.</p>
       </section>
-      
-    
-      <section class="otherSettings" id="teamsSection">
-        <h3>Teams</h3>
         
-        <p>
-          Sending <em>done</em>s to <a href="#" target="_blank" class="specialUnderline" id="defaultTeam">&nbsp;</a>.
-        </p>
-        <p>&nbsp;</p>
-        <p>Select <span class="specialUnderline" title="You can change team for individual dones when sending">default team</span> to send your dones to: </p>
-        <select id="teamSelect">
-        </select><span id="buttonBehaviourSaved" class="savedStatus"> Saved :)</span>
-        <p>&nbsp;</p>
-        <p>If you created, joined or left a team recently, and it is not showing in the list, update the team list here:</p>
-          <button title="If you have more than one teams, or created/joined a new team" id="refreshTeams">Refresh team list</button>
+      <section>
+        <h3>Keyboard shortcut</h3>
+        <p>The default keyboard shortcut used by the extension is <span class="macAlt" title="'Command + Shift + Z' on Mac">Ctrl + Shift + <strong>Z</strong>.</span>. This brings up the popup to add a new Done. Just press the shortcut and start typing. Press 'Enter' to log the new Done, and get cracking on your list again.
+        <p>You can change the keyboard shortcut to a different one <a href="chrome://extensions/configureCommands">here</a>.</p>
       </section>
+        
+      <section>
+        <h3>Add Goals</h3>
+        <p>Start your task with a pair of square brackets - <strong>[</strong> and <strong>]</strong> - to log them as goals, instead of completed dones. The pair of [] symbolises an unchecked checkbox</p>
+        <p>Goals show up below your dones in your iDoneThis account, and can be checked off when completed.</p>
+      </section>
+        
+      <section>
+        <h3>Tagging</h3>
+        <p>Including #tags in your tasks will tag them. You can see all tasks tagged with that hash tag in your iDoneThis account</p>
+      </section>
+        
       <div class="settings-separater"></div>
- -->      
       
-<!--       <section id="about">
-        <h3>About</h3>
-        <p><a href="about.html">Click here</a> for more information on how to use AcceleReader, and how reading time estimates and article ageing work.</p>
-      </section>
- -->      
       <section id="disclaimer">
         <h3>Disclaimer</h3>
         <p>This is an unofficial, 3rd party extension and uses the iDoneThis API, but has no formal affiliation with <a href="https://idonethis.com/" target="_blank" alt="iDoneThis">iDoneThis</a>.</p>
@@ -126,9 +109,7 @@
       </div>
     </div>
     <script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/ls.js"></script>
-    <!-- // <script type="text/javascript" src="js/core.js"></script> -->
-    <!-- // <script type="text/javascript" src="js/options.js"></script> -->
-    <script type="text/javascript" src="js/options-new.js"></script>
+    <!-- // <script type="text/javascript" src="js/ls.js"></script> -->
+    <script type="text/javascript" src="js/tips.js"></script>
   </body>
 </html>

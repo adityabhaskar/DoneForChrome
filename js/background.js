@@ -41,20 +41,13 @@ chrome.runtime.onInstalled.addListener(function (details){
   } 
   
   // For options dev/testing only
-  if(details.reason === "update")
-    // chrome.tabs.create({
-    //   url: chrome.extension.getURL("options.html"),
-    //   active: true
-    // });
-    chrome.tabs.create({
-      url: chrome.extension.getURL("options-new.html"),
-      active: true
-    });
+  // if(details.reason === "update")
+  //   chrome.runtime.openOptionsPage();
   // End Testing
 });
 
 
-iDoneThis.isLoggedIn(function(){
+iDoneThis.isLoggedIn(false, function(){
   // If logged in at startup
   console.log("In bg: logged in");
   
@@ -135,7 +128,7 @@ function setupExtensionState(loggedIn){
 
 
 function sendFromCommand(text, disposition){
-  iDoneThis.isLoggedIn(function(){
+  iDoneThis.isLoggedIn(false, function(){
     // If logged in, send command
     
     iDoneThis.newDone(
@@ -188,12 +181,7 @@ function sendFromCommand(text, disposition){
 
 
 function openOptions(){
-  chrome.tabs.create({
-    url: chrome.extension.getURL("options.html"),
-    active: true
-  },function(tab){
-    console.log("Not ready, so opened settings...");
-  });
+  chrome.runtime.openOptionsPage();
 }
 
 

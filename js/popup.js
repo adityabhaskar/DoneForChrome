@@ -54,7 +54,7 @@ $(document).ready(function(){
   
   
   // Set input states - disabled/enabled - if not logged in
-  bgPage.iDoneThis.isLoggedIn(textDefault, function(){
+  bgPage.iDoneThis.isLoggedIn(false, textDefault, function(){
     $("#doneText, #done_date, #teamSelect").addClass("sendingState").attr("disabled","disabled");
     $("#status").text(messageStrings.loginerror_status_text);
   });
@@ -154,6 +154,12 @@ $(document).ready(function(){
       onSend(doneText);
     else // highlight #doneText
       $("#doneText").val("").focus();
+  });
+  
+  // options link handler
+  $("#optionsLink").on("click", function(e){
+    e.preventDefault();
+    chrome.runtime.openOptionsPage();
   });
 });
 

@@ -1,6 +1,8 @@
 // iDoneThis Obj
 var iDoneThis = {
   
+  // CORS_ANYWHERE: "",
+  // CORS_ANYWHERE: "http://www.whateverorigin.org/",
   CORS_ANYWHERE: "https://cors-anywhere.herokuapp.com/",
   BASE: "https://idonethis.com/api/",
   VER: "v0.1",
@@ -12,35 +14,38 @@ var iDoneThis = {
   
   errorStatus: "",
   
-  isLoggedIn: function(successCallback, failureCallback){
-    if(localStorage.username && localStorage.username !== ""){
-      if(successCallback) successCallback();
+  isLoggedIn: function(checkremote, successCallback, failureCallback){
+    if(checkremote !== true){
+      if(localStorage.username && localStorage.username !== ""){
+        if(successCallback) successCallback();
+      } else {
+        if(failureCallback) failureCallback();
+      }
     } else {
-      if(failureCallback) failureCallback();
+      if(localStorage.idtToken && localStorage.idtToken !== ""){
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", iDoneThis.BASE + iDoneThis.VER + iDoneThis.NOOP);
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("Authorization", "Token " + localStorage.idtToken);
+        xhr.send();
+        xhr.onreadystatechange = function() {
+          if(xhr.readyState == 4){
+            if(xhr.status == 200) {
+              var response = JSON.parse(xhr.responseText);
+              if(response.ok === true){
+                if(successCallback) successCallback();
+              }
+            } else {
+              // localStorage.removeItem("username");
+              if(failureCallback) failureCallback();
+            }
+          }
+        }
+      } else {
+        localStorage.removeItem("username");
+        if(failureCallback) failureCallback();
+      }
     }
-    // if(localStorage.idtToken && localStorage.idtToken !== ""){
-    //   var xhr = new XMLHttpRequest();
-    //   xhr.open("GET", iDoneThis.BASE + iDoneThis.VER + iDoneThis.NOOP);
-    //   xhr.setRequestHeader("Accept", "application/json");
-    //   xhr.setRequestHeader("Authorization", "Token " + localStorage.idtToken);
-    //   xhr.send();
-    //   xhr.onreadystatechange = function() {
-    //     if(xhr.readyState == 4){
-    //       if(xhr.status == 200) {
-    //         var response = JSON.parse(xhr.responseText);
-    //         if(response.ok === true){
-    //           if(successCallback) successCallback();
-    //         }
-    //       } else {
-    //         // localStorage.removeItem("username");
-    //         if(failureCallback) failureCallback();
-    //       }
-    //     }
-    //   }
-    // } else {
-    //   localStorage.removeItem("username");
-    //   if(failureCallback) failureCallback();
-    // }
   },
   
   
@@ -80,7 +85,8 @@ var iDoneThis = {
   
   logout: function(callback){
     localStorage.clear();
-    if(callback) callback();
+    ls.clear(callback);
+    // if(callback) callback();
   },
   
   
@@ -153,7 +159,7 @@ var iDoneThis = {
   syncOfflineList: function(successCallback, failureCallback, offlineCallback){
     ls.get("offlineList", function(st){
       if(st && st.offlineList && st.offlineList.length > 0){
-        console.log("Inside syncOfflineList with:" + st.offlineList.length + "elements");
+        console.log("Inside syncOfflineList with:" + st.offlineList.length + " elements");
         
         var sendURL = iDoneThis.CORS_ANYWHERE + iDoneThis.BASE + iDoneThis.VER + iDoneThis.DONES;
         

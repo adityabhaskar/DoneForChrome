@@ -1,6 +1,6 @@
 {
-  "version": "0.0.6.1",
-  "version_name": "0.0.6.1 beta",
+  "version": "0.0.6.2",
+  "version_name": "0.0.6.2 beta",
   "name": "__MSG_appName__",
   "short_name": "__MSG_shortName__",
   "description": "__MSG_appDescription__",
@@ -17,7 +17,7 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "mac": "Command+Shift+Z",
+        "mac": "Ctrl+Shift+Z",
         "windows": "Ctrl+Shift+Z",
         "chromeos": "Ctrl+Shift+Z",
         "linux": "Ctrl+Shift+Z"
@@ -41,7 +41,7 @@
       "512": "img/done-512.png"
   },
   "options_ui": {
-    "page": "options-new.html",
+    "page": "options.html",
     "chrome_style": false,
     "open_in_tab": true
   },

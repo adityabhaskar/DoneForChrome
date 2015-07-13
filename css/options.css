@@ -58,6 +58,7 @@ body {
   width: 30em;
   float: left;
   position: relative;
+  z-index: 10;
 }
 
 #cx-edit-help-content>div {
@@ -110,4 +111,9 @@ body {
 
 .highlighted{
   background-color: gainsboro; /*darkseagreen*/
+}
+
+.macAlt{
+  border-bottom: 1px dotted black;
+  cursor: help;
 }

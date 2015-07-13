@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Done! - Extension for iDoneThis",
+    "message": "Done! - Quick-add extension for iDoneThis",
     "description": "The name of the application"
   },
   "shortName": {
@@ -116,23 +116,23 @@
     "description": "The text for notification title"
   },
   "accountHelp": {
-    "message": "<p>Connect to the Pocket account that you want to use with the extension.</p><p>When logged in, shows the account name in use, and number of unread items in your list.</p>",
+    "message": "<h3>Manage account</h3><p>Connect to the <strong>iDoneThis</strong> account to which you want to send your done tasks. The token you provide is stored locally, and is used for sending your dones to iDoneThis.</p><p>When connected, this space shows the account name in use.</p><p>On 'Disconnect', your iDoneThis token, and all related user data stored locally are removed permanently. You will need to connect again to use the extension.</p>",
     "description": "Help text for account section of settings"
   },
   "teamsSectionHelp": {
-    "message": "<p></p>",
+    "message": "<h3>Manage teams</h3><p>Displays the current default team to which your done tasks are added.</p><p>You can change the default team from the dropdown list. You can also change the team for a specific task from the task popup by clicking on the current team name.</p><p>If you recently joined or created a new team and don't see it in the list, update the list using the 'Refresh team list' button.</p>",
     "description": "Help text for teamsSection section of settings"
   },
   "disclaimerSectionHelp": {
-    "message": "<p></p>",
+    "message": "",
     "description": "Help text for disclaimerSection section of settings"
   },
   "feedbackSectionHelp": {
-    "message": "<p>Please use this form to share your feedback and inputs on the extension.</p>",
+    "message": "<p>I really would like to hear your feedback - feature suggestions, bug reports, ideas, and complaints. Please share using this link!</p>",
     "description": "Help text for feedbackSection section of settings"
   },
   "meHelp": {
-    "message": "<p>Hi!</p><p>I'm Adi.</p><p>I'm an engineer and an MBA by education, a management consultant by what I've done longest, a runner-cycist-swimmer-hiker by what I enjoy as punishment, and too much of a dog person, according to most dogs.</p><p>I also like staying (loosely) in touch with those old programming skills I learnt in undergrad over a decade back. So, in my spare time, I develop extensions and apps for Chrome - mainly around some need I have or, in case of <a href='https://chrome.google.com/webstore/detail/clutter-free-prevent-dupl/iipjdmnoigaobkamfhnojmglcdbnfaaf' target='_blank'>one particular extension</a>, a need that <a href='http://twitter.com/adityabhaskar' target='_blank'>@Zee</a> had.</p><p>Catch me on Twitter (<a href='http://twitter.com/adityabhaskar' target='_blank'>@adityabhaskar</a>) if you've got any feedback, or just want to chat.</p><p>I'm also at <a href='http://twitter.com/middlering' target='_blank'>@middlering</a>, if you want to talk about running, cycling, swimming, hiking, or not loving your dog too much.</p><p>Cheers!</p>",
+    "message": "<p>Hi!</p><p>I'm <em>Adi</em>, the ideator, instigator and developer behind this extension.</p><p>I am...<ul><li> an engineer and an MBA by education,</li><li>a management consultant by what I've done longest,</li><li>a runner-cycist-swimmer-hiker by what I enjoy,</li><li>and too much of a dog person, according to most dogs.</li></ul></p><p>I also like staying (loosely) in touch with those old programming skills I learnt in undergrad over a decade back. So, in my spare time, I develop extensions and apps for Chrome - mainly around some need I have or, in <a href='https://chrome.google.com/webstore/detail/clutter-free-prevent-dupl/iipjdmnoigaobkamfhnojmglcdbnfaaf' target='_blank'>one case</a>, a need that <a href='http://twitter.com/adityabhaskar' target='_blank'>@Zee</a> had.</p><p>Catch me on Twitter (<a href='http://twitter.com/adityabhaskar' target='_blank'>@adityabhaskar</a>) if you've got any feedback, or just want to chat.</p><p>I'm also at <a href='http://twitter.com/middlering' target='_blank'>@middlering</a>, if you want to talk about running, cycling, swimming, hiking, or not loving your dog too much.</p><p>Cheers!</p>",
     "description": "Help text for me section of settings"
   }
 }
