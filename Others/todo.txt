@@ -46,9 +46,9 @@ ver X.X.X.X
 
 ver 0.0.6.3
   
-  -- NEXT VERSION -- Update: Add publicity image(s) - 440x280
-
-  -- NEXT VERSION -- Update: Add screenshots
+  [DONE] Update: Add publicity image(s) - 440x280
+  
+  [DONE] Update: Add screenshots
 
   
 ------------------------
