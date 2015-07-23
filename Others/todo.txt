@@ -38,17 +38,41 @@ https://docs.google.com/forms/d/1Io6iamQ5Xlw7FoaffRo_tpGPfw_9GvtT4BaAk7wx3UE/vie
 
 ver X.X.X.X
   
-  -- NEXT VERSION -- Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+  -- NEXT VERSION -- Popup: Process adds in background, return to empty form immediately. Keep showing running dog while bg send is on. On success, add to list below, on failure add to offline list and show in status.
+  
+  -- NEXT VERSION -- Popup: Suggest tags inline in input field
+  
+  -- NEXT VERSION -- Popup: Daily alarm reminder notification to file dones. Option to only trigger notification when no dones recorded.
+  
+  
+------------------------
 
+
+ver 0.0.6.4
+  
+  -- NEXT VERSION -- Popup: Process adds in background, return to empty form immediately. Keep showing running dog while bg send is on. On success, add to list below, on failure add to offline list and show in status.
+  
+  -- NEXT VERSION -- Popup: Suggest tags inline in input field
+  
+  -- NEXT VERSION -- Popup: Daily alarm reminder notification to file dones. Option to only trigger notification when no dones recorded.
+  
   
 ------------------------
 
 
 ver 0.0.6.3
   
+  [DONE] Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+  
+    [DONE] Options: Frequency at which to check for Dones (default: 15 min)
+  
+    [DONE] iDoneThis: getDones to fetch and save dones
+    
   [DONE] Update: Add publicity image(s) - 440x280
   
   [DONE] Update: Add screenshots
+  
+  [DONE] Change utm_medium & utm_campaign to chrome_projects for all links
 
   
 ------------------------

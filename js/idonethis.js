@@ -66,6 +66,7 @@ var iDoneThis = {
               localStorage.username = response.user;
               iDoneThis.getUserDetails(function(){
                 iDoneThis.getTeams(successCallback);
+                iDoneThis.getDones();
               });
             }
           } else {
@@ -243,6 +244,63 @@ var iDoneThis = {
                     break;
                   }
                 }
+                if(successCallback) successCallback();
+              });
+            } else {
+              // idt returned with response.ok === false
+              if(failureCallback) failureCallback();
+            }
+          } else {
+            // Returned with status !== 200
+            if(failureCallback) failureCallback();
+          }
+        }
+      }
+      
+      xhr.onerror = function(){
+        // Network layer error
+        // Save action offline?
+        console.log("Network error in getTeams.");
+      }
+    } else {
+      // LS username is empty or nonexistant
+      localStorage.removeItem("username");
+      
+      if(failureCallback) failureCallback();
+    }
+  },
+  
+  
+  /**
+   * iDoneThis.getDones
+   * Retrieve dones from server and save to chrome.storage.local
+   * @param {string} listDate Date for which to fetch dones. If null, fetch for today
+   * @param {function} successCallback Callback after a successful fetch
+   * @param {function} failureCallback Callback after a failed fetch
+   * @return {none} none
+   */
+  getDones: function(listDate, successCallback, failureCallback){
+    if(localStorage.username && localStorage.username !== ""){
+      
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", iDoneThis.BASE + iDoneThis.VER + iDoneThis.DONES + "?done_date=" + (typeof(listDate) === "string" ? listDate : "today"));
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Authorization", "Token " + localStorage.idtToken);
+      xhr.send();
+      
+      xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4){
+          if(xhr.status == 200) {
+            
+            var response = JSON.parse(xhr.responseText);
+            
+            if(response.ok === true){
+              console.log(response.results);
+              ls.set({dones: response.results}, function(){
+                localStorage.since = Date.now();
+                chrome.alarms.create(DONE_CHECKER_ALARM, {
+                  periodInMinutes: parseInt(localStorage.doneFrequency)
+                });
                 if(successCallback) successCallback();
               });
             } else {

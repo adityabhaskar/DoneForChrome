@@ -1,7 +1,8 @@
 var bgPage = chrome.extension.getBackgroundPage();
-
+var timeoutname;
 var LOGOUT_CONFIRM = chrome.i18n.getMessage("logout_confirm");
 var IDT_URL = "https://iDoneThis.com/home/"
+var DONE_CHECKER_ALARM = "doneChecker";
 
 $(document).ready(function(){
   var appName = chrome.i18n.getMessage("appName");
@@ -9,6 +10,9 @@ $(document).ready(function(){
   $("#extShortName").text(shortName);
   $("#extName").text(appName);
   $("title").text("Options - " + appName);
+  
+  if(localStorage.doneFrequency)
+    $("#updateFrequency").val(localStorage.doneFrequency);
   
   bgPage.iDoneThis.isLoggedIn(false, function(){
     updateOptionsPage(true);
@@ -87,6 +91,13 @@ $(document).ready(function(){
     $("#defaultTeam").delay(250).text(localStorage.defaultTeam).attr("href", localStorage.defaultTeamURL);
     confirmSave(this.id);
   });
+  
+  // Setup updateFrequency Section
+  $("#updateFrequency").change(function(evt){
+    if(timeoutname) clearTimeout(timeoutname);
+    timeoutname = setTimeout(resetDoneAlarm, 3000, this.value);
+  });
+  
   
   loadHelpMessages();
   positionHelps();
@@ -202,3 +213,16 @@ function confirmSave(source){
   $("#"+source+"Saved").delay(400).fadeIn("fast").delay(2000).fadeOut("fast");
 }
 
+
+function resetDoneAlarm(doneFrequency){
+  localStorage.doneFrequency = doneFrequency;
+  
+  if(doneFrequency > 0)
+    chrome.alarms.create(DONE_CHECKER_ALARM, {
+      periodInMinutes: parseInt(doneFrequency)
+    });
+  else
+    chrome.alarms.clear(DONE_CHECKER_ALARM);
+  
+  confirmSave("updateFrequency");
+}

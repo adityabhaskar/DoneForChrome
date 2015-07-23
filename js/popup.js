@@ -43,8 +43,8 @@ $(document).ready(function(){
       for (var i = 0; i < st.teams.length; i++) {
         o = new Option(st.teams[i].name, st.teams[i].short_name);
         if(st.teams[i].short_name === localStorage.defaultTeamCode) o.selected = true;
-        teamSelect.append(o);
       }
+      teamSelect.append(o);
       
       if(teamCount < 2){
         $("#selectedTeam").removeClass("specialUnderline");
@@ -52,6 +52,9 @@ $(document).ready(function(){
     }
   });
   
+  
+  // populate dones list
+  updateDoneList();
   
   // Set input states - disabled/enabled - if not logged in
   bgPage.iDoneThis.isLoggedIn(false, textDefault, function(){
@@ -202,6 +205,8 @@ function onSend(text){
       textDefault();
     });
     
+    bgPage.iDoneThis.getDones(null, updateDoneList);
+    
   }, function(response){
     // Mailing unsuccessful
     
@@ -293,4 +298,28 @@ function yyyymmdd(date){
   var mm = (date.getMonth()+1).toString(); // getMonth() is zero-based
   var dd  = date.getDate().toString();
   return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" +  (dd[1]?dd:"0"+dd[0]); // padding
+}
+
+function updateDoneList(){
+  $("#doneList").text("");
+  ls.get("dones", function(st){
+    if(st && st.dones){
+      if(st.dones.length > 0){
+        var doneList = $("#doneList");
+        var o = "";
+        var doneCount = 0, goalCount = 0;
+        for (var i = 0; i < st.dones.length; i++) {
+          o += "<li class='" + (st.dones[i].goal_completed === true ? "completed" : "goal") + "''><p>" + st.dones[i].markedup_text + "&nbsp;&nbsp;<a href='" + st.dones[i].permalink + "' target='_blank'><img src='img/external-9.png'></a></p></li>";
+          if(st.dones[i].goal_completed === true)
+            doneCount++;
+          else
+            goalCount++;
+        }
+        doneList.append(o);
+        $("#doneListTitle").text(doneCount + " dones completed today" + (goalCount > 0 ? (", " + goalCount + " goal" + (goalCount > 1 ? "s" : "") + " pending") : ""));
+      } else {
+        $("#doneListTitle").text("No dones completed today. Get cracking!");
+      }
+    }
+  });
 }

@@ -21,6 +21,8 @@ var BUTTON_GREEN = "#33ff33";
 var BUTTON_RED = "#ff3333";
 var TEAM_CHECKER_ALARM = "teamChecker";
 var CONNECTION_CHECKER_ALARM = "connectionChecker";
+var DONE_CHECKER_ALARM = "doneChecker";
+var DONE_FREQUENCY = 15; // minutes. If zero, no alarm
 
 chrome.runtime.onInstalled.addListener(function (details){
   if(details.reason === "install"){
@@ -31,6 +33,7 @@ chrome.runtime.onInstalled.addListener(function (details){
       console.log("First boot, opened settings to log in");
     });
     chrome.runtime.setUninstallURL(UNINSTALL_URL);
+    localStorage.doneFrequency = DONE_FREQUENCY;
   }
   
   if(details.reason === "update"){
@@ -38,11 +41,13 @@ chrome.runtime.onInstalled.addListener(function (details){
     // if loggedIn, update teams
     if(localStorage.username && localStorage.username!=="")
       iDoneThis.getTeams();
+    if(details.previousVersion < "0.0.6.3")
+      localStorage.doneFrequency = DONE_FREQUENCY;
   } 
   
   // For options dev/testing only
-  // if(details.reason === "update")
-  //   chrome.runtime.openOptionsPage();
+  if(details.reason === "update")
+    chrome.runtime.openOptionsPage();
   // End Testing
 });
 
@@ -56,6 +61,7 @@ iDoneThis.isLoggedIn(false, function(){
   
   // Update teams
   iDoneThis.getTeams();
+  iDoneThis.getDones();
   
   // If online, and there are offline dones to sync, start offlineSync
   if(navigator.onLine && localStorage.offlineDones === "true")
@@ -63,13 +69,18 @@ iDoneThis.isLoggedIn(false, function(){
       // cancel alarm if successful
       clearConnectionCheckerAlarm();
     }, createConnectionCheckerAlarm, createConnectionCheckerAlarm);
-
+  
     
-  // Start once-a-day alarm
+  // Start done-checker alarm
+  if(localStorage.doneFrequency > 0)
+    chrome.alarms.create(DONE_CHECKER_ALARM, {
+      periodInMinutes: parseInt(localStorage.doneFrequency)
+    });
+    
+  // Start once-a-day team-checker alarm
   chrome.alarms.create(TEAM_CHECKER_ALARM, {
     periodInMinutes: 1440
   });
-  
 }, function(){
   // If not logged in at startup
   console.log("In bg: not logged in");
@@ -218,6 +229,11 @@ function alarmHandler(alarm){
     
     case TEAM_CHECKER_ALARM:
       iDoneThis.getTeams();
+      break;
+    
+    case DONE_CHECKER_ALARM:
+      console.log("getting dones, from alarm");
+      iDoneThis.getDones();
       break;
     
     case CONNECTION_CHECKER_ALARM:

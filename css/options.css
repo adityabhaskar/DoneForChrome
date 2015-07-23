@@ -25,6 +25,12 @@ body {
 }
 
 
+#updateFrequency{
+  width: 3em;
+  text-align: right;
+}
+
+
 .selected a{
   color: rgb(48, 57, 66) !important;
 }

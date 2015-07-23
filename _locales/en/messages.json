@@ -123,6 +123,10 @@
     "message": "<h3>Manage teams</h3><p>Displays the current default team to which your done tasks are added.</p><p>You can change the default team from the dropdown list. You can also change the team for a specific task from the task popup by clicking on the current team name.</p><p>If you recently joined or created a new team and don't see it in the list, update the list using the 'Refresh team list' button.</p>",
     "description": "Help text for teamsSection section of settings"
   },
+  "donesSectionHelp": {
+    "message": "<h3>Sync Settings</h3><p>Specify how frequently to check for new dones on iDoneThis servers.</p><p>To stop syncing completely, set the value to 0.</p><p><em>This setting doesn't impact sending dones to iDoneThis using this extension.</em></p>",
+    "description": "Help text for donesSection section of settings"
+  },
   "disclaimerSectionHelp": {
     "message": "",
     "description": "Help text for disclaimerSection section of settings"
