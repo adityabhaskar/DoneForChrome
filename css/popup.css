@@ -6,131 +6,143 @@
 }
 
 body {
-  padding: 20px;
+  /*padding: 20px;*/
   color: black;
   min-width: 32em;
   min-height: 5em;
   font-family: 'Open Sans', Verdana, 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 
-#textLine{
-  white-space: nowrap;
+#inputDiv{
+  padding: 2em 2em 0;
 }
 
 
-  #doneText{
-    height: 15px;
-    width: calc(100% - 4em);
+  #textLine{
+    white-space: nowrap;
   }
 
 
-  #greenTick{
-    color: green;
-    font-size: medium;
-    font-weight: bold;
-  }
+    #doneText{
+      height: 15px;
+      width: calc(100% - 4em);
+    }
 
 
-  #redAlert{
-    color: red;
-    font-size: medium;
-    font-weight: bold;
-    padding-left: 0.25em;
-  }
+    #greenTick{
+      color: green;
+      font-size: medium;
+      font-weight: bold;
+    }
 
 
-  #sendingDog{
-    content:url("/img/sending.gif");
-    width: 28px;
-    vertical-align: text-bottom;
-  }
+    #redAlert{
+      color: red;
+      font-size: medium;
+      font-weight: bold;
+      padding-left: 0.25em;
+    }
 
 
-  #savedOfflineIcon{
-    content:url("/img/saved_offline.png");
-    padding-left: 0.25em;
-    vertical-align: text-bottom;
-  }
+    #sendingDog{
+      content:url("/img/sending.gif");
+      width: 28px;
+      vertical-align: text-bottom;
+    }
 
 
-#dateTeamDiv{
-  display: inline-block;
-  max-width: calc(100% - 4em);
-  margin-top: 0.8em;
-  font-size: 11px;
-  color: gray;
-}
-  
-  #dateTeamDiv.sendShowing{
-    max-width: 25.9em;
-  }
-
-  #dateTeamDiv strong{
-    color: black;
-    font-weight: normal;
-  }
-  
-
-#status{
-  font-size: 11px;
-  color: gray;
-  margin: 1.5em auto 0;
-}
+    #savedOfflineIcon{
+      content:url("/img/saved_offline.png");
+      padding-left: 0.25em;
+      vertical-align: text-bottom;
+    }
 
 
-#sendDiv{
-  display: none;
-  position: absolute;
-  top: 54px;
-  right: 6.4em;
-  text-align: right;
-  z-index: -1;
-}
-
-
-#selectorsDiv{
-  
-}
-  
-  #selectorSeparator{
-    display: none;
-    border: 0;
-    height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    margin: 0;
-    margin-top: 1.1em;
-    /*width: calc(100% - 4em);*/
-  }
-  
-  #done_date{
-    height: 15px;
-    max-width: 11em;
-    padding: 1px;
-  }
-
-
-  #teamSelect{
-    width: 50%
-  }
-  
-  #hide_team_span,
-  #hide_date_span
-  {
+  #dateTeamDiv{
+    display: inline-block;
+    max-width: calc(100% - 4em);
+    margin-top: 0.8em;
     font-size: 11px;
+    color: gray;
   }
     
+    #dateTeamDiv.sendShowing{
+      max-width: 25.9em;
+    }
+
+    #dateTeamDiv strong{
+      color: black;
+      font-weight: normal;
+    }
+    
+
+  #status{
+    font-size: 11px;
+    color: gray;
+    margin: 1.5em auto 0;
+  }
+
+
+  #sendDiv{
+    display: none;
+    position: absolute;
+    top: 54px;
+    right: 6.4em;
+    text-align: right;
+    z-index: -1;
+  }
+
+
+  #selectorsDiv{
+    
+  }
+    
+    #selectorSeparator{
+      display: none;
+      border: 0;
+      height: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 0;
+      margin-top: 1.1em;
+      /*width: calc(100% - 4em);*/
+    }
+    
+    #done_date{
+      height: 15px;
+      max-width: 11em;
+      padding: 1px;
+    }
+
+
+    #teamSelect{
+      width: 50%
+    }
+    
+    #hide_team_span,
+    #hide_date_span
+    {
+      font-size: 11px;
+    }
+      
 
 #doneListDiv {
-  /*border-top: 1px inset rgb(238, 238, 238);*/
   margin-top: 1em;
   padding-bottom: 0.5em;
   padding-top: 0.5em;
   color: #444;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(128, 128, 128, 0.1);
+  padding: 0.5em 2em 1em;
+  background-color: #eeeeee;
 }
+  
+  #doneListTitle {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
   
   #doneList{
     font-size: 11px;
@@ -180,12 +192,19 @@ body {
   bottom: 0;
   right: 0;
   padding-right: 0.5em;
+  width: 100%;
+  text-align: right;
+  height: 2em;
 }
-
-
+  
   #footer a{
     display: inline-block;
-    padding: 0.5em;
+    /*padding: 0.5em;*/
+    padding: 4px 0.5em 3px;
+    }
+  
+  #footer img {
+    vertical-align: top;
   }
 
 

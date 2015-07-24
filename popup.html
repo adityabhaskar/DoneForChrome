@@ -5,33 +5,35 @@
 </head>
 <body>
   
-  <div id="textLine">
-    <input type="text" id="doneText" placeholder="What'd you get done today?" title="What'd you get done today?">
-    <span id="greenTick" class="hidden">&#x2714;</span>
-    <span id="sendingDog" class="hidden"></span>
-    <span id="savedOfflineIcon" class="hidden"></span>
-    <span id="redAlert" class="hidden">!</span>
-  </div>
-  
-  <div id="dateTeamDiv">
-    <span id="on_required" class="hidden">On </span><strong class="specialUnderline" id="selectedDate" title="Change date"></strong>, in team <strong id="selectedTeam" class="specialUnderline" title="Change team">...</strong>
-  </div>
-  
-  <div id="sendDiv">
-    <button id="send">Send</button>
-  </div>
-  
-  <p id="status">&nbsp;</p>
-  
-  <div id="selectorsDiv">
-    <hr id="selectorSeparator" />
-    <p id="dateSelectorDiv" class="hidden">
-      <!-- Date:  --><input type="date" id="done_date"> <span class="specialUnderline" id="hide_date_span">Hide</span>
-    </p>
-    <p id="teamSelectorDiv" class="hidden">
-      <!-- Team:  --><select id="teamSelect">
-      </select> <span class="specialUnderline" id="hide_team_span">Hide</span>
-    </p>
+  <div id="inputDiv">
+    <div id="textLine">
+      <input type="text" id="doneText" placeholder="What'd you get done today?" title="What'd you get done today?">
+      <span id="greenTick" class="hidden">&#x2714;</span>
+      <span id="sendingDog" class="hidden"></span>
+      <span id="savedOfflineIcon" class="hidden"></span>
+      <span id="redAlert" class="hidden">!</span>
+    </div>
+    
+    <div id="dateTeamDiv">
+      <span id="on_required" class="hidden">On </span><strong class="specialUnderline" id="selectedDate" title="Change date"></strong>, in team <strong id="selectedTeam" class="specialUnderline" title="Change team">...</strong>
+    </div>
+    
+    <div id="sendDiv">
+      <button id="send">Send</button>
+    </div>
+    
+    <p id="status">&nbsp;</p>
+    
+    <div id="selectorsDiv">
+      <hr id="selectorSeparator" />
+      <p id="dateSelectorDiv" class="hidden">
+        <!-- Date:  --><input type="date" id="done_date"> <span class="specialUnderline" id="hide_date_span">Hide</span>
+      </p>
+      <p id="teamSelectorDiv" class="hidden">
+        <!-- Team:  --><select id="teamSelect">
+        </select> <span class="specialUnderline" id="hide_team_span">Hide</span>
+      </p>
+    </div>
   </div>
   
   <div id="doneListDiv">

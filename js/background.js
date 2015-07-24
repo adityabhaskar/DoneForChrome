@@ -46,8 +46,8 @@ chrome.runtime.onInstalled.addListener(function (details){
   } 
   
   // For options dev/testing only
-  if(details.reason === "update")
-    chrome.runtime.openOptionsPage();
+  // if(details.reason === "update")
+  //   chrome.runtime.openOptionsPage();
   // End Testing
 });
 

@@ -48,6 +48,16 @@ ver X.X.X.X
 ------------------------
 
 
+ver 1.0.0.1
+  
+  [DONE] Popup: darker bg shade for dones listing
+  
+  [DONE] Popup: sync dones on every popup open
+  
+  
+------------------------
+
+
 ver 1.0.0.0
   
   [DONE] Switched unicode check boxes in list to image icon boxes

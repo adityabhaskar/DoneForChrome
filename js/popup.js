@@ -54,7 +54,9 @@ $(document).ready(function(){
   
   
   // populate dones list
-  updateDoneList();
+  // updateDoneList();
+  $("#doneListTitle").text("No dones completed today. Get cracking!");
+  bgPage.iDoneThis.getDones(null, updateDoneList, updateDoneList);
   
   // Set input states - disabled/enabled - if not logged in
   bgPage.iDoneThis.isLoggedIn(false, textDefault, function(){

@@ -318,6 +318,7 @@ var iDoneThis = {
         // Network layer error
         // Save action offline?
         console.log("Network error in getTeams.");
+        // if(offlineCallback) offlineCallback();
       }
     } else {
       // LS username is empty or nonexistant
