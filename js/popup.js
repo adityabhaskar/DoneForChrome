@@ -309,7 +309,7 @@ function updateDoneList(){
         var o = "";
         var doneCount = 0, goalCount = 0;
         for (var i = 0; i < st.dones.length; i++) {
-          o += "<li class='" + (st.dones[i].goal_completed === true ? "completed" : "goal") + "''><p>" + st.dones[i].markedup_text + "&nbsp;&nbsp;<a href='" + st.dones[i].permalink + "' target='_blank'><img src='img/external-9.png'></a></p></li>";
+          o += "<li class='" + (st.dones[i].goal_completed === true ? "completed" : "goal") + "'><p>" + st.dones[i].markedup_text + "&nbsp;&nbsp;<a href='" + st.dones[i].permalink + "' target='_blank'><img src='img/external-9.png'></a></p></li>";
           if(st.dones[i].goal_completed === true)
             doneCount++;
           else

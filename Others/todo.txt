@@ -48,14 +48,10 @@ ver X.X.X.X
 ------------------------
 
 
-ver 0.0.6.4
+ver 1.0.0.0
   
-  -- NEXT VERSION -- Popup: Process adds in background, return to empty form immediately. Keep showing running dog while bg send is on. On success, add to list below, on failure add to offline list and show in status.
-  
-  -- NEXT VERSION -- Popup: Suggest tags inline in input field
-  
-  -- NEXT VERSION -- Popup: Daily alarm reminder notification to file dones. Option to only trigger notification when no dones recorded.
-  
+  [DONE] Switched unicode check boxes in list to image icon boxes
+    
   
 ------------------------
 

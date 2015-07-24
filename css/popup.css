@@ -148,15 +148,17 @@ body {
   #doneList li:before{
     margin-left: -3.25em;
     margin-right: .100em;
-    vertical-align: top;
+    vertical-align: sub;
   }
   
   .goal:before{
     content: "\2610\0020";
+    content: url("../img/empty-12.png");
   }
   
   .completed::before{
-    content: "\2611\0020";
+    /*content: "\2611\0020";*/
+    content: url("../img/dark-12.png");
     /*content: "\2714\0020";*/
     /*content: "\2713\0020";*/
   }
@@ -165,6 +167,7 @@ body {
     display: inline-block;
     margin: 0;
     margin-left: 0.5em;
+    vertical-align: text-top;
   }
   
   #doneList a{
