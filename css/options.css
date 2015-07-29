@@ -123,3 +123,8 @@ body {
   border-bottom: 1px dotted black;
   cursor: help;
 }
+
+.staggered{
+  position: relative;
+  left: 2em;
+}

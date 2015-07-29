@@ -71,12 +71,25 @@
       </section>
       
       <section class="otherSettings loggedIn" id="donesSection">
-        <h3>Sync Settings</h3>
+        <h3>Other Settings</h3>
         
         <p>
-          <label for="updateFrequency">Update Frequency <em>(in minutes)</em>: 
+          <label for="updateFrequency">Sync Frequency <em>(in minutes)</em>: 
             <input id="updateFrequency" type="number" placeholder="Time in mins" class=""><span id="updateFrequencySaved" class="savedStatus"> Saved :)</span></label>
         </p>
+        <p>
+          <label for="dailyNotification">
+            <input type="checkbox" id="dailyNotification" class="checkBoxSettings"/>
+            Show <strong>daily reminder notification</strong> to log completed tasks
+          </label> at&nbsp;&nbsp;<input type="time" id="dailyNotificationTime"><span id="dailyNotificationSaved" class="savedStatus"> Saved :)</span>
+        </p>
+<!--         <p></p>
+        <label for="emptyDaysOnly" class="staggered">
+          <input type="checkbox" id="emptyDaysOnly" class="checkBoxSettings"/>
+          Show notification only if no tasks logged that day
+        </label><span id="emptyDaysOnlySaved" class="savedStatus"> Saved :)</span> -->
+        
+        
       </section>
       
       <div class="settings-separater"></div>

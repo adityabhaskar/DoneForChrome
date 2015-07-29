@@ -42,7 +42,17 @@ ver X.X.X.X
   
   -- NEXT VERSION -- Popup: Suggest tags inline in input field
   
-  -- NEXT VERSION -- Popup: Daily alarm reminder notification to file dones. Option to only trigger notification when no dones recorded.
+  
+------------------------
+
+
+ver 1.0.0.2
+  
+  [DONE] New Feature: Daily alarm reminder notification to file dones. Option to only trigger notification when no dones recorded.
+  
+  [DONE] Bug Fix: Notification shows every time browser opens /  extension loads.
+  
+  [DONE] Open popup in a floating window if notification clicked
   
   
 ------------------------

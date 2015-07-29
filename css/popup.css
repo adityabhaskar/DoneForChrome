@@ -13,11 +13,14 @@ body {
   font-family: 'Open Sans', Verdana, 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #eeeeee;
 }
 
 
 #inputDiv{
-  padding: 2em 2em 0;
+  /*padding: 2em 2em 0;*/
+  padding: 2em;
+  background-color: white;
 }
 
 
@@ -90,9 +93,9 @@ body {
     display: none;
     position: absolute;
     top: 54px;
-    right: 6.4em;
+    right: 6em;
     text-align: right;
-    z-index: -1;
+    /*z-index: -1;*/
   }
 
 
@@ -130,7 +133,7 @@ body {
       
 
 #doneListDiv {
-  margin-top: 1em;
+  /*margin-top: 1em;*/
   padding-bottom: 0.5em;
   padding-top: 0.5em;
   color: #444;

@@ -1,8 +1,11 @@
-var bgPage = chrome.extension.getBackgroundPage();
-var timeoutname;
 var LOGOUT_CONFIRM = chrome.i18n.getMessage("logout_confirm");
 var IDT_URL = "https://iDoneThis.com/home/"
 var DONE_CHECKER_ALARM = "doneChecker";
+var DAILY_NOTIFICATION_ALARM = "dailyNotificationAlarm";
+var INPUT_DELAY = 2000; //ms to wait before accepting & saving text inputs
+
+var bgPage = chrome.extension.getBackgroundPage();
+var freqInputTimeout, alarmTimeInputTimeout;
 
 $(document).ready(function(){
   var appName = chrome.i18n.getMessage("appName");
@@ -11,6 +14,16 @@ $(document).ready(function(){
   $("#extName").text(appName);
   $("title").text("Options - " + appName);
   
+  if(localStorage.dailyNotificationTime)
+    $("#dailyNotificationTime").val(localStorage.dailyNotificationTime);
+  
+  if(localStorage.dailyNotification === "true"){
+    $("#dailyNotificationTime").removeAttr("disabled");
+    $("#dailyNotification").prop("checked", true);
+  }
+  else
+    $("#dailyNotificationTime").attr("disabled", "disabled");
+  
   if(localStorage.doneFrequency)
     $("#updateFrequency").val(localStorage.doneFrequency);
   
@@ -18,6 +31,35 @@ $(document).ready(function(){
     updateOptionsPage(true);
   }, function(){
     updateOptionsPage(false);
+  });
+  
+  // idtToken - in focus event handler
+  $("#idtTokenInput").on("focusin", function(){
+    $("#idtTokenSaved").hide();
+    $("#idtTokenHelp").fadeIn("fast");
+  });
+  
+  // idtToken - out of focus event handler
+  $("#idtTokenInput").on("focusout", function(){
+    var idtToken = $("#idtTokenInput").val().trim();
+    if(idtToken !== undefined && idtToken !== localStorage.idtToken){
+      localStorage.idtToken = idtToken;
+      $("#idtTokenHelp").fadeOut("fast", function(){
+        confirmSave(this.id);
+      });
+    } else {
+      $("#idtTokenHelp").fadeOut("fast");
+    }
+    updateOptionsPage(false);
+  });
+  
+  // Disable/Enable Connect button when token field is empty/not
+  $("#idtTokenInput").on("input", function(){
+    if($("#idtTokenInput").val().trim() !== ""){
+      $("#connect").removeAttr("disabled");
+    } else {
+      $("#connect").attr("disabled", "disabled");
+    }
   });
   
   // login event handler
@@ -50,35 +92,6 @@ $(document).ready(function(){
     bgPage.iDoneThis.getTeams(updateTeams);
   });
   
-  // idtToken - in focus event handler
-  $("#idtTokenInput").on("focusin", function(){
-    $("#idtTokenSaved").hide();
-    $("#idtTokenHelp").fadeIn("fast");
-  });
-  
-  // idtToken - out of focus event handler
-  $("#idtTokenInput").on("focusout", function(){
-    var idtToken = $("#idtTokenInput").val().trim();
-    if(idtToken !== undefined && idtToken !== localStorage.idtToken){
-      localStorage.idtToken = idtToken;
-      $("#idtTokenHelp").fadeOut("fast", function(){
-        confirmSave(this.id);
-      });
-    } else {
-      $("#idtTokenHelp").fadeOut("fast");
-    }
-    updateOptionsPage(false);
-  });
-  
-  // Disable/Enable Connect button when token field is empty/not
-  $("#idtTokenInput").on("input", function(){
-    if($("#idtTokenInput").val().trim() !== ""){
-      $("#connect").removeAttr("disabled");
-    } else {
-      $("#connect").attr("disabled", "disabled");
-    }
-  });
-  
   // Change default team
   $("#teamSelect").on("change", function(){
     // Save new selected team as default
@@ -92,10 +105,36 @@ $(document).ready(function(){
     confirmSave(this.id);
   });
   
-  // Setup updateFrequency Section
+  // updateFrequency event handler
   $("#updateFrequency").change(function(evt){
-    if(timeoutname) clearTimeout(timeoutname);
-    timeoutname = setTimeout(resetDoneAlarm, 3000, this.value);
+    if(freqInputTimeout) clearTimeout(freqInputTimeout);
+    freqInputTimeout = setTimeout(resetDoneAlarm, INPUT_DELAY, this.value);
+  });
+  
+  
+  // dailyNotification event handler
+  $("#dailyNotification").change(function(evt){
+    var id = this.id;
+    var value = this.checked;
+    localStorage[id] = value;
+    
+    if(value === true){
+      $("#dailyNotificationTime").removeAttr("disabled");
+      resetDailyNotificationAlarm(localStorage.dailyNotificationTime);
+    } else {
+      $("#dailyNotificationTime").attr("disabled", "disabled");
+      chrome.alarms.clear(DAILY_NOTIFICATION_ALARM);
+      confirmSave(id);
+    }
+  });
+  
+  
+  // Date.parse(new Date().toDateString() + " "+$("#dailyNotificationTime").val())
+  
+  // dailyNotificationTime event handler
+  $("#dailyNotificationTime").change(function(evt){
+    if(alarmTimeInputTimeout) clearTimeout(alarmTimeInputTimeout);
+    alarmTimeInputTimeout = setTimeout(resetDailyNotificationAlarm, INPUT_DELAY, this.value);
   });
   
   
@@ -198,6 +237,7 @@ function loadHelpMessages(){
   });
 }
 
+
 function positionHelps(){
   $("section").each(function(){
     var id = $(this).attr("id");
@@ -207,6 +247,7 @@ function positionHelps(){
     });
   });
 }
+
 
 function confirmSave(source){
   console.log("Option saved: " + source);
@@ -226,3 +267,19 @@ function resetDoneAlarm(doneFrequency){
   
   confirmSave("updateFrequency");
 }
+
+
+function resetDailyNotificationAlarm(timeofAlarm){
+  localStorage.dailyNotificationTime = timeofAlarm;
+  var alarmTime = Date.parse(new Date().toDateString() + " " + timeofAlarm);
+  if((new Date()) > alarmTime)
+    alarmTime += 24*60*60*1000;
+  
+  chrome.alarms.create(DAILY_NOTIFICATION_ALARM, {
+    when: alarmTime,
+    periodInMinutes: 24*60 // once a day
+  });
+  
+  confirmSave("dailyNotification");
+}
+

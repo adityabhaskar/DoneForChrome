@@ -71,6 +71,14 @@
     "message": "Dones saved offline were successfully sent.",
     "description": "The text for notification message"
   },
+  "dailyReminderNotificationTitle": {
+    "message": "What'd you get done today?",
+    "description": "The title for notification message"
+  },
+  "dailyReminderNotificationMessage": {
+    "message": "#number completed so far today.",
+    "description": "The text for notification message"
+  },
   "default_status_text": {
     "message": "Press Enter to send",
     "description": "Default text for popup status space"
@@ -124,7 +132,7 @@
     "description": "Help text for teamsSection section of settings"
   },
   "donesSectionHelp": {
-    "message": "<h3>Sync Settings</h3><p>Specify how frequently to check for new dones on iDoneThis servers.</p><p>To stop syncing completely, set the value to 0.</p><p><em>This setting doesn't impact sending dones to iDoneThis using this extension.</em></p>",
+    "message": "<h3>Other Settings</h3><p>Specify how frequently to check for new dones on iDoneThis servers.</p><p>To stop syncing completely, set the value to 0. <em>This setting doesn't impact sending dones to iDoneThis using this extension.</em></p><p>&nbsp;</p><p>Enable <strong>daily notification</strong> that reminds you to log your <span title='dones'>completed tasks</span> to iDoneThis. Default time for notifiction is 7PM.</p>",
     "description": "Help text for donesSection section of settings"
   },
   "disclaimerSectionHelp": {

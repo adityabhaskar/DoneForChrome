@@ -1,20 +1,48 @@
 var messageStrings = {
-    "defaultPopupTitle": chrome.i18n.getMessage("browserButtonTitle"),
-    "noLoginPopupTitle": chrome.i18n.getMessage("errorMessageNoLogin"),
-    "noUsernamePopupTitle": chrome.i18n.getMessage("errorMessageNoUsername"),
-    "doneNotificationTitle": chrome.i18n.getMessage("doneNotificationTitle"),
-    "doneNotificationMessage": chrome.i18n.getMessage("doneNotificationMessage"),
-    "errorNotificationTitle": chrome.i18n.getMessage("errorNotificationTitle"),
-    "errorNotificationMessage": chrome.i18n.getMessage("errorNotificationMessage"),
-    "promptMessage": chrome.i18n.getMessage("promptMessage"),
-    "noLoginMessage": chrome.i18n.getMessage("noLoginMessage"),
-    "offlineSavedNotificationTitle": chrome.i18n.getMessage("offlineSavedNotificationTitle"),
-    "offlineSavedNotificationMessage": chrome.i18n.getMessage("offlineSavedNotificationMessage"),
-    "loginRequiredNotificationTitle": chrome.i18n.getMessage("loginRequiredNotificationTitle"),
-    "loginRequiredNotificationMessage": chrome.i18n.getMessage("loginRequiredNotificationMessage"),
-    "syncedNotificationMessage": chrome.i18n.getMessage("syncedNotificationMessage"),
-  };
-
+  "defaultPopupTitle": chrome.i18n.getMessage("browserButtonTitle"),
+  "noLoginPopupTitle": chrome.i18n.getMessage("errorMessageNoLogin"),
+  "noUsernamePopupTitle": chrome.i18n.getMessage("errorMessageNoUsername"),
+  "doneNotificationTitle": chrome.i18n.getMessage("doneNotificationTitle"),
+  "doneNotificationMessage": chrome.i18n.getMessage("doneNotificationMessage"),
+  "errorNotificationTitle": chrome.i18n.getMessage("errorNotificationTitle"),
+  "errorNotificationMessage": chrome.i18n.getMessage("errorNotificationMessage"),
+  "promptMessage": chrome.i18n.getMessage("promptMessage"),
+  "noLoginMessage": chrome.i18n.getMessage("noLoginMessage"),
+  "offlineSavedNotificationTitle": chrome.i18n.getMessage("offlineSavedNotificationTitle"),
+  "offlineSavedNotificationMessage": chrome.i18n.getMessage("offlineSavedNotificationMessage"),
+  "loginRequiredNotificationTitle": chrome.i18n.getMessage("loginRequiredNotificationTitle"),
+  "loginRequiredNotificationMessage": chrome.i18n.getMessage("loginRequiredNotificationMessage"),
+  "syncedNotificationMessage": chrome.i18n.getMessage("syncedNotificationMessage"),
+  "dailyReminderNotificationTitle": chrome.i18n.getMessage("dailyReminderNotificationTitle"),
+  "dailyReminderNotificationMessage": chrome.i18n.getMessage("dailyReminderNotificationMessage"),
+};
+  
+var dateFormattingStrings = [
+  [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ],
+  [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ]
+];
+  
 var UNINSTALL_URL = "http://c306.net/whygo.html?src=qdt";
 var NOTIFICATION_ICON_URL = chrome.extension.getURL("img/done-128.png");
 var BUTTON_GREEN = "#33ff33";
@@ -22,7 +50,12 @@ var BUTTON_RED = "#ff3333";
 var TEAM_CHECKER_ALARM = "teamChecker";
 var CONNECTION_CHECKER_ALARM = "connectionChecker";
 var DONE_CHECKER_ALARM = "doneChecker";
-var DONE_FREQUENCY = 15; // minutes. If zero, no alarm
+var DAILY_NOTIFICATION_ALARM = "dailyNotificationAlarm";
+var DAILY_NOTIFICATION_ID = "dailyNotification";
+
+localStorage.doneFrequency = localStorage.doneFrequency || 15;
+localStorage.dailyNotification = localStorage.dailyNotification || "true";
+localStorage.dailyNotificationTime = localStorage.dailyNotificationTime || "19:00";
 
 chrome.runtime.onInstalled.addListener(function (details){
   if(details.reason === "install"){
@@ -33,7 +66,6 @@ chrome.runtime.onInstalled.addListener(function (details){
       console.log("First boot, opened settings to log in");
     });
     chrome.runtime.setUninstallURL(UNINSTALL_URL);
-    localStorage.doneFrequency = DONE_FREQUENCY;
   }
   
   if(details.reason === "update"){
@@ -41,8 +73,6 @@ chrome.runtime.onInstalled.addListener(function (details){
     // if loggedIn, update teams
     if(localStorage.username && localStorage.username!=="")
       iDoneThis.getTeams();
-    if(details.previousVersion < "0.0.6.3")
-      localStorage.doneFrequency = DONE_FREQUENCY;
   } 
   
   // For options dev/testing only
@@ -77,9 +107,21 @@ iDoneThis.isLoggedIn(false, function(){
       periodInMinutes: parseInt(localStorage.doneFrequency)
     });
     
+  // Start daily notification alarm
+  if(localStorage.dailyNotification === "true"){
+    var alarmTime = Date.parse(new Date().toDateString() + " " + localStorage.dailyNotificationTime);
+    if((new Date()) > alarmTime)
+      alarmTime += 24*60*60*1000;
+    
+    chrome.alarms.create(DAILY_NOTIFICATION_ALARM, {
+      when: alarmTime,
+      periodInMinutes: 24*60
+    });
+  }
+    
   // Start once-a-day team-checker alarm
   chrome.alarms.create(TEAM_CHECKER_ALARM, {
-    periodInMinutes: 1440
+    periodInMinutes: 24*60
   });
 }, function(){
   // If not logged in at startup
@@ -94,6 +136,9 @@ chrome.omnibox.onInputEntered.addListener(sendFromCommand);
 
 // On alarm, check for changes in teams - added/removed, etc.
 chrome.alarms.onAlarm.addListener(alarmHandler);
+
+
+chrome.notifications.onClicked.addListener(notificationClickHandler);
 
 
 window.addEventListener("online", function(e){
@@ -197,28 +242,6 @@ function openOptions(){
 
 
 /**
- * showNotification
- * Displays a chrome.notification for the extension with click through URLs and event tracking 
- * @param {object} notif Object with details of notification - title, message, context, iconType
- * @return {null} null
- */
-function showNotification(notif){
-  chrome.notifications.create("", {
-    type: "basic",
-    iconUrl: notif.icon ? notif.icon : NOTIFICATION_ICON_URL,
-    title: notif.title,
-    message: notif.message,
-    contextMessage: notif.contextMessage ? notif.contextMessage : "",
-    // isClickable: false,
-  }, function(id){
-    chrome.alarms.create(id, {
-      delayInMinutes: notif.clearDelay ? notif.clearDelay : 1
-    });
-  });
-}
-
-
-/**
  * alarmHandler
  * Handler for alarm events - for getTeams alarms, fetches teams, for all other alarms, clears notifications
  * @param {Param-Type} Param-Name Param-description
@@ -229,6 +252,24 @@ function alarmHandler(alarm){
     
     case TEAM_CHECKER_ALARM:
       iDoneThis.getTeams();
+      break;
+    
+    case DAILY_NOTIFICATION_ALARM:
+      // iDoneThis.getTeams();
+      ls.get("dones", function(st){
+        var today = new Date();
+        var contextMsg = messageStrings.dailyReminderNotificationMessage.replace("#number", (st.dones.length > 0 ? st.dones.length : "No") + " done" + (st.dones.length !== 1 ? "s" : ""));
+        var msg = messageStrings.dailyReminderNotificationTitle + " " + dateFormattingStrings[0][today.getUTCDay()-1] + ", " + today.getDate() + " " + dateFormattingStrings[1][today.getUTCDay()-1];
+        
+        showNotification({
+          id: DAILY_NOTIFICATION_ID,
+          message: msg,
+          contextMessage: contextMsg,
+          // buttons: [{
+          //   title: "Log iDoneThis",
+          // }]
+        });
+      });
       break;
     
     case DONE_CHECKER_ALARM:
@@ -276,3 +317,44 @@ function clearConnectionCheckerAlarm(callback){
 }
 
 
+/**
+ * showNotification
+ * Displays a chrome.notification for the extension with click through URLs and event tracking 
+ * @param {object} notif Object with details of notification - title, message, context, iconType
+ * @return {null} null
+ */
+function showNotification(notif){
+  var options = {
+    type: notif.type || "basic",
+    iconUrl: notif.icon || NOTIFICATION_ICON_URL,
+    // title: notif.title || chrome.i18n.getMessage("shortName"),
+    title: notif.title || "",
+    message: notif.message,
+    contextMessage: notif.contextMessage || "",
+    // isClickable: false,
+  };
+  if(notif.buttons)
+    options.buttons = notif.buttons;
+  
+  chrome.notifications.create(notif.id || "", options, function(id){
+    if(id !== DAILY_NOTIFICATION_ID)
+      chrome.alarms.create(id, {
+        delayInMinutes: notif.clearDelay ? notif.clearDelay : 1
+      });
+  });
+}
+
+
+function notificationClickHandler(id){
+  if(id === DAILY_NOTIFICATION_ID){
+    // open popup
+    chrome.windows.create({
+      url: "popup.html",
+      width: 400,
+      height: 250,
+      focused: true,
+      type: "popup",
+      state: "docked"
+    });
+  }
+}

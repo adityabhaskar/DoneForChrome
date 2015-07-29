@@ -58,7 +58,7 @@ var iDoneThis = {
       xhr.send();
       xhr.onreadystatechange = function() {
         if(xhr.readyState == 4){
-          console.log(xhr.responseText);
+          // console.log(xhr.responseText);
           if(xhr.status == 200) {
             var response = JSON.parse(xhr.responseText);
             if(response.ok === true){
@@ -105,10 +105,10 @@ var iDoneThis = {
     xhr.onreadystatechange = function() {
       if(xhr.readyState == 4){
         if(xhr.status >= 200 && xhr.status < 300) {
-          console.log(xhr.responseText);
+          // console.log(xhr.responseText);
           
           var response = JSON.parse(xhr.responseText);
-          console.log(response);
+          // console.log(response);
           console.log("sent.");
           
           if(response.ok === true){
@@ -117,7 +117,7 @@ var iDoneThis = {
           } else {
             // localStorage.removeItem("username");
             console.log("send failed, recheck auth token. \n Original message: ");
-            console.log(doneObj);
+            // console.log(doneObj);
             
             if(failureCallback) failureCallback(response);
           }
@@ -175,10 +175,10 @@ var iDoneThis = {
         xhr.onreadystatechange = function() {
           if(xhr.readyState == 4){
             if(xhr.status >= 200 && xhr.status < 300) {
-              console.log(xhr.responseText);
+              // console.log(xhr.responseText);
               
               var response = JSON.parse(xhr.responseText);
-              console.log(response);
+              // console.log(response);
               console.log("sent.");
               
               if(response.ok === true){
@@ -190,7 +190,7 @@ var iDoneThis = {
               } else {
                 // localStorage.removeItem("username");
                 console.log("send failed, recheck auth token. \n Original message: ");
-                console.log(doneObj);
+                // console.log(doneObj);
                 
                 if(failureCallback) failureCallback(response);
               }
@@ -295,7 +295,7 @@ var iDoneThis = {
             var response = JSON.parse(xhr.responseText);
             
             if(response.ok === true){
-              console.log(response.results);
+              // console.log(response.results);
               ls.set({dones: response.results}, function(){
                 localStorage.since = Date.now();
                 chrome.alarms.create(DONE_CHECKER_ALARM, {
