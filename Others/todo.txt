@@ -46,6 +46,14 @@ ver X.X.X.X
 ------------------------
 
 
+ver 1.0.0.3
+  
+  [DONE] Bug Fix: Default team gets reset every time extension reloads or browser reopens
+  
+  
+------------------------
+
+
 ver 1.0.0.2
   
   [DONE] New Feature: Daily alarm reminder notification to file dones. Option to only trigger notification when no dones recorded.

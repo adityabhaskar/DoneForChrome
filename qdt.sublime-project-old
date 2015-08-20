@@ -1,0 +1,13 @@
+{
+  "folders":
+  [
+    {
+      "path": "/home/raven/Dropbox/Dev/2. Chrome Apps/idonethis/qdt/",
+      "folder_exclude_patterns": ["icons"]
+    },
+    {
+      "path": "/home/raven/Dropbox/Dev/5. Websites/c306/Index/quickdonethis",
+      "folder_exclude_patterns": ["icons"]
+    }
+  ]
+}

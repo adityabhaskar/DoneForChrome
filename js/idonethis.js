@@ -87,7 +87,6 @@ var iDoneThis = {
   logout: function(callback){
     localStorage.clear();
     ls.clear(callback);
-    // if(callback) callback();
   },
   
   
@@ -231,17 +230,19 @@ var iDoneThis = {
             if(response.ok === true){
               ls.set({teams: response.results}, function(){
                 
-                localStorage.defaultTeam = response.results[0].name;
-                localStorage.defaultTeamCode = response.results[0].short_name;
-                localStorage.defaultTeamURL = response.results[0].permalink;
-                localStorage.teamCount = response.results.length;
-                
-                for (var i = 0; i < response.results.length; i++) {
-                  if(response.results[i].is_personal === true){
-                    localStorage.defaultTeam = response.results[i].name;
-                    localStorage.defaultTeamCode = response.results[i].short_name;
-                    localStorage.defaultTeamURL = response.results[i].permalink;
-                    break;
+                if(!(localStorage.defaultTeam && localStorage.defaultTeamCode && localStorage.defaultTeamURL)){
+                  localStorage.defaultTeam = response.results[0].name;
+                  localStorage.defaultTeamCode = response.results[0].short_name;
+                  localStorage.defaultTeamURL = response.results[0].permalink;
+                  localStorage.teamCount = response.results.length;
+                  
+                  for (var i = 0; i < response.results.length; i++) {
+                    if(response.results[i].is_personal === true){
+                      localStorage.defaultTeam = response.results[i].name;
+                      localStorage.defaultTeamCode = response.results[i].short_name;
+                      localStorage.defaultTeamURL = response.results[i].permalink;
+                      break;
+                    }
                   }
                 }
                 if(successCallback) successCallback();
