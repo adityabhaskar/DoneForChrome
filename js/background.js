@@ -284,7 +284,7 @@ function alarmHandler(alarm){
       iDoneThis.getDones();
       break;
     
-    case DONE_CHECKER_ALARM:
+    case OFFLINE_SYNC_ALARM:
       console.log("syncing any offline tasks");
       if(localStorage.offlineDones === "true")
         iDoneThis.syncOfflineList(function(){

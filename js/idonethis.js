@@ -243,21 +243,31 @@ var iDoneThis = {
             
             if(response.ok === true){
               ls.set({teams: response.results}, function(){
+                var defaultExists = false;
+                var foundFirstPersonal = false;
                 
-                if(!(localStorage.defaultTeam && localStorage.defaultTeamCode && localStorage.defaultTeamURL)){
-                  localStorage.defaultTeam = response.results[0].name;
-                  localStorage.defaultTeamCode = response.results[0].short_name;
-                  localStorage.defaultTeamURL = response.results[0].permalink;
-                  localStorage.teamCount = response.results.length;
-                  
-                  for (var i = 0; i < response.results.length; i++) {
-                    if(response.results[i].is_personal === true){
-                      localStorage.defaultTeam = response.results[i].name;
-                      localStorage.defaultTeamCode = response.results[i].short_name;
-                      localStorage.defaultTeamURL = response.results[i].permalink;
-                      break;
-                    }
+                var tempDefaultTeam = response.results[0].name;
+                var tempDefaultTeamCode = response.results[0].short_name;
+                var tempDefaultTeamURL = response.results[0].permalink;
+                localStorage.teamCount = response.results.length;
+                
+                for (var i = 0; i < response.results.length; i++) {
+                  if(response.results[i].short_name === localStorage.defaultTeamCode){
+                    defaultExists = true;
+                    break;
                   }
+                  if(response.results[i].is_personal === true && foundFirstPersonal === false){
+                    tempDefaultTeam = response.results[i].name;
+                    tempDefaultTeamCode = response.results[i].short_name;
+                    tempDefaultTeamURL = response.results[i].permalink;
+                    foundFirstPersonal = true;
+                  }
+                }
+                
+                if(defaultExists === false){
+                  localStorage.defaultTeam = tempDefaultTeam;
+                  localStorage.defaultTeamCode = tempDefaultTeamCode;
+                  localStorage.defaultTeamURL = tempDefaultTeamURL;
                 }
                 if(successCallback) successCallback();
               });

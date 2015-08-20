@@ -46,6 +46,16 @@ ver X.X.X.X
 ------------------------
 
 
+ver 1.0.1.1
+  
+  [DONE] Bug Fix: Handle default team getting deleted - set a new default (first or first is_personal)
+  
+  [DONE] Bug Fix: Fixed bug with offline sync alarm handler
+  
+  
+------------------------
+
+
 ver 1.0.1.0
   
   [DONE] Bug Fix: Set up a new recurring alarm (every 15 mins) for syncing offline Dones
