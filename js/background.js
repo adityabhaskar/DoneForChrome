@@ -50,6 +50,8 @@ var BUTTON_RED = "#ff3333";
 var TEAM_CHECKER_ALARM = "teamChecker";
 var CONNECTION_CHECKER_ALARM = "connectionChecker";
 var DONE_CHECKER_ALARM = "doneChecker";
+var OFFLINE_SYNC_ALARM = "offlineSyncer";
+var OFFLINE_SYNC_FREQUENCY = 15;
 var DAILY_NOTIFICATION_ALARM = "dailyNotificationAlarm";
 var DAILY_NOTIFICATION_ID = "dailyNotification";
 
@@ -106,6 +108,11 @@ iDoneThis.isLoggedIn(false, function(){
     chrome.alarms.create(DONE_CHECKER_ALARM, {
       periodInMinutes: parseInt(localStorage.doneFrequency)
     });
+    
+  // Start offline-sync alarm
+  chrome.alarms.create(OFFLINE_SYNC_ALARM, {
+    periodInMinutes: parseInt(OFFLINE_SYNC_FREQUENCY)
+  });
     
   // Start daily notification alarm
   if(localStorage.dailyNotification === "true"){
@@ -195,7 +202,7 @@ function sendFromCommand(text, disposition){
         // date: new Date().toDateString()
       }, 
       function(response){
-        // Mailing successful, show notification
+        // Added successfully, show notification
         showNotification({
           iconUrl: NOTIFICATION_ICON_URL,
           title: messageStrings.doneNotificationMessage,
@@ -203,7 +210,7 @@ function sendFromCommand(text, disposition){
         });
       }, 
       function(reason){
-        // Mailing unsuccessful, Show notification
+        // Adding unsuccessful, Show notification
         showNotification({
           title: messageStrings.errorNotificationTitle,
           message: text,
@@ -275,6 +282,15 @@ function alarmHandler(alarm){
     case DONE_CHECKER_ALARM:
       console.log("getting dones, from alarm");
       iDoneThis.getDones();
+      break;
+    
+    case DONE_CHECKER_ALARM:
+      console.log("syncing any offline tasks");
+      if(localStorage.offlineDones === "true")
+        iDoneThis.syncOfflineList(function(){
+          // cancel alarm if successful
+          clearConnectionCheckerAlarm();        
+        });
       break;
     
     case CONNECTION_CHECKER_ALARM:

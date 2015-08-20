@@ -124,6 +124,25 @@ var iDoneThis = {
           console.log("xhr.status: " + xhr.status);
           console.log("xhr.responseText: " + xhr.responseText);
           console.log("xhr.response: " + xhr.response);
+          
+          // Save done offline, 
+          ls.get("offlineList", function(st){
+            var offlineList = [];
+            if(st && st.offlineList)
+              offlineList = st.offlineList;
+            
+            offlineList.push(doneObj);
+            ls.set({"offlineList": offlineList}, function(){
+              console.log("added done to offline List");
+              
+              // Signal online listener to sync
+              localStorage.offlineDones = "true";
+              
+              // Show notification that done has been added to offline list
+              if(offlineCallback) offlineCallback();
+              // if(failureCallback) failureCallback(response);
+            });
+          });
         }
       }
     }
@@ -174,11 +193,8 @@ var iDoneThis = {
         xhr.onreadystatechange = function() {
           if(xhr.readyState == 4){
             if(xhr.status >= 200 && xhr.status < 300) {
-              // console.log(xhr.responseText);
               
               var response = JSON.parse(xhr.responseText);
-              // console.log(response);
-              console.log("sent.");
               
               if(response.ok === true){
                 // remove current done from list, call self
@@ -187,9 +203,7 @@ var iDoneThis = {
                   iDoneThis.syncOfflineList(successCallback, failureCallback, offlineCallback);
                 });
               } else {
-                // localStorage.removeItem("username");
                 console.log("send failed, recheck auth token. \n Original message: ");
-                // console.log(doneObj);
                 
                 if(failureCallback) failureCallback(response);
               }
