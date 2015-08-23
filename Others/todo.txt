@@ -46,6 +46,14 @@ ver X.X.X.X
 ------------------------
 
 
+ver 1.0.1.2
+  
+  [DONE] Bug Fix: Wrong date formula on daily notifications
+  
+  
+------------------------
+
+
 ver 1.0.1.1
   
   [DONE] Bug Fix: Handle default team getting deleted - set a new default (first or first is_personal)

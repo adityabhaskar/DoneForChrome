@@ -19,13 +19,13 @@ var messageStrings = {
   
 var dateFormattingStrings = [
   [
+    "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
-    "Sunday"
   ],
   [
     "Jan",
@@ -266,7 +266,8 @@ function alarmHandler(alarm){
       ls.get("dones", function(st){
         var today = new Date();
         var contextMsg = messageStrings.dailyReminderNotificationMessage.replace("#number", (st.dones.length > 0 ? st.dones.length : "No") + " done" + (st.dones.length !== 1 ? "s" : ""));
-        var msg = messageStrings.dailyReminderNotificationTitle + " " + dateFormattingStrings[0][today.getUTCDay()-1] + ", " + today.getDate() + " " + dateFormattingStrings[1][today.getUTCDay()-1];
+        // var msg = messageStrings.dailyReminderNotificationTitle + " " + dateFormattingStrings[0][today.getUTCDay()-1] + ", " + today.getDate() + " " + dateFormattingStrings[1][today.getUTCDay()-1];
+        var msg = messageStrings.dailyReminderNotificationTitle + " " + dateFormattingStrings[0][today.getUTCDay()] + ", " + today.getDate() + " " + dateFormattingStrings[1][today.getMonth()];
         
         showNotification({
           id: DAILY_NOTIFICATION_ID,
