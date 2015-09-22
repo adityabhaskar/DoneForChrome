@@ -11,10 +11,6 @@
     "message": "Quickly add your Dones to iDoneThis from popup or location bar!",
     "description": "The description of the application"
   },
-  "browserButtonTitle": {
-    "message": "Done!",
-    "description": "The title text for browser button"
-  },
   "promptMessage": {
     "message": "What'd you get <match>done</match> today?",
     "description": "Prompt text for input and omnibox fields"
@@ -146,5 +142,14 @@
   "meHelp": {
     "message": "<p>Hi!</p><p>I'm <em>Adi</em>, the ideator, instigator and developer behind this extension.</p><p>I am...<ul><li> an engineer and an MBA by education,</li><li>a management consultant by what I've done longest,</li><li>a runner-cycist-swimmer-hiker by what I enjoy,</li><li>and too much of a dog person, according to most dogs.</li></ul></p><p>I also like staying (loosely) in touch with those old programming skills I learnt in undergrad over a decade back. So, in my spare time, I develop extensions and apps for Chrome - mainly around some need I have or, in <a href='https://chrome.google.com/webstore/detail/clutter-free-prevent-dupl/iipjdmnoigaobkamfhnojmglcdbnfaaf' target='_blank'>one case</a>, a need that <a href='http://twitter.com/adityabhaskar' target='_blank'>@Zee</a> had.</p><p>Catch me on Twitter (<a href='http://twitter.com/adityabhaskar' target='_blank'>@adityabhaskar</a>) if you've got any feedback, or just want to chat.</p><p>I'm also at <a href='http://twitter.com/middlering' target='_blank'>@middlering</a>, if you want to talk about running, cycling, swimming, hiking, or not loving your dog too much.</p><p>Cheers!</p>",
     "description": "Help text for me section of settings"
+  },
+  "nonZeroDoneBadgeTitle":{
+    "message": " tasks completed so far today. Keep it coming!"
+  },
+  "zeroDoneBadgeTitle":{
+    "message": "No tasks completed so far today. Let's get started, shall we?"
+  },
+  "zeroDoneBadgeText":{
+    "message": " : ( "
   }
 }

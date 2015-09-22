@@ -31,6 +31,11 @@ body {
 }
 
 
+#dailyNotificationTime, #updateFrequency{
+  font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, Geneva, 'Open Sans', sans-serif;
+}
+
+
 .selected a{
   color: rgb(48, 57, 66) !important;
 }

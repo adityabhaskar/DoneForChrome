@@ -14,12 +14,12 @@ var iDoneThis = {
   
   errorStatus: "",
   
-  isLoggedIn: function(checkremote, successCallback, failureCallback){
+  isLoggedIn: function(checkremote, callback){
     if(checkremote !== true){
       if(localStorage.username && localStorage.username !== ""){
-        if(successCallback) successCallback();
+        if(callback) callback(true);
       } else {
-        if(failureCallback) failureCallback();
+        if(callback) callback(false);
       }
     } else {
       if(localStorage.idtToken && localStorage.idtToken !== ""){
@@ -33,23 +33,22 @@ var iDoneThis = {
             if(xhr.status == 200) {
               var response = JSON.parse(xhr.responseText);
               if(response.ok === true){
-                if(successCallback) successCallback();
+                if(callback) callback(true);
               }
             } else {
               // localStorage.removeItem("username");
-              if(failureCallback) failureCallback();
+              if(callback) callback(false);
             }
           }
         }
       } else {
         localStorage.removeItem("username");
-        if(failureCallback) failureCallback();
+        if(callback) callback(false);
       }
     }
   },
   
-  
-  connect: function(successCallback, failureCallback){
+  connect: function(callback){
     if(localStorage.idtToken && localStorage.idtToken !== ""){
       var xhr = new XMLHttpRequest();
       xhr.open("GET", iDoneThis.BASE + iDoneThis.VER + iDoneThis.NOOP);
@@ -65,33 +64,30 @@ var iDoneThis = {
               console.log("connected.");
               localStorage.username = response.user;
               iDoneThis.getUserDetails(function(){
-                iDoneThis.getTeams(successCallback);
+                iDoneThis.getTeams(callback);
                 iDoneThis.getDones();
               });
             }
           } else {
             console.log("connect failed, recheck auth token");
             localStorage.removeItem("username");
-            if(failureCallback) failureCallback();
+            if(callback) callback(false);
           }
         }
       }
     } else {
       console.log("connect failed, no auth token");
       localStorage.removeItem("username");
-      if(failureCallback) failureCallback();
+      if(callback) callback(false);
     }
   },
-  
   
   logout: function(callback){
     localStorage.clear();
     ls.clear(callback);
   },
   
-  
-  newDone: function(doneObj, successCallback, failureCallback, offlineCallback){
-    // var CORS_ANYWHERE = "https://cors-anywhere.herokuapp.com/";
+  newDone: function(doneObj, callback){
     var sendURL = iDoneThis.CORS_ANYWHERE + iDoneThis.BASE + iDoneThis.VER + iDoneThis.DONES;
     
     var xhr = new XMLHttpRequest();
@@ -104,21 +100,19 @@ var iDoneThis = {
     xhr.onreadystatechange = function() {
       if(xhr.readyState == 4){
         if(xhr.status >= 200 && xhr.status < 300) {
-          // console.log(xhr.responseText);
           
           var response = JSON.parse(xhr.responseText);
-          // console.log(response);
           console.log("sent.");
           
           if(response.ok === true){
-            if(successCallback)
-              successCallback(response);
-          } else {
-            // localStorage.removeItem("username");
-            console.log("send failed, recheck auth token. \n Original message: ");
-            // console.log(doneObj);
+            iDoneThis.getDones(null, function(){
+              if(callback) callback(true);
+            });
             
-            if(failureCallback) failureCallback(response);
+          } else {
+            console.log("send failed, recheck auth token. \n Original message: ");
+            
+            if(callback) callback(false);
           }
         } else {
           console.log("xhr.status: " + xhr.status);
@@ -139,8 +133,7 @@ var iDoneThis = {
               localStorage.offlineDones = "true";
               
               // Show notification that done has been added to offline list
-              if(offlineCallback) offlineCallback();
-              // if(failureCallback) failureCallback(response);
+              if(callback) callback("offline");
             });
           });
         }
@@ -164,18 +157,17 @@ var iDoneThis = {
           localStorage.offlineDones = "true";
           
           // Show notification that done has been added to offline list
-          if(offlineCallback) offlineCallback();
+          if(callback) callback("offline");
         });
       });
     }
   },
   
-  
   /**
    * syncOfflineList
    * Recursive function - sends first element of offlineList to idt, removes it from list then calls self
    */
-  syncOfflineList: function(successCallback, failureCallback, offlineCallback){
+  syncOfflineList: function(callback){
     ls.get("offlineList", function(st){
       if(st && st.offlineList && st.offlineList.length > 0){
         console.log("Inside syncOfflineList with:" + st.offlineList.length + " elements");
@@ -200,12 +192,20 @@ var iDoneThis = {
                 // remove current done from list, call self
                 st.offlineList.shift();
                 ls.set({"offlineList": st.offlineList}, function(){
-                  iDoneThis.syncOfflineList(successCallback, failureCallback, offlineCallback);
+                  if(st.offlineList.length > 0)
+                    iDoneThis.syncOfflineList(callback);
+                  else {
+                    // All dones synced
+                    localStorage.offlineDones = "false";
+                    iDoneThis.getDones(null, function(){
+                      if(callback) callback(true);
+                    });
+                  }
                 });
               } else {
                 console.log("send failed, recheck auth token. \n Original message: ");
                 
-                if(failureCallback) failureCallback(response);
+                if(callback) callback(false, response);
               }
             }
           }
@@ -215,18 +215,13 @@ var iDoneThis = {
           // Network layer error
           // Save done offline, 
           localStorage.offlineDones = "true";
-          if(offlineCallback) offlineCallback();
+          if(callback) callback(false);
         }
-      } else {
-        // All dones synced
-        localStorage.offlineDones = "false";
-        if(successCallback) successCallback();
       }
     });
   },
   
-  
-  getTeams: function(successCallback, failureCallback){
+  getTeams: function(callback){
     if(localStorage.username && localStorage.username !== ""){
       
       var xhr = new XMLHttpRequest();
@@ -269,15 +264,15 @@ var iDoneThis = {
                   localStorage.defaultTeamCode = tempDefaultTeamCode;
                   localStorage.defaultTeamURL = tempDefaultTeamURL;
                 }
-                if(successCallback) successCallback();
+                if(callback) callback(true);
               });
             } else {
               // idt returned with response.ok === false
-              if(failureCallback) failureCallback();
+              if(callback) callback(false);
             }
           } else {
             // Returned with status !== 200
-            if(failureCallback) failureCallback();
+            if(callback) callback(false);
           }
         }
       }
@@ -291,10 +286,9 @@ var iDoneThis = {
       // LS username is empty or nonexistant
       localStorage.removeItem("username");
       
-      if(failureCallback) failureCallback();
+      if(callback) callback(false);
     }
   },
-  
   
   /**
    * iDoneThis.getDones
@@ -304,11 +298,11 @@ var iDoneThis = {
    * @param {function} failureCallback Callback after a failed fetch
    * @return {none} none
    */
-  getDones: function(listDate, successCallback, failureCallback){
+  getDones: function(listDate, callback){
     if(localStorage.username && localStorage.username !== ""){
       
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", iDoneThis.BASE + iDoneThis.VER + iDoneThis.DONES + "?done_date=" + (typeof(listDate) === "string" ? listDate : "today"));
+      xhr.open("GET", iDoneThis.BASE + iDoneThis.VER + iDoneThis.DONES + "?page_size=100&done_date=" + (typeof(listDate) === "string" && listDate !== "" ? listDate : "today"));
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("Authorization", "Token " + localStorage.idtToken);
       xhr.send();
@@ -320,21 +314,23 @@ var iDoneThis = {
             var response = JSON.parse(xhr.responseText);
             
             if(response.ok === true){
-              // console.log(response.results);
               ls.set({dones: response.results}, function(){
                 localStorage.since = Date.now();
                 chrome.alarms.create(DONE_CHECKER_ALARM, {
                   periodInMinutes: parseInt(localStorage.doneFrequency)
                 });
-                if(successCallback) successCallback();
+                updateBadgeText();
+                if(callback) callback(true);
               });
             } else {
               // idt returned with response.ok === false
-              if(failureCallback) failureCallback();
+              updateBadgeText();
+              if(callback) callback(false);
             }
           } else {
             // Returned with status !== 200
-            if(failureCallback) failureCallback();
+            updateBadgeText();
+            if(callback) callback(false);
           }
         }
       }
@@ -343,18 +339,18 @@ var iDoneThis = {
         // Network layer error
         // Save action offline?
         console.log("Network error in getTeams.");
-        // if(offlineCallback) offlineCallback();
+        updateBadgeText();
+        if(callback) callback(false);
       }
     } else {
       // LS username is empty or nonexistant
       localStorage.removeItem("username");
       
-      if(failureCallback) failureCallback();
+      if(callback) callback(false);
     }
   },
   
-  
-  getUserDetails: function(successCallback, failureCallback){
+  getUserDetails: function(callback){
     if(localStorage.username && localStorage.username !== ""){
       
       var xhr = new XMLHttpRequest();
@@ -376,19 +372,19 @@ var iDoneThis = {
               localStorage.niceName = response.result.nicest_name;
               localStorage.email = response.result.email;
               localStorage.avatar_url = response.result.avatar_url;
-              if(successCallback) successCallback();
+              if(callback) callback(true);
             
             } else {
               
               console.log("didn't get userInfo: " + response);
-              if(failureCallback) failureCallback();
+              if(callback) callback(false);
             
             }
           
           } else {
             // Response status != 200, http error thrown
             console.log("didn't get userInfo, recheck auth token");
-            if(failureCallback) failureCallback();
+            if(callback) callback(false);
             
           }
         }
@@ -397,19 +393,17 @@ var iDoneThis = {
     } else {
       
       console.log("not connected");
-      if(failureCallback) failureCallback();
+      if(callback) callback(false);
       
     }
   },
-  
   
   buildUrl: function(base, key, value) {
     var sep = (base.indexOf('?') > -1) ? '&' : '?';
     return base + sep + key + '=' + value;
   },
   
-  
-  checkConnection: function(onlineCallback, offlineCallback){
+  checkConnection: function(callback){
     var xhr = new XMLHttpRequest();
     var headURL = iDoneThis.BASE + iDoneThis.VER + iDoneThis.NOOP;
     var r = Math.round(Math.random() * 10000);
@@ -423,16 +417,15 @@ var iDoneThis = {
     xhr.onreadystatechange = function() {
       if(xhr.readyState == 4){
         if (xhr.status >= 200 && xhr.status < 304) {
-          if(onlineCallback) onlineCallback();
+          if(callback) callback(true);
         } else {
-          if(offlineCallback) offlineCallback();
+          if(callback) callback(false);
         }
       }
     }
     
     xhr.onerror = function(){
-      if(offlineCallback) offlineCallback();
+      if(callback) callback(false);
     }
   },
-  
 }

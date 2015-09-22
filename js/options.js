@@ -3,6 +3,9 @@ var IDT_URL = "https://iDoneThis.com/home/"
 var DONE_CHECKER_ALARM = "doneChecker";
 var DAILY_NOTIFICATION_ALARM = "dailyNotificationAlarm";
 var INPUT_DELAY = 2000; //ms to wait before accepting & saving text inputs
+var BUTTON_GREEN = "#33ff33";
+var BUTTON_GREY = "#999999";
+var BUTTON_RED = "#ff3333";
 
 var bgPage = chrome.extension.getBackgroundPage();
 var freqInputTimeout, alarmTimeInputTimeout;
@@ -27,11 +30,10 @@ $(document).ready(function(){
   if(localStorage.doneFrequency)
     $("#updateFrequency").val(localStorage.doneFrequency);
   
-  bgPage.iDoneThis.isLoggedIn(false, function(){
-    updateOptionsPage(true);
-  }, function(){
-    updateOptionsPage(false);
-  });
+  if(localStorage.showCountOnBadge === "true")
+    $("#showCountOnBadge").prop("checked", true);
+  
+  bgPage.iDoneThis.isLoggedIn(false, updateOptionsPage);
   
   // idtToken - in focus event handler
   $("#idtTokenInput").on("focusin", function(){
@@ -66,11 +68,7 @@ $(document).ready(function(){
   $("#connect").on("click", function(e){
     e.preventDefault();
     console.log("init Login");
-    bgPage.iDoneThis.connect(function(){
-      updateOptionsPage(true);
-    }, function(){
-      updateOptionsPage(false);
-    });
+    bgPage.iDoneThis.connect(updateOptionsPage);
   });
   
   // logout event handler
@@ -111,22 +109,47 @@ $(document).ready(function(){
     freqInputTimeout = setTimeout(resetDoneAlarm, INPUT_DELAY, this.value);
   });
   
-  
-  // dailyNotification event handler
-  $("#dailyNotification").change(function(evt){
+  $(".checkBoxSettings").change(function(evt){
     var id = this.id;
     var value = this.checked;
     localStorage[id] = value;
     
-    if(value === true){
-      $("#dailyNotificationTime").removeAttr("disabled");
-      resetDailyNotificationAlarm(localStorage.dailyNotificationTime);
-    } else {
-      $("#dailyNotificationTime").attr("disabled", "disabled");
-      chrome.alarms.clear(DAILY_NOTIFICATION_ALARM);
-      confirmSave(id);
+    switch(id){
+      case "dailyNotification":
+        if(value === true){
+          $("#dailyNotificationTime").removeAttr("disabled");
+          resetDailyNotificationAlarm(localStorage.dailyNotificationTime);
+        } else {
+          $("#dailyNotificationTime").attr("disabled", "disabled");
+          chrome.alarms.clear(DAILY_NOTIFICATION_ALARM);
+          confirmSave(id);
+        }
+        break;
+      case "showCountOnBadge":
+        bgPage.updateBadgeText();
+        break;
+      default:
+        //Do Something
     }
+    
+    
   });
+  
+  // dailyNotification event handler
+  // $("#dailyNotification").change(function(evt){
+  //   var id = this.id;
+  //   var value = this.checked;
+  //   localStorage[id] = value;
+    
+  //   if(value === true){
+  //     $("#dailyNotificationTime").removeAttr("disabled");
+  //     resetDailyNotificationAlarm(localStorage.dailyNotificationTime);
+  //   } else {
+  //     $("#dailyNotificationTime").attr("disabled", "disabled");
+  //     chrome.alarms.clear(DAILY_NOTIFICATION_ALARM);
+  //     confirmSave(id);
+  //   }
+  // });
   
   
   // Date.parse(new Date().toDateString() + " "+$("#dailyNotificationTime").val())

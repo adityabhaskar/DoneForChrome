@@ -54,15 +54,12 @@ $(document).ready(function(){
   
   
   // populate dones list
-  // updateDoneList();
+  updateDoneList();
   $("#doneListTitle").text("No dones completed today. Get cracking!");
-  bgPage.iDoneThis.getDones(null, updateDoneList, updateDoneList);
+  bgPage.iDoneThis.getDones(null, updateDoneList);
   
   // Set input states - disabled/enabled - if not logged in
-  bgPage.iDoneThis.isLoggedIn(false, textDefault, function(){
-    $("#doneText, #done_date, #teamSelect").addClass("sendingState").attr("disabled","disabled");
-    $("#status").text(messageStrings.loginerror_status_text);
-  });
+  bgPage.iDoneThis.isLoggedIn(false, textDefault);
   
   
   // Handler for clicking change team link
@@ -195,65 +192,68 @@ function onSend(text){
     }
   }
     
-  bgPage.iDoneThis.newDone(doneObj, function(response){
-    // Mailing successful
-    
-    // clear input text, show green tick (then timeout and clear)
-    $("#sendingDog").hide();
-    $("#greenTick").fadeIn("fast").delay(2000).fadeOut("fast");
-    $("#status").hide().text(messageStrings.sent_status_text).fadeIn("fast").delay(2000).fadeOut("fast", function(){
-      if(sendVisible === 0)
-        $("#status").text(messageStrings.default_status_text).fadeIn("fast");
-      textDefault();
-    });
-    
-    bgPage.iDoneThis.getDones(null, updateDoneList);
-    
-  }, function(response){
-    // Mailing unsuccessful
-    
-    // darken input text, show red exclamation sign
-    $("#sendingDog").hide();
-    $("#redAlert").fadeIn("fast");
-    $("#doneText").removeClass("sendingState").removeAttr("disabled");
-    
-    // show error message in dim, small font below
-    if(response && response.errors && response.errors.team && response.errors.team.length > 0)
-      $("#status").hide().text(messageStrings.error_status_title + response.errors.team[0]).fadeIn("fast"); //no team error message
-    else
+  bgPage.iDoneThis.newDone(doneObj, function(status){
+    if(status === true){
+      // Mailing successful
+      
+      // clear input text, show green tick (then timeout and clear)
+      $("#sendingDog").hide();
+      $("#greenTick").fadeIn("fast").delay(2000).fadeOut("fast");
+      $("#status").hide().text(messageStrings.sent_status_text).fadeIn("fast").delay(2000).fadeOut("fast", function(){
+        if(sendVisible === 0)
+          $("#status").text(messageStrings.default_status_text).fadeIn("fast");
+        textDefault(true);
+      });
+      
+      updateDoneList();
+      // bgPage.iDoneThis.getDones(null, updateDoneList);
+    } else if(status === false){
+      // Mailing unsuccessful
+      
+      // darken input text, show red exclamation sign
+      $("#sendingDog").hide();
+      $("#redAlert").fadeIn("fast");
+      $("#doneText").removeClass("sendingState").removeAttr("disabled");
+      
+      // show error message in dim, small font below
       $("#status").hide().text(messageStrings.error_status_title + messageStrings.error_default_title).fadeIn("fast"); //default error message
-    // if(sendVisible === 0){
-    //   $("#status").delay(2000).fadeOut("slow");
-    // }
-  }, function(){
-    // Saved offline
-    
-    // clear input text, show timer tick (then timeout and clear)
-    $("#sendingDog").hide();
-    $("#savedOfflineIcon").fadeIn("fast").delay(3000).fadeOut("fast");
-    $("#status").hide().text(messageStrings.offline_saved_status_text).fadeIn("fast").delay(3000).fadeOut("fast", function(){
-      if(sendVisible === 0)
-        $("#status").text(messageStrings.default_status_text).fadeIn("fast");
-      textDefault();
-    });
-    
-    chrome.alarms.create(CONNECTION_CHECKER_ALARM, {
-      periodInMinutes: Math.round(Math.random()*5) // check reconnection in 0-5 mins
-    });
-    
+      textDefault(false);
+      updateDoneList();
+    } else if(status === "offline"){
+      // Saved offline
+      
+      // clear input text, show timer tick (then timeout and clear)
+      $("#sendingDog").hide();
+      $("#savedOfflineIcon").fadeIn("fast").delay(3000).fadeOut("fast");
+      $("#status").hide().text(messageStrings.offline_saved_status_text).fadeIn("fast").delay(3000).fadeOut("fast", function(){
+        if(sendVisible === 0)
+          $("#status").text(messageStrings.default_status_text).fadeIn("fast");
+        textDefault(true);
+      });
+      
+      chrome.alarms.create(CONNECTION_CHECKER_ALARM, {
+        periodInMinutes: Math.round(Math.random()*5) // check reconnection in 0-5 mins
+      });
+      updateDoneList();
+    }
   });
 }
 
 // Sets up default texts and states of all input elements
-function textDefault(){
-  $("#status").text(messageStrings.default_status_text);
-  $("#doneText").val("");
-  $("#selectedTeam").text(selectedTeam.string);
-  $("#done_date").val(dateStr.today);
-  $("#selectedDate").text(selectedDate.string);
-  
-  $("#doneText, #done_date, #teamSelect").removeClass("sendingState").removeAttr("disabled");
-  $("#doneText").focus();
+function textDefault(status){
+  if(status === true){
+    $("#status").text(messageStrings.default_status_text);
+    $("#doneText").val("");
+    $("#selectedTeam").text(selectedTeam.string);
+    $("#done_date").val(dateStr.today);
+    $("#selectedDate").text(selectedDate.string);
+    
+    $("#doneText, #done_date, #teamSelect").removeClass("sendingState").removeAttr("disabled");
+    $("#doneText").focus();
+  } else {
+    $("#doneText, #done_date, #teamSelect").addClass("sendingState").attr("disabled","disabled");
+    $("#status").text(messageStrings.loginerror_status_text);
+  }
 }
 
 
@@ -304,12 +304,14 @@ function yyyymmdd(date){
 
 function updateDoneList(){
   $("#doneList").text("");
-  ls.get("dones", function(st){
-    if(st && st.dones){
-      if(st.dones.length > 0){
-        var doneList = $("#doneList");
-        var o = "";
-        var doneCount = 0, goalCount = 0;
+  ls.get(["dones", "offlineList"], function(st){
+    var totalDones = st ? ((st.dones && st.dones.length > 0 ? st.dones.length : 0) + (st.offlineList && st.offlineList.length > 0 ? st.offlineList.length : 0)) : 0;
+    if(totalDones > 0){
+      var doneList = $("#doneList");
+      var o = "";
+      var doneCount = 0, goalCount = 0;
+      
+      if(st.dones && st.dones.length > 0){
         for (var i = 0; i < st.dones.length; i++) {
           o += "<li class='" + (st.dones[i].goal_completed === true ? "completed" : "goal") + "'><p>" + st.dones[i].markedup_text + "&nbsp;&nbsp;<a href='" + st.dones[i].permalink + "' target='_blank'><img src='img/external-9.png'></a></p></li>";
           if(st.dones[i].goal_completed === true)
@@ -317,11 +319,25 @@ function updateDoneList(){
           else
             goalCount++;
         }
-        doneList.append(o);
-        $("#doneListTitle").text(doneCount + " dones completed today" + (goalCount > 0 ? (", " + goalCount + " goal" + (goalCount > 1 ? "s" : "") + " pending") : ""));
-      } else {
-        $("#doneListTitle").text("No dones completed today. Get cracking!");
       }
+      
+      if(st.offlineList && st.offlineList.length > 0){
+        for (var i = 0; i < st.offlineList.length; i++) {
+          if(/^\[\] /i.test(st.offlineList[i].raw_text) === true){
+            o += "<li class='goal'><p>" + st.offlineList[i].raw_text.substr(3) + "</p>&nbsp;&nbsp;<img src='img/saved_offline.png'></li>";
+            goalCount++;
+          } else {
+            o += "<li class='completed'><p>" + st.offlineList[i].raw_text + "</p>&nbsp;&nbsp;<img src='img/saved_offline.png'></li>";
+            doneCount++;
+          }
+        }
+      }
+      
+      if(doneList.text() === "") doneList.append(o);
+      $("#doneListTitle").text(doneCount + " dones completed today" + (goalCount > 0 ? (", " + goalCount + " goal" + (goalCount > 1 ? "s" : "") + " pending") : ""));
+    } else {
+      $("#doneListTitle").text("No dones completed today. Get cracking!");
     }
   });
+  bgPage.updateBadgeText();
 }

@@ -46,6 +46,28 @@ ver X.X.X.X
 ------------------------
 
 
+ver 1.0.3.0
+  
+  -- NEXT VERSION -- UPDATE: Add analytics - track dones, source (omnibar/popup), installs, uninstalls
+  
+  
+------------------------
+
+
+ver 1.0.2.0
+  
+  [DONE] NEW FEATURE: Show completed task count (or :( ) in browserAction badgeText
+  
+  [DONE] BUG FIX: Shows both online and offline dones & goals in popup list
+  
+  [DONE] UPDATE: Refactored iDoneThis code to replace success, failure & offline callbacks with single callback(status)
+  
+  [DONE] BUG FIX: Race condition causing occassional dead-hanging (was happening due to connection checker alarm firing every ~0 secs - only happens in dev)
+  
+  
+------------------------
+
+
 ver 1.0.1.2
   
   [DONE] Bug Fix: Wrong date formula on daily notifications

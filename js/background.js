@@ -1,5 +1,4 @@
 var messageStrings = {
-  "defaultPopupTitle": chrome.i18n.getMessage("browserButtonTitle"),
   "noLoginPopupTitle": chrome.i18n.getMessage("errorMessageNoLogin"),
   "noUsernamePopupTitle": chrome.i18n.getMessage("errorMessageNoUsername"),
   "doneNotificationTitle": chrome.i18n.getMessage("doneNotificationTitle"),
@@ -15,6 +14,10 @@ var messageStrings = {
   "syncedNotificationMessage": chrome.i18n.getMessage("syncedNotificationMessage"),
   "dailyReminderNotificationTitle": chrome.i18n.getMessage("dailyReminderNotificationTitle"),
   "dailyReminderNotificationMessage": chrome.i18n.getMessage("dailyReminderNotificationMessage"),
+  "shortName": chrome.i18n.getMessage("shortName"),
+  "zeroDoneBadgeText": chrome.i18n.getMessage("zeroDoneBadgeText"),
+  "zeroDoneBadgeTitle": chrome.i18n.getMessage("zeroDoneBadgeTitle"),
+  "nonZeroDoneBadgeTitle": chrome.i18n.getMessage("nonZeroDoneBadgeTitle"),
 };
   
 var dateFormattingStrings = [
@@ -46,6 +49,7 @@ var dateFormattingStrings = [
 var UNINSTALL_URL = "http://c306.net/whygo.html?src=qdt";
 var NOTIFICATION_ICON_URL = chrome.extension.getURL("img/done-128.png");
 var BUTTON_GREEN = "#33ff33";
+var BUTTON_GREY = "#999999";
 var BUTTON_RED = "#ff3333";
 var TEAM_CHECKER_ALARM = "teamChecker";
 var CONNECTION_CHECKER_ALARM = "connectionChecker";
@@ -54,10 +58,12 @@ var OFFLINE_SYNC_ALARM = "offlineSyncer";
 var OFFLINE_SYNC_FREQUENCY = 15;
 var DAILY_NOTIFICATION_ALARM = "dailyNotificationAlarm";
 var DAILY_NOTIFICATION_ID = "dailyNotification";
+var NEW_DONE_NOTIFICATION = "newDoneNotification";
 
 localStorage.doneFrequency = localStorage.doneFrequency || 15;
 localStorage.dailyNotification = localStorage.dailyNotification || "true";
 localStorage.dailyNotificationTime = localStorage.dailyNotificationTime || "19:00";
+localStorage.showCountOnBadge = localStorage.showCountOnBadge || "true";
 
 chrome.runtime.onInstalled.addListener(function (details){
   if(details.reason === "install"){
@@ -84,58 +90,64 @@ chrome.runtime.onInstalled.addListener(function (details){
 });
 
 
-iDoneThis.isLoggedIn(false, function(){
-  // If logged in at startup
-  console.log("In bg: logged in");
-  
-  // Show on browser button
-  setupExtensionState(true);
-  
-  // Update teams
-  iDoneThis.getTeams();
-  iDoneThis.getDones();
-  
-  // If online, and there are offline dones to sync, start offlineSync
-  if(navigator.onLine && localStorage.offlineDones === "true")
-    iDoneThis.syncOfflineList(function(){
-      // cancel alarm if successful
-      clearConnectionCheckerAlarm();
-    }, createConnectionCheckerAlarm, createConnectionCheckerAlarm);
-  
+iDoneThis.isLoggedIn(false, function(status){
+  if(status !== true){
+    // If not logged in at startup
+    console.log("In bg: not logged in");
     
-  // Start done-checker alarm
-  if(localStorage.doneFrequency > 0)
-    chrome.alarms.create(DONE_CHECKER_ALARM, {
-      periodInMinutes: parseInt(localStorage.doneFrequency)
+    // Show on browser button, prompting to login
+    setupExtensionState(false);
+  } else {
+    
+    // If logged in at startup
+    console.log("In bg: logged in");
+    
+    // Show on browser button
+    setupExtensionState(true);
+    
+    // Update teams
+    iDoneThis.getTeams();
+    iDoneThis.getDones();
+    
+    // If online, and there are offline dones to sync, start offlineSync
+    if(navigator.onLine && localStorage.offlineDones === "true")
+      iDoneThis.syncOfflineList(function(status){
+        if(status === true){
+          // cancel alarm if successful
+          clearConnectionCheckerAlarm();
+        } else {
+          createConnectionCheckerAlarm();
+        }
+      });
+    
+    // Start done-checker alarm
+    if(localStorage.doneFrequency > 0)
+      chrome.alarms.create(DONE_CHECKER_ALARM, {
+        periodInMinutes: parseInt(localStorage.doneFrequency)
+      });
+      
+    // Start offline-sync alarm
+    chrome.alarms.create(OFFLINE_SYNC_ALARM, {
+      periodInMinutes: parseInt(OFFLINE_SYNC_FREQUENCY)
     });
-    
-  // Start offline-sync alarm
-  chrome.alarms.create(OFFLINE_SYNC_ALARM, {
-    periodInMinutes: parseInt(OFFLINE_SYNC_FREQUENCY)
-  });
-    
-  // Start daily notification alarm
-  if(localStorage.dailyNotification === "true"){
-    var alarmTime = Date.parse(new Date().toDateString() + " " + localStorage.dailyNotificationTime);
-    if((new Date()) > alarmTime)
-      alarmTime += 24*60*60*1000;
-    
-    chrome.alarms.create(DAILY_NOTIFICATION_ALARM, {
-      when: alarmTime,
+      
+    // Start daily notification alarm
+    if(localStorage.dailyNotification === "true"){
+      var alarmTime = Date.parse(new Date().toDateString() + " " + localStorage.dailyNotificationTime);
+      if((new Date()) > alarmTime)
+        alarmTime += 24*60*60*1000;
+      
+      chrome.alarms.create(DAILY_NOTIFICATION_ALARM, {
+        when: alarmTime,
+        periodInMinutes: 24*60
+      });
+    }
+      
+    // Start once-a-day team-checker alarm
+    chrome.alarms.create(TEAM_CHECKER_ALARM, {
       periodInMinutes: 24*60
     });
   }
-    
-  // Start once-a-day team-checker alarm
-  chrome.alarms.create(TEAM_CHECKER_ALARM, {
-    periodInMinutes: 24*60
-  });
-}, function(){
-  // If not logged in at startup
-  console.log("In bg: not logged in");
-  
-  // Show on browser button, prompting to login
-  setupExtensionState(false);
 });
 
 // Setup listener for omnibox input
@@ -151,10 +163,13 @@ chrome.notifications.onClicked.addListener(notificationClickHandler);
 window.addEventListener("online", function(e){
   console.log("we are ONLINE, syncing offline items");
   if(navigator.onLine && localStorage.offlineDones === "true"){
-    iDoneThis.checkConnection(function(){
-      clearConnectionCheckerAlarm(function(){
-        iDoneThis.syncOfflineList(false, createConnectionCheckerAlarm, createConnectionCheckerAlarm);
-      });
+    console.log("from window.online");
+    iDoneThis.checkConnection(function(status){
+      if(status === true)
+        iDoneThis.syncOfflineList(function(status){
+          if(status === true) clearConnectionCheckerAlarm();
+          else createConnectionCheckerAlarm();
+        });
     });
   }
 }, false);
@@ -166,7 +181,7 @@ function setupExtensionState(loggedIn){
   
   if(loggedIn){
     
-    chrome.browserAction.setTitle({title: messageStrings.defaultPopupTitle});
+    chrome.browserAction.setTitle({title: messageStrings.shortName});
     chrome.browserAction.setBadgeText({text: ""});
     chrome.browserAction.setBadgeBackgroundColor({color: BUTTON_GREEN});
     chrome.browserAction.setPopup({popup: "popup.html"});
@@ -174,7 +189,7 @@ function setupExtensionState(loggedIn){
       description: messageStrings.promptMessage
     });
     // chrome.omnibox.onInputEntered.addListener(sendFromCommand);
-  
+    
   } else {
     
     chrome.browserAction.setTitle({title: messageStrings.noLoginPopupTitle});
@@ -191,54 +206,53 @@ function setupExtensionState(loggedIn){
 
 
 function sendFromCommand(text, disposition){
-  iDoneThis.isLoggedIn(false, function(){
-    // If logged in, send command
+  iDoneThis.isLoggedIn(false, function(loggedIn){
     
-    iDoneThis.newDone(
-      {
+    if(loggedIn !== true){
+      // If not logged in... show notification
+      showNotification({
+        title: messageStrings.loginRequiredNotificationTitle,
+        message: messageStrings.loginRequiredNotificationMessage,
+        clearDelay: 5
+      });
+    
+    } else {
+      
+      // If logged in, send command
+      iDoneThis.newDone({
         raw_text: text,
         team: localStorage.defaultTeamCode,
         done_date: yyyymmdd(new Date())
         // date: new Date().toDateString()
-      }, 
-      function(response){
-        // Added successfully, show notification
-        showNotification({
-          iconUrl: NOTIFICATION_ICON_URL,
-          title: messageStrings.doneNotificationMessage,
-          message: text,
-        });
-      }, 
-      function(reason){
-        // Adding unsuccessful, Show notification
-        showNotification({
-          title: messageStrings.errorNotificationTitle,
-          message: text,
-          contextMessage: messageStrings.errorNotificationMessage,
-          clearDelay: 5
-        });
-      }, 
-      function(){
-        // Saved offline, Show notification & start/reset timer
-        createConnectionCheckerAlarm();
-        
-        showNotification({
-          title: messageStrings.offlineSavedNotificationTitle,
-          message: text,
-          contextMessage: messageStrings.offlineSavedNotificationMessage,
-          clearDelay: 3
-        });
-      }
-    );
-  }, function(){
-    // If not logged in... show notification
-    // change notification text to indicate 'Login required'
-    showNotification({
-      title: messageStrings.loginRequiredNotificationTitle,
-      // message: text,
-      message: messageStrings.loginRequiredNotificationMessage,
-      clearDelay: 5
-    });
+      }, function(status){
+        if(status === true)
+          // Added successfully, show notification
+          showNotification({
+            iconUrl: NOTIFICATION_ICON_URL,
+            title: messageStrings.doneNotificationMessage,
+            message: text,
+          });
+        else if(status === false)
+          // Adding unsuccessful, Show notification
+          showNotification({
+            title: messageStrings.errorNotificationTitle,
+            message: text,
+            contextMessage: messageStrings.errorNotificationMessage,
+            clearDelay: 5
+          });
+        else if(status === "offline"){
+          // Saved offline, Show notification & start/reset timer
+          createConnectionCheckerAlarm();
+          showNotification({
+            id: NEW_DONE_NOTIFICATION,
+            title: messageStrings.offlineSavedNotificationTitle,
+            message: text,
+            contextMessage: messageStrings.offlineSavedNotificationMessage,
+            clearDelay: 3
+          });
+        }
+      });
+    }
   });
 }
 
@@ -258,24 +272,22 @@ function alarmHandler(alarm){
   switch(alarm.name){
     
     case TEAM_CHECKER_ALARM:
+      console.log("in teamChecker alarm");
       iDoneThis.getTeams();
       break;
     
     case DAILY_NOTIFICATION_ALARM:
-      // iDoneThis.getTeams();
-      ls.get("dones", function(st){
+      console.log("in daily notification alarm");
+      ls.get(["dones", "offlineList"], function(st){
         var today = new Date();
-        var contextMsg = messageStrings.dailyReminderNotificationMessage.replace("#number", (st.dones.length > 0 ? st.dones.length : "No") + " done" + (st.dones.length !== 1 ? "s" : ""));
-        // var msg = messageStrings.dailyReminderNotificationTitle + " " + dateFormattingStrings[0][today.getUTCDay()-1] + ", " + today.getDate() + " " + dateFormattingStrings[1][today.getUTCDay()-1];
+        var totalDones = st ? ((st.dones && st.dones.length > 0 ? st.dones.length : 0) + (st.offlineList && st.offlineList.length > 0 ? st.offlineList.length : 0)) : 0;
+        var contextMsg = messageStrings.dailyReminderNotificationMessage.replace("#number", (totalDones > 0 ? totalDones : "No") + " task" + (totalDones !== 1 ? "s" : ""));
         var msg = messageStrings.dailyReminderNotificationTitle + " " + dateFormattingStrings[0][today.getUTCDay()] + ", " + today.getDate() + " " + dateFormattingStrings[1][today.getMonth()];
         
         showNotification({
           id: DAILY_NOTIFICATION_ID,
           message: msg,
           contextMessage: contextMsg,
-          // buttons: [{
-          //   title: "Log iDoneThis",
-          // }]
         });
       });
       break;
@@ -288,18 +300,26 @@ function alarmHandler(alarm){
     case OFFLINE_SYNC_ALARM:
       console.log("syncing any offline tasks");
       if(localStorage.offlineDones === "true")
-        iDoneThis.syncOfflineList(function(){
+        iDoneThis.syncOfflineList(function(status){
           // cancel alarm if successful
-          clearConnectionCheckerAlarm();        
+          if(status === true)
+            clearConnectionCheckerAlarm();
         });
       break;
     
     case CONNECTION_CHECKER_ALARM:
-      iDoneThis.checkConnection(function(){
-        iDoneThis.syncOfflineList(function(){
-          // cancel alarm if successful
-          clearConnectionCheckerAlarm();
-        });
+      console.log("in connectionCheckerAlarm");
+      iDoneThis.checkConnection(function(status){
+        if(status === true)
+          iDoneThis.syncOfflineList(function(status){
+            // cancel alarm if successful
+            if(status === true)
+              clearConnectionCheckerAlarm();
+            else
+              createConnectionCheckerAlarm();
+          });
+        else
+          createConnectionCheckerAlarm();
       });
       break;
     
@@ -319,8 +339,9 @@ function yyyymmdd(date){
 
 
 function createConnectionCheckerAlarm(){
+  var alarmPeriod = Math.round(Math.random()*4) + 1;
   chrome.alarms.create(CONNECTION_CHECKER_ALARM, {
-    periodInMinutes: Math.round(Math.random()*5) // check reconnection in 0-5 mins
+    periodInMinutes: alarmPeriod // check reconnection in 1-5 mins
   });
 }
 
@@ -373,5 +394,26 @@ function notificationClickHandler(id){
       type: "popup",
       state: "docked"
     });
+  }
+}
+
+
+function updateBadgeText(){
+  if(localStorage.showCountOnBadge === "true")
+    ls.get(["dones", "offlineList"], function(st){
+      var totalDones = st ? ((st.dones && st.dones.length > 0 ? st.dones.length : 0) + (st.offlineList && st.offlineList.length > 0 ? st.offlineList.length : 0)) : 0;
+      if(totalDones > 0){
+        chrome.browserAction.setBadgeText({text: totalDones.toLocaleString()});
+        chrome.browserAction.setTitle({title: totalDones.toLocaleString() + messageStrings.nonZeroDoneBadgeTitle});
+        chrome.browserAction.setBadgeBackgroundColor({color: BUTTON_GREEN});
+      } else {
+        chrome.browserAction.setBadgeText({text: messageStrings.zeroDoneBadgeText});
+        chrome.browserAction.setTitle({title: messageStrings.zeroDoneBadgeTitle});
+        chrome.browserAction.setBadgeBackgroundColor({color: BUTTON_GREY});
+      }
+    });
+  else {
+    chrome.browserAction.setBadgeText({text: ""});
+    chrome.browserAction.setTitle({title: messageStrings.shortName});
   }
 }

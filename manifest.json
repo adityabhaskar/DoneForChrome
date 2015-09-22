@@ -1,6 +1,6 @@
 {
-  "version": "1.0.1.2",
-  "version_name": "1.0.1.2 beta",
+  "version": "1.0.2.0",
+  "version_name": "1.0.2.0 beta",
   "name": "__MSG_appName__",
   "short_name": "__MSG_shortName__",
   "description": "__MSG_appDescription__",
@@ -29,7 +29,7 @@
       "19": "img/done-19.png",
       "38": "img/done-38.png"
     },
-    "default_title": "__MSG_browserButtonTitle__",
+    "default_title": "__MSG_shortName__",
     "default_popup": "popup.html"
   },
   "icons": {
