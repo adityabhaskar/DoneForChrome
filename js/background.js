@@ -73,7 +73,6 @@ chrome.runtime.onInstalled.addListener(function (details){
     },function(tab){
       console.log("First boot, opened settings to log in");
     });
-    chrome.runtime.setUninstallURL(UNINSTALL_URL);
   }
   
   if(details.reason === "update"){
@@ -82,6 +81,9 @@ chrome.runtime.onInstalled.addListener(function (details){
     if(localStorage.username && localStorage.username!=="")
       iDoneThis.getTeams();
   } 
+  
+  if(details.reason !== "chrome_update"){
+    chrome.runtime.setUninstallURL(UNINSTALL_URL);
   
   // For options dev/testing only
   // if(details.reason === "update")

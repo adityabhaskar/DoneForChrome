@@ -206,7 +206,6 @@ function onSend(text){
       });
       
       updateDoneList();
-      // bgPage.iDoneThis.getDones(null, updateDoneList);
     } else if(status === false){
       // Mailing unsuccessful
       
