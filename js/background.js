@@ -84,6 +84,7 @@ chrome.runtime.onInstalled.addListener(function (details){
   
   if(details.reason !== "chrome_update"){
     chrome.runtime.setUninstallURL(UNINSTALL_URL);
+  }
   
   // For options dev/testing only
   // if(details.reason === "update")
