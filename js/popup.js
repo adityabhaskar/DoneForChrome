@@ -242,7 +242,7 @@ function textDefault(status){
     $("#status").text(messageStrings.default_status_text);
     $("#doneText").val("");
     $("#selectedTeam").text(selectedTeam.string);
-    $("#done_date").val(dateStr.today);
+    $("#done_date").val(selectedDate.code);
     $("#selectedDate").text(selectedDate.string);
     
     $("#doneText, #done_date, #teamSelect").removeClass("sendingState").removeAttr("disabled");

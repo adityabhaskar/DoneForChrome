@@ -52,13 +52,23 @@ ver 1.0.3.0
   
   -- NEXT VERSION -- BUG FIX: When dones are added from notification->popup, they don't update the badge count
   
+  -- NEXT VERSION -- UPDATE: Save unposted text in Done text box on change, clear on send, re-add on new popup opening if not cleared
+  
+  
+------------------------
+
+
+ver 1.0.2.4
+  
+  [DONE] BUG FIX: Date in date-entry box should be same as selected (and in text), not always today.
+  
   
 ------------------------
 
 
 ver 1.0.2.3
   
-  -- NEXT VERSION -- UPDATE: Reduce input-box-blocked delay after sending a done successfully
+  [DONE] UPDATE: Reduce input-box-blocked delay after sending a done successfully
   
   
 ------------------------
