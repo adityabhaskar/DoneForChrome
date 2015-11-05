@@ -1,6 +1,9 @@
 var bgPage = chrome.extension.getBackgroundPage();
 
 var CONNECTION_CHECKER_ALARM = "connectionChecker";
+var SUCCESS_DELAY = 2000;
+var FAILURE_DELAY = 3000;
+var INPUT_DELAY = 1000;
 
 var messageStrings = {
   offline_saved_status_text: chrome.i18n.getMessage("offline_saved_status_text"),
@@ -141,11 +144,6 @@ $(document).ready(function(){
         onSend($("#doneText").val());
       else // highlight #doneText if empty
         $("#doneText").val("").focus();
-    
-    // Attempt at updating the date field if Text begins with a date - abandoned
-    // } else {
-    //   if(/^(\d{8})|(\d{4}\-\d{2}\-\d{2}) /.test(this.value))
-    //     console.log("date...");
     }
   });
   
@@ -198,12 +196,12 @@ function onSend(text){
       
       // clear input text, show green tick (then timeout and clear)
       $("#sendingDog").hide();
-      $("#greenTick").fadeIn("fast").delay(2000).fadeOut("fast");
-      $("#status").hide().text(messageStrings.sent_status_text).fadeIn("fast").delay(2000).fadeOut("fast", function(){
+      $("#greenTick").fadeIn("fast").delay(SUCCESS_DELAY).fadeOut("fast");
+      $("#status").hide().text(messageStrings.sent_status_text).fadeIn("fast").delay(SUCCESS_DELAY).fadeOut("fast", function(){
         if(sendVisible === 0)
           $("#status").text(messageStrings.default_status_text).fadeIn("fast");
-        textDefault(true);
       });
+      setTimeout(textDefault, INPUT_DELAY, true);
       
       updateDoneList();
     } else if(status === false){
@@ -223,12 +221,12 @@ function onSend(text){
       
       // clear input text, show timer tick (then timeout and clear)
       $("#sendingDog").hide();
-      $("#savedOfflineIcon").fadeIn("fast").delay(3000).fadeOut("fast");
-      $("#status").hide().text(messageStrings.offline_saved_status_text).fadeIn("fast").delay(3000).fadeOut("fast", function(){
+      $("#savedOfflineIcon").fadeIn("fast").delay(FAILURE_DELAY).fadeOut("fast");
+      $("#status").hide().text(messageStrings.offline_saved_status_text).fadeIn("fast").delay(FAILURE_DELAY).fadeOut("fast", function(){
         if(sendVisible === 0)
           $("#status").text(messageStrings.default_status_text).fadeIn("fast");
-        textDefault(true);
       });
+      setTimeout(textDefault, INPUT_DELAY, true);
       
       chrome.alarms.create(CONNECTION_CHECKER_ALARM, {
         periodInMinutes: Math.round(Math.random()*5) // check reconnection in 0-5 mins

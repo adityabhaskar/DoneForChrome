@@ -56,6 +56,14 @@ ver 1.0.3.0
 ------------------------
 
 
+ver 1.0.2.3
+  
+  -- NEXT VERSION -- UPDATE: Reduce input-box-blocked delay after sending a done successfully
+  
+  
+------------------------
+
+
 ver 1.0.2.2
   
   [DONE] BUG FIX: missing } in uninstallURL
