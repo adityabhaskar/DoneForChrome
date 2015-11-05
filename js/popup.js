@@ -39,6 +39,9 @@ var teamCount = localStorage.teamCount;
 
 $(document).ready(function(){
   
+  if(location.hash === "#popout")
+    $("#openExternal").hide();
+  
   // populate select list with team names
   ls.get("teams", function(st){
     if(st && st.teams && st.teams.length > 0){
@@ -165,6 +168,17 @@ $(document).ready(function(){
   $("#optionsLink").on("click", function(e){
     e.preventDefault();
     chrome.runtime.openOptionsPage();
+  });
+  
+  $("#openExternal").on("click", function(){
+    chrome.windows.create({
+      url: "popup.html#popout",
+      width: 400,
+      height: 400,
+      focused: true,
+      type: "popup",
+      state: "docked"
+    });
   });
   
   addEventListener("unload", saveInput);

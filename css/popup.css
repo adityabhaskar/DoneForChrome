@@ -192,26 +192,26 @@ body {
   }
   
 #footer{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   padding-right: 0.5em;
   width: 100%;
   text-align: right;
   height: 2em;
+  background-color: #eee;
 }
   
   #footer a{
     display: inline-block;
-    /*padding: 0.5em;*/
     padding: 4px 0.5em 1px;
   }
   
-  #footer img {
+  #footer img{
     vertical-align: top;
   }
   
-  #footerSeparator {
+  #footerSeparator{
     position: relative;
     top: -1.9em;
     left: calc(0.5em + 2.5%);
@@ -225,6 +225,25 @@ body {
     border-top-width: 1px;
   }
   
+  #openExternal::before {
+    display: inline-block;
+    position: absolute;
+    left: calc(0.5em + 2.5%);
+    content: '';
+    width: 23px;
+    height: 23px;
+    background: url("../img/iconsetBlack.svg");
+    background-size: 640px 440px;
+    background-position: 52px 293px;
+    opacity: 0.6;
+    box-sizing: content-box;
+    cursor: pointer;
+  }
+  
+  #openExternal:hover::before{
+    opacity: 1;
+  }
+
   
 .hidden{
   display: none;

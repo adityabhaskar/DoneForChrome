@@ -390,9 +390,9 @@ function notificationClickHandler(id){
   if(id === DAILY_NOTIFICATION_ID){
     // open popup
     chrome.windows.create({
-      url: "popup.html",
+      url: "popup.html#popout",
       width: 400,
-      height: 250,
+      height: 400,
       focused: true,
       type: "popup",
       state: "docked"

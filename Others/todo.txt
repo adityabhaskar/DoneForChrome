@@ -46,11 +46,19 @@ ver X.X.X.X
 ------------------------
 
 
-ver 1.0.3.0
+ver 1.0.3.1
   
   -- NEXT VERSION -- UPDATE: Add analytics - track dones, source (omnibar/popup), installs, uninstalls
   
-  -- NEXT VERSION -- BUG FIX: When dones are added from notification->popup, they don't update the badge count
+  
+------------------------
+
+
+ver 1.0.3.0
+  
+  [DONE] UPDATE: Add icon to convert browseraction popup to standalone window popup
+  
+  [DONE] BUG FIX: When dones are added from notification->popup, they don't update the badge count
   
   
 ------------------------
