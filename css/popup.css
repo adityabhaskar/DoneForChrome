@@ -225,6 +225,31 @@ body {
     border-top-width: 1px;
   }
   
+  #optionsLink{
+    padding: 0 !important;
+  }
+  
+  img#otherApps{
+    position: relative;
+    top: 2px;
+  }
+  
+  #optionsLink::before {
+    position: relative;
+    top: 4px;
+    left: -5px;
+    display: inline-block;
+    content: '';
+    width: 17px;
+    height: 17px;
+    background: url("../img/iconsetBlack.svg");
+    background-size: 640px 440px;
+    background-position: 569px 169px;
+    opacity: 0.5;
+    box-sizing: content-box;
+    cursor: pointer;
+  }
+  
   #openExternal::before {
     display: inline-block;
     position: absolute;
@@ -234,14 +259,14 @@ body {
     height: 23px;
     background: url("../img/iconsetBlack.svg");
     background-size: 640px 440px;
-    background-position: 52px 293px;
-    opacity: 0.6;
+    background-position: 172px 212px;
+    opacity: 0.5;
     box-sizing: content-box;
     cursor: pointer;
   }
   
-  #openExternal:hover::before{
-    opacity: 1;
+  .iconLink:hover::before{
+    opacity: 1 !important;
   }
 
   
