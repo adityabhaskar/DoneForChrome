@@ -4,6 +4,9 @@ var CONNECTION_CHECKER_ALARM = "connectionChecker";
 var SUCCESS_DELAY = 2000;
 var FAILURE_DELAY = 3000;
 var INPUT_DELAY = 1000;
+var DATE_REGEX = /^((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(0229)) /;
+// /^(?:((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(02)(29))|(yesterday)|(tomorrow)) /;
+
 
 var messageStrings = {
   offline_saved_status_text: chrome.i18n.getMessage("offline_saved_status_text"),
@@ -17,10 +20,8 @@ var messageStrings = {
   cancel_change_team_link_text: chrome.i18n.getMessage("cancel_change_team_link_text"),
 }
 
-var DATE_REGEX = /^((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(0229)) /;
-// /^(?:((?:(\d{4})(-?)(?:(?:(0[13578]|1[02]))(-?)(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(-?)(0[1-9]|[12]\d|30)|(02)(-?)(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])(-?)(02)(29))|(yesterday)|(tomorrow)) /;
-
 var sendVisible = 0;
+var defaultInputText = "";
 var dateStr = {
   today: yyyymmdd(new Date()),
   yesterday: yyyymmdd(new Date(Date.now() - 24*3600*1000)),
@@ -62,7 +63,11 @@ $(document).ready(function(){
   bgPage.iDoneThis.getDones(null, updateDoneList);
   
   // Set input states - disabled/enabled - if not logged in
-  bgPage.iDoneThis.isLoggedIn(false, textDefault);
+  ls.get("inputText", function(st){
+    if(st && st.inputText)
+      defaultInputText = st.inputText;
+    bgPage.iDoneThis.isLoggedIn(false, textDefault);
+  });
   
   
   // Handler for clicking change team link
@@ -161,7 +166,15 @@ $(document).ready(function(){
     e.preventDefault();
     chrome.runtime.openOptionsPage();
   });
+  
+  addEventListener("unload", saveInput);
+  $("#doneText").on("blur", saveInput);
 });
+
+function saveInput() {
+  bgPage.saveInput($("#doneText").val().trim());
+}
+
 
 function onSend(text){
   // lighten input text, show rotating circle & text
@@ -240,10 +253,13 @@ function onSend(text){
 function textDefault(status){
   if(status === true){
     $("#status").text(messageStrings.default_status_text);
-    $("#doneText").val("");
+    $("#doneText").val(defaultInputText);
     $("#selectedTeam").text(selectedTeam.string);
     $("#done_date").val(selectedDate.code);
     $("#selectedDate").text(selectedDate.string);
+    ls.set({"inputText": ""}, function(){
+      defaultInputText = "";
+    });
     
     $("#doneText, #done_date, #teamSelect").removeClass("sendingState").removeAttr("disabled");
     $("#doneText").focus();

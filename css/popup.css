@@ -149,6 +149,7 @@ body {
   
   #doneList{
     font-size: 11px;
+    margin-bottom: 1.5em;
   }
   
   #doneList li{
@@ -203,14 +204,28 @@ body {
   #footer a{
     display: inline-block;
     /*padding: 0.5em;*/
-    padding: 4px 0.5em 3px;
-    }
+    padding: 4px 0.5em 1px;
+  }
   
   #footer img {
     vertical-align: top;
   }
-
-
+  
+  #footerSeparator {
+    position: relative;
+    top: -1.9em;
+    left: calc(0.5em + 2.5%);
+    width: 95%;
+    height: 0px;
+    margin: 0;
+    border-color: rgba(128, 128, 128, 0.1);
+    background-color: rgba(128, 128, 128, 0.1);
+    border-width: 0;
+    border-style: inset;
+    border-top-width: 1px;
+  }
+  
+  
 .hidden{
   display: none;
 }

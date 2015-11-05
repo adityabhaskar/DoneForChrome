@@ -52,7 +52,15 @@ ver 1.0.3.0
   
   -- NEXT VERSION -- BUG FIX: When dones are added from notification->popup, they don't update the badge count
   
-  -- NEXT VERSION -- UPDATE: Save unposted text in Done text box on change, clear on send, re-add on new popup opening if not cleared
+  
+------------------------
+
+
+ver 1.0.2.5
+  
+  [DONE] UPDATE: Save unposted text in Done text box on change, clear on send, re-add on new popup opening if not cleared
+  
+  [DONE] UPDATE: Added separator hr between list and footer
   
   
 ------------------------

@@ -420,3 +420,9 @@ function updateBadgeText(){
     chrome.browserAction.setTitle({title: messageStrings.shortName});
   }
 }
+
+
+function saveInput(input) {
+  if(input !== "")
+    ls.set({"inputText": input});
+}
