@@ -42,8 +42,9 @@ $(document).ready(function(){
   if(location.hash === "#popout")
     $("#openExternal").hide();
   
-  // populate select list with team names
-  ls.get("teams", function(st){
+  // 1. Populate select list with team names
+  // 2. Set input states - disabled/enabled - if not logged in
+  ls.get(["teams", "inputText"], function(st){
     if(st && st.teams && st.teams.length > 0){
       var teamSelect = $("#teamSelect");
       var o;
@@ -57,6 +58,11 @@ $(document).ready(function(){
         $("#selectedTeam").removeClass("specialUnderline");
       }
     }
+    
+    if(st && st.inputText)
+      defaultInputText = st.inputText;
+    
+    bgPage.iDoneThis.isLoggedIn(false, textDefault);
   });
   
   
@@ -64,13 +70,6 @@ $(document).ready(function(){
   updateDoneList();
   $("#doneListTitle").text("No dones completed today. Get cracking!");
   bgPage.iDoneThis.getDones(null, updateDoneList);
-  
-  // Set input states - disabled/enabled - if not logged in
-  ls.get("inputText", function(st){
-    if(st && st.inputText)
-      defaultInputText = st.inputText;
-    bgPage.iDoneThis.isLoggedIn(false, textDefault);
-  });
   
   
   // Handler for clicking change team link

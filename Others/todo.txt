@@ -46,9 +46,17 @@ ver X.X.X.X
 ------------------------
 
 
-ver 1.0.3.2
+ver 1.0.3.3
   
   -- NEXT VERSION -- UPDATE: Add analytics - track dones, source (omnibar/popup), installs, uninstalls
+  
+  
+------------------------
+
+
+ver 1.0.3.2
+  
+  [DONE] BUG FIX: Reset "inputText" even if popup closed before send is complete
   
   
 ------------------------

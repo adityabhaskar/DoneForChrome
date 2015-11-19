@@ -102,16 +102,19 @@ var iDoneThis = {
         if(xhr.status >= 200 && xhr.status < 300) {
           
           var response = JSON.parse(xhr.responseText);
-          console.log("sent.");
           
           if(response.ok === true){
-            iDoneThis.getDones(null, function(){
-              if(callback) callback(true);
+            
+            console.log("sent.");
+            ls.set({"inputText": ""}, function(){
+              iDoneThis.getDones(null, function(){
+                if(callback) callback(true);
+              });
             });
             
           } else {
-            console.log("send failed, recheck auth token. \n Original message: ");
             
+            console.log("send failed, recheck auth token. \n Original message: ");
             if(callback) callback(false);
           }
         } else {
