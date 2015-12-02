@@ -283,7 +283,20 @@ function alarmHandler(alarm){
       console.log("in daily notification alarm");
       ls.get(["dones", "offlineList"], function(st){
         var today = new Date();
-        var totalDones = st ? ((st.dones && st.dones.length > 0 ? st.dones.length : 0) + (st.offlineList && st.offlineList.length > 0 ? st.offlineList.length : 0)) : 0;
+        // var totalDones = st ? ((st.dones && st.dones.length > 0 ? st.dones.length : 0) + (st.offlineList && st.offlineList.length > 0 ? st.offlineList.length : 0)) : 0;
+        var totalDones = 0;
+        if(st && st.dones && st.dones.length > 0){
+          for (var i = 0; i < st.dones.length; i++) {
+            if(st.dones[i].goal_completed === true)
+              totalDones++;
+          }
+        }
+        if(st && st.offlineList && st.offlineList.length > 0){
+          for (var i = 0; i < st.offlineList.length; i++) {
+            if(/^\[\] /i.test(st.offlineList[i].raw_text) === true)
+              totalDones++;
+          }
+        }
         var contextMsg = messageStrings.dailyReminderNotificationMessage.replace("#number", (totalDones > 0 ? totalDones : "No") + " task" + (totalDones !== 1 ? "s" : ""));
         var msg = messageStrings.dailyReminderNotificationTitle + " " + dateFormattingStrings[0][today.getUTCDay()] + ", " + today.getDate() + " " + dateFormattingStrings[1][today.getMonth()];
         

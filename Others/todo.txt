@@ -46,7 +46,7 @@ ver X.X.X.X
 ------------------------
 
 
-ver 1.0.3.3
+ver 1.0.3.4
   
   -- NEXT VERSION -- UPDATE: Add analytics - track dones, source (omnibar/popup), installs, uninstalls
   
@@ -54,9 +54,17 @@ ver 1.0.3.3
 ------------------------
 
 
+ver 1.0.3.3
+  
+  -- NEXT VERSION -- BUG FIX: Notification says total done count as sum of dones + todos
+  
+  
+------------------------
+
+
 ver 1.0.3.2
   
-  [DONE] BUG FIX: Reset "inputText" even if popup closed before send is complete
+    [DONE] BUG FIX: Reset "inputText" even if popup closed before send is complete
   
   
 ------------------------
