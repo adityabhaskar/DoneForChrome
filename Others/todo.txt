@@ -56,7 +56,7 @@ ver 1.0.3.4
 
 ver 1.0.3.3
   
-  -- NEXT VERSION -- BUG FIX: Notification says total done count as sum of dones + todos
+  [DONE] BUG FIX: Notification says total done count as sum of dones + todos
   
   
 ------------------------
