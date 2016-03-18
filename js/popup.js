@@ -51,8 +51,8 @@ $(document).ready(function(){
       for (var i = 0; i < st.teams.length; i++) {
         o = new Option(st.teams[i].name, st.teams[i].short_name);
         if(st.teams[i].short_name === localStorage.defaultTeamCode) o.selected = true;
+        teamSelect.append(o);
       }
-      teamSelect.append(o);
       
       if(teamCount < 2){
         $("#selectedTeam").removeClass("specialUnderline");
@@ -184,7 +184,8 @@ $(document).ready(function(){
   $("#doneText").on("blur", saveInput);
 });
 
-function saveInput() {
+function saveInput(){
+  // Saving in background, because the pop may be dead by the time input is saved
   bgPage.saveInput($("#doneText").val().trim());
 }
 

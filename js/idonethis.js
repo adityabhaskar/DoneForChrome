@@ -192,23 +192,35 @@ var iDoneThis = {
               var response = JSON.parse(xhr.responseText);
               
               if(response.ok === true){
+                
                 // remove current done from list, call self
                 st.offlineList.shift();
-                ls.set({"offlineList": st.offlineList}, function(){
-                  if(st.offlineList.length > 0)
+                  
+                if(st.offlineList.length > 0)
+                  ls.set({"offlineList": st.offlineList}, function(){
                     iDoneThis.syncOfflineList(callback);
-                  else {
-                    // All dones synced
+                  });
+                
+                else 
+                  // All dones synced
+                  ls.set({
+                    "offlineList": st.offlineList,
+                    "inputText": ""
+                  }, function(){
+                    
                     localStorage.offlineDones = "false";
+                    
                     iDoneThis.getDones(null, function(){
                       if(callback) callback(true);
                     });
-                  }
-                });
+                    
+                  });
+                  
               } else {
-                console.log("send failed, recheck auth token. \n Original message: ");
                 
+                console.log("send failed, recheck auth token. \n Original message: ");
                 if(callback) callback(false, response);
+                
               }
             }
           }
