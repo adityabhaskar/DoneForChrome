@@ -42,20 +42,24 @@ ver X.X.X.X
   
   -- NEXT VERSION -- Popup: Suggest tags inline in input field
   
-  
-------------------------
-
-
-ver 1.0.3.5
-  
   -- NEXT VERSION -- UPDATE: Add analytics - track dones, source (omnibar/popup), installs, uninstalls
   
   
 ------------------------
 
 
-ver 1.0.3.4
+ver 1.0.3.5
   
+  -- NEXT VERSION -- UPDATE: Add notification for Done for Android
+  
+  -- NEXT VERSION -- UPDATE: Add bottom bar for Done for Android
+  
+  
+------------------------
+
+
+ver 1.0.3.4
+    
   [DONE] BUG FIX: Clear saved input on successful offlineSync
   
   [DONE] BUG FIX: Team selection in popup showed only one/last team

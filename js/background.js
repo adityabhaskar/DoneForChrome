@@ -47,7 +47,9 @@ var dateFormattingStrings = [
 ];
   
 var UNINSTALL_URL = "http://c306.net/whygo.html?src=qdt";
+var DONE_FOR_ANDROID_URL = "https://play.google.com/store/apps/details?id=net.c306.done&utm_source=DoneForChromeNotification&utm_medium=notification&utm_campaign=DoneForChrome";
 var NOTIFICATION_ICON_URL = chrome.extension.getURL("img/done-128.png");
+var DONE_FOR_ANDROID_NOTIFICATION_ICON_URL = chrome.extension.getURL("img/dfapromo-icon-128.png");
 var BUTTON_GREEN = "#33ff33";
 var BUTTON_GREY = "#999999";
 var BUTTON_RED = "#ff3333";
@@ -58,12 +60,14 @@ var OFFLINE_SYNC_ALARM = "offlineSyncer";
 var OFFLINE_SYNC_FREQUENCY = 15;
 var DAILY_NOTIFICATION_ALARM = "dailyNotificationAlarm";
 var DAILY_NOTIFICATION_ID = "dailyNotification";
+var DONE_FOR_ANDROID_NOTIFICATION_ID = "doneForAndroidNotification";
 var NEW_DONE_NOTIFICATION = "newDoneNotification";
 
 localStorage.doneFrequency = localStorage.doneFrequency || 15;
 localStorage.dailyNotification = localStorage.dailyNotification || "true";
 localStorage.dailyNotificationTime = localStorage.dailyNotificationTime || "19:00";
 localStorage.showCountOnBadge = localStorage.showCountOnBadge || "true";
+localStorage.showDoneForAndroidNotification = localStorage.showDoneForAndroidNotification || "true";
 
 chrome.runtime.onInstalled.addListener(function (details){
   if(details.reason === "install"){
@@ -80,7 +84,22 @@ chrome.runtime.onInstalled.addListener(function (details){
     // if loggedIn, update teams
     if(localStorage.username && localStorage.username!=="")
       iDoneThis.getTeams();
-  } 
+    
+    // Show notification if not previously clicked on, or dismissed
+    if(localStorage.showDoneForAndroidNotification !== "false"){
+      showNotification({
+        title: "Done! for Android",
+        message: "Android app for Done!, for iDoneThis users. Get it now!",
+        id: DONE_FOR_ANDROID_NOTIFICATION_ID,
+        // clearDelay: 10,
+        icon: DONE_FOR_ANDROID_NOTIFICATION_ICON_URL,
+        buttons: [
+          {title: "Get it now!", iconUrl: "img/google_play_128.png"},
+        ],
+        requireInteraction: true,
+      });
+    }
+  }
   
   if(details.reason !== "chrome_update"){
     chrome.runtime.setUninstallURL(UNINSTALL_URL);
@@ -162,6 +181,12 @@ chrome.alarms.onAlarm.addListener(alarmHandler);
 
 chrome.notifications.onClicked.addListener(notificationClickHandler);
 
+chrome.notifications.onButtonClicked.addListener(notificationButtonClickHandler);
+
+chrome.notifications.onClosed.addListener(function(id, byUser){
+  if(byUser)
+    localStorage.showDoneForAndroidNotification = "false";
+});
 
 window.addEventListener("online", function(e){
   console.log("we are ONLINE, syncing offline items");
@@ -381,12 +406,12 @@ function showNotification(notif){
   var options = {
     type: notif.type || "basic",
     iconUrl: notif.icon || NOTIFICATION_ICON_URL,
-    // title: notif.title || chrome.i18n.getMessage("shortName"),
     title: notif.title || "",
     message: notif.message,
     contextMessage: notif.contextMessage || "",
-    // isClickable: false,
+    requireInteraction: notif.requireInteraction || false,
   };
+  
   if(notif.buttons)
     options.buttons = notif.buttons;
   
@@ -400,16 +425,41 @@ function showNotification(notif){
 
 
 function notificationClickHandler(id){
-  if(id === DAILY_NOTIFICATION_ID){
-    // open popup
-    chrome.windows.create({
-      url: "popup.html#popout",
-      width: 400,
-      height: 400,
-      focused: true,
-      type: "popup",
-      state: "docked"
-    });
+  switch(id){
+    
+    case DAILY_NOTIFICATION_ID:
+      chrome.windows.create({
+        url: "popup.html#popout",
+        width: 400,
+        height: 400,
+        focused: true,
+        type: "popup",
+        state: "docked"
+      });
+      break;
+    
+    case DONE_FOR_ANDROID_NOTIFICATION_ID:
+      openDoneForAndroidTab(id);
+      break;
+    
+    default:
+      //Do Something
+  }
+}
+
+function openDoneForAndroidTab(id){
+  chrome.tabs.create({
+    url: DONE_FOR_ANDROID_URL,
+    active: true
+  });
+  chrome.notifications.clear(id);
+  localStorage.showDoneForAndroidNotification = "false";
+}
+
+function notificationButtonClickHandler(notificationId, buttonIndex){
+  console.log("buttonIndex: ", buttonIndex);
+  if(notificationId == DONE_FOR_ANDROID_NOTIFICATION_ID && buttonIndex == 0){
+    openDoneForAndroidTab(notificationId);
   }
 }
 
