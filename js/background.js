@@ -443,7 +443,7 @@ function notificationClickHandler(id){
       break;
     
     default:
-      //Do Something
+      console.log("Unidentified notification: ", id);
   }
 }
 

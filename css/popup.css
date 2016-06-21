@@ -286,3 +286,27 @@ body {
   cursor: pointer;
 }
 
+#doneForAndroidBanner {
+  background: #eea;
+  padding: 0.2em 2em;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+
+#doneForAndroidBannerIcon{
+  height: 16px;
+  vertical-align: text-top;
+}
+
+
+#doneForAndroidBannerText {
+  padding-left: 0.5em;
+}
+
+#doneForAndroidBannerCloseButton{
+  position: absolute;
+  right: 0.5em;
+  top: 4px;
+  height: 12px;
+}

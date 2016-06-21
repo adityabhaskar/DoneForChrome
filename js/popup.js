@@ -1,5 +1,6 @@
 var bgPage = chrome.extension.getBackgroundPage();
 
+var DONE_FOR_ANDROID_URL = "https://play.google.com/store/apps/details?id=net.c306.done&utm_source=DoneForChromeNotification&utm_medium=notification&utm_campaign=DoneForChrome";
 var CONNECTION_CHECKER_ALARM = "connectionChecker";
 var SUCCESS_DELAY = 2000;
 var FAILURE_DELAY = 3000;
@@ -37,10 +38,15 @@ var selectedTeam = {
 };
 var teamCount = localStorage.teamCount;
 
+localStorage.showDoneForAndroidBottomBar = localStorage.showDoneForAndroidBottomBar || "true";
+
 $(document).ready(function(){
   
   if(location.hash === "#popout")
     $("#openExternal").hide();
+  
+  if(localStorage.showDoneForAndroidBottomBar === "false")
+    $("#doneForAndroidBanner").hide();
   
   // 1. Populate select list with team names
   // 2. Set input states - disabled/enabled - if not logged in
@@ -90,6 +96,7 @@ $(document).ready(function(){
       $("#teamSelectorDiv").hide();
     });
   });
+  
   // Handler for team selector
   $("#teamSelect").on("change", function(){
     // change selected team
@@ -178,6 +185,26 @@ $(document).ready(function(){
       type: "popup",
       state: "docked"
     });
+  });
+  
+  $("#doneForAndroidBanner:not(#doneForAndroidBannerCloseButton)").on("click", function(){
+    
+    localStorage.showDoneForAndroidNotification = "false";
+    localStorage.showDoneForAndroidBottomBar = "false";  
+    
+    chrome.tabs.create({
+      url: DONE_FOR_ANDROID_URL,
+      active: true
+    });
+    
+  });
+  
+  $("#doneForAndroidBannerCloseButton").on("click", function(){
+    
+    localStorage.showDoneForAndroidBottomBar = "false";  
+    $("#doneForAndroidBanner").hide();
+    
+    return false;
   });
   
   addEventListener("unload", saveInput);

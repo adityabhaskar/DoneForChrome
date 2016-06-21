@@ -48,11 +48,17 @@ ver X.X.X.X
 ------------------------
 
 
+ver 1.0.3.6
+  
+  [DONE] UPDATE: Add bottom bar for Done for Android
+  
+  
+------------------------
+
+
 ver 1.0.3.5
   
-  -- NEXT VERSION -- UPDATE: Add notification for Done for Android
-  
-  -- NEXT VERSION -- UPDATE: Add bottom bar for Done for Android
+  [DONE] UPDATE: Add notification for Done for Android
   
   
 ------------------------
