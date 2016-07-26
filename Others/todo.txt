@@ -48,6 +48,16 @@ ver X.X.X.X
 ------------------------
 
 
+ver 1.0.3.7
+  
+  [DONE] UPDATE: Changed on and off badge background colours to improve contrast with text
+  
+  [DONE] UPDATE: Moved constants in background js to constants.js
+  
+  
+------------------------
+
+
 ver 1.0.3.6
   
   [DONE] UPDATE: Add bottom bar for Done for Android
