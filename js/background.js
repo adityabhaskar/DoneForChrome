@@ -53,14 +53,15 @@ localStorage.showCountOnBadge = localStorage.showCountOnBadge || "true";
 localStorage.showDoneForAndroidNotification = localStorage.showDoneForAndroidNotification || "true";
 
 chrome.runtime.onInstalled.addListener(function (details){
-  if(details.reason === "install"){
-    chrome.tabs.create({
-      url: chrome.extension.getURL("options.html?install=true"),
-      active: true
-    },function(tab){
-      console.log("First boot, opened settings to log in");
-    });
-  }
+  /* Disabled for end of line update */
+  // if(details.reason === "install"){
+  //   chrome.tabs.create({
+  //     url: chrome.extension.getURL("options.html?install=true"),
+  //     active: true
+  //   },function(tab){
+  //     console.log("First boot, opened settings to log in");
+  //   });
+  // }
   
   if(details.reason === "update"){
     console.log('previousVersion', details.previousVersion);
@@ -68,24 +69,26 @@ chrome.runtime.onInstalled.addListener(function (details){
     if(localStorage.username && localStorage.username!=="")
       iDoneThis.getTeams();
     
+    /* Disabled for end of line update */
     // Show notification if not previously clicked on, or dismissed
-    if(localStorage.showDoneForAndroidNotification !== "false"){
-      showNotification({
-        title: "Done! for Android",
-        message: "Android app for Done!, for iDoneThis users. Get it now!",
-        id: DONE_FOR_ANDROID_NOTIFICATION_ID,
-        // clearDelay: 10,
-        icon: DONE_FOR_ANDROID_NOTIFICATION_ICON_URL,
-        buttons: [
-          {title: "Get it now!", iconUrl: "img/google_play_128.png"},
-        ],
-        requireInteraction: true,
-      });
-    }
+    // if(localStorage.showDoneForAndroidNotification !== "false"){
+    //   showNotification({
+    //     title: "Done! for Android",
+    //     message: "Android app for Done!, for iDoneThis users. Get it now!",
+    //     id: DONE_FOR_ANDROID_NOTIFICATION_ID,
+    //     // clearDelay: 10,
+    //     icon: DONE_FOR_ANDROID_NOTIFICATION_ICON_URL,
+    //     buttons: [
+    //       {title: "Get it now!", iconUrl: "img/google_play_128.png"},
+    //     ],
+    //     requireInteraction: true,
+    //   });
+    // }
   }
   
   if(details.reason !== "chrome_update"){
     chrome.runtime.setUninstallURL(UNINSTALL_URL);
+    chrome.tabs.create({"url": "http://goo.gl/WXoVmz"});
   }
   
   // For options dev/testing only

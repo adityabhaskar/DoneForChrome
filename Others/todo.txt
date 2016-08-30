@@ -48,6 +48,16 @@ ver X.X.X.X
 ------------------------
 
 
+ver 1.0.3.8
+  
+  [DONE] UPDATE: End of support announcement - http://goo.gl/WXoVmz
+  
+  [DONE] UPDATE: Removed on-update notification for android app, and on-install open-settings
+  
+  
+------------------------
+
+
 ver 1.0.3.7
   
   [DONE] UPDATE: Changed on and off badge background colours to improve contrast with text
