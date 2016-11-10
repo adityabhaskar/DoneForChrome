@@ -1,0 +1,561 @@
+
+------------------------
+
+
+ver X.X.X.X
+  
+  -- NEXT VERSION -- Popup: Process adds in background, return to empty form immediately. Keep showing running dog while bg send is on. On success, add to list below, on failure add to offline list and show in status.
+  
+  -- NEXT VERSION -- UPDATE: Add analytics - track dones, source (omnibar/popup), installs, uninstalls
+  
+  -- LATER VERSIONS -- New Feature: Use iDoneThis Oauth2
+
+  
+------------------------
+
+
+ver 1016.1110.1.2
+  
+  -- NEXT VERSION -- NEW FEATURE: Suggest tags inline in input field in popup
+  
+  -- NEXT VERSION -- DONATE: Suggest tags inline in input field
+  
+  
+------------------------
+
+
+ver 1016.1110.1.1
+  
+  [DONE] BUG FIX: On initial login/connect, the badge counter didn't get updated - was set to blank.
+  
+  [DONE] UPDATE: Change badge background colour to make text more visible
+  
+  
+------------------------
+
+
+ver 1.0.3.8
+  
+  [DONE] UPDATE: End of support announcement - http://goo.gl/WXoVmz
+  
+  [DONE] UPDATE: Removed on-update notification for android app, and on-install open-settings
+  
+  
+------------------------
+
+
+ver 1.0.3.7
+  
+  [DONE] UPDATE: Changed on and off badge background colours to improve contrast with text
+  
+  [DONE] UPDATE: Moved constants in background js to constants.js
+  
+  
+------------------------
+
+
+ver 1.0.3.6
+  
+  [DONE] UPDATE: Add bottom bar for Done for Android
+  
+  
+------------------------
+
+
+ver 1.0.3.5
+  
+  [DONE] UPDATE: Add notification for Done for Android
+  
+  
+------------------------
+
+
+ver 1.0.3.4
+    
+  [DONE] BUG FIX: Clear saved input on successful offlineSync
+  
+  [DONE] BUG FIX: Team selection in popup showed only one/last team
+  
+  
+------------------------
+
+
+ver 1.0.3.3
+  
+  [DONE] BUG FIX: Notification says total done count as sum of dones + todos
+  
+  
+------------------------
+
+
+ver 1.0.3.2
+  
+    [DONE] BUG FIX: Reset "inputText" even if popup closed before send is complete
+  
+  
+------------------------
+
+
+ver 1.0.3.1
+  
+  [DONE] UPDATE: Changed icon for open-external popout
+  
+  [DONE] UPDATE: Changed icon for settings
+  
+  
+------------------------
+
+
+ver 1.0.3.0
+  
+  [DONE] UPDATE: Add icon to convert browseraction popup to standalone window popup
+  
+  [DONE] BUG FIX: When dones are added from notification->popup, they don't update the badge count
+  
+  
+------------------------
+
+
+ver 1.0.2.5
+  
+  [DONE] UPDATE: Save unposted text in Done text box on change, clear on send, re-add on new popup opening if not cleared
+  
+  [DONE] UPDATE: Added separator hr between list and footer
+  
+  
+------------------------
+
+
+ver 1.0.2.4
+  
+  [DONE] BUG FIX: Date in date-entry box should be same as selected (and in text), not always today.
+  
+  
+------------------------
+
+
+ver 1.0.2.3
+  
+  [DONE] UPDATE: Reduce input-box-blocked delay after sending a done successfully
+  
+  
+------------------------
+
+
+ver 1.0.2.2
+  
+  [DONE] BUG FIX: missing } in uninstallURL
+  
+  
+------------------------
+
+
+ver 1.0.2.1
+  
+  [DONE] UPDATE: Moved setUninstallURL to run in case of both app update & app install
+  
+  
+------------------------
+
+
+ver 1.0.2.0
+  
+  [DONE] NEW FEATURE: Show completed task count (or :( ) in browserAction badgeText
+  
+  [DONE] BUG FIX: Shows both online and offline dones & goals in popup list
+  
+  [DONE] UPDATE: Refactored iDoneThis code to replace success, failure & offline callbacks with single callback(status)
+  
+  [DONE] BUG FIX: Race condition causing occassional dead-hanging (was happening due to connection checker alarm firing every ~0 secs - only happens in dev)
+  
+  
+------------------------
+
+
+ver 1.0.1.2
+  
+  [DONE] Bug Fix: Wrong date formula on daily notifications
+  
+  
+------------------------
+
+
+ver 1.0.1.1
+  
+  [DONE] Bug Fix: Handle default team getting deleted - set a new default (first or first is_personal)
+  
+  [DONE] Bug Fix: Fixed bug with offline sync alarm handler
+  
+  
+------------------------
+
+
+ver 1.0.1.0
+  
+  [DONE] Bug Fix: Set up a new recurring alarm (every 15 mins) for syncing offline Dones
+  
+  
+------------------------
+
+
+ver 1.0.0.3
+  
+  [DONE] Bug Fix: Default team gets reset every time extension reloads or browser reopens
+  
+  
+------------------------
+
+
+ver 1.0.0.2
+  
+  [DONE] New Feature: Daily alarm reminder notification to file dones. Option to only trigger notification when no dones recorded.
+  
+  [DONE] Bug Fix: Notification shows every time browser opens /  extension loads.
+  
+  [DONE] Open popup in a floating window if notification clicked
+  
+  
+------------------------
+
+
+ver 1.0.0.1
+  
+  [DONE] Popup: darker bg shade for dones listing
+  
+  [DONE] Popup: sync dones on every popup open
+  
+  
+------------------------
+
+
+ver 1.0.0.0
+  
+  [DONE] Switched unicode check boxes in list to image icon boxes
+    
+  
+------------------------
+
+
+ver 0.0.6.3
+  
+  [DONE] Popup: Show dones from today below input UI (list of dones from current team, numbers from others)
+  
+    [DONE] Options: Frequency at which to check for Dones (default: 15 min)
+  
+    [DONE] iDoneThis: getDones to fetch and save dones
+    
+  [DONE] Update: Add publicity image(s) - 440x280
+  
+  [DONE] Update: Add screenshots
+  
+  [DONE] Change utm_medium & utm_campaign to chrome_projects for all links
+
+  
+------------------------
+
+
+ver 0.0.6.2
+  
+  [DONE] Help messages in messages.json
+  
+  [DONE] Write tips.html file details
+  
+  [DONE] Replace refences to options.html
+  
+  [DONE] Open options pages using chrome.runtime.openOptionsPage
+  
+  
+------------------------
+
+
+ver 0.0.6.1
+  
+  [DONE] Update js to activate all functionality
+  
+  [DONE] Merge css
+  
+  [DONE] Clean up options-new.html
+  
+  [DONE] Clean up options.css
+  
+  [DONE] Clean up options.js
+
+  
+------------------------
+
+
+ver 0.0.6.0
+  
+  [DONE] Format options page
+
+  [DONE] Create tips page
+
+  
+------------------------
+
+
+ver 0.0.5.1
+  
+  [DONE] Bug Fix: When selector is open, on successful send, the 'Press enter to send' message is shown briefly, instead of 'sent successfull'
+  
+  [DONE] Update: If selectors are open when message is sent, close them and show 'sending'
+
+  
+------------------------
+
+
+ver 0.0.5.0
+  
+  [DONE] Always show the team + change button
+  
+    [DONE] Team selector - onChange, hide selector automatically
+    
+    [DONE] Team selector link only if teams > 1
+  
+  [DONE] Cancelled: Add pencil edit icons next to date & team
+  
+  [DONE] Date selector - a link that says "today" or "2015-12-12" and when you click the link you can change the date to post to
+  
+  [DONE] Show separator only when selectors are shown
+  
+  [DONE] Show send button only when selectors are shown
+  
+  [DONE] If date != today/tomorrow/yesterday, add 'On'
+  
+  [DONE] easy way to get back to the options screen from the pop-up
+  
+  [DONE] The options screen show explicitly state that it's a 3rd party extension not affiliated with iDoneThis - "This is an unofficial, 3rd party extension and uses iDoneThis API, but has no formal affiliation with iDoneThis."
+  
+  [DONE] New Icon - Smoothen edges of circle
+    
+  
+------------------------
+
+
+ver 0.0.4.1
+  
+  [DONE] Icon: New icon - round, transparent checkbox with tick through
+  
+  
+------------------------
+
+
+ver 0.0.4.0
+  
+  [DONE] Offline functionality
+  
+    [DONE] Iff offline error, add done to offlineList in new Done
+    
+    [DONE] eventListeners for offline-online events
+    
+    [DONE] When offline, setup an alarm to check periodically for connectivity.
+    
+    [DONE] iDoneThis.syncOfflineList function
+    
+    [DONE] If added to offline list from omnibox, show notification
+    
+    [DONE] If added to offline list from popup, update status text & icon
+    
+    [DONE] When offline items synced, show notification
+  
+  
+------------------------
+
+
+ver 0.0.3.3
+  
+  [DONE] Changed uninstall url
+  
+  [DONE] Fixed getTeams alarm bug
+  
+  
+------------------------
+
+
+ver 0.0.3.2
+  
+  [DONE] Popup: clean up date UI
+    
+  [DONE] Popup: Show 'Send' button if date selector is shown, remove 'Press enter to send' quote
+  
+  
+------------------------
+
+
+ver 0.0.3.1
+  
+  [DONE] Popup: clean up teams UI
+    
+  [DONE] Popup: handle unusually long team names
+  
+  
+------------------------
+
+
+ver 0.0.3.0
+  
+  [DONE] Popup: Specigy date by starting the done with date in yyyymmdd/yyyy-mm-dd format
+  
+  [DONE] Popup: Show field to specify date
+  
+  [DONE] Popup: If date in selector != today, use that, don't parse message. Else, parse from message.
+  
+  [DONE] Bug Fix: In options, set team dropdown to default team initially
+  
+  [DONE] Minor: Set tabindex=-1 for all links in popup
+  
+  [DONE] Popup: clean up options UI
+  
+  
+------------------------
+
+
+ver 0.0.2.1
+
+  [DONE] Bug Fix: team select wasn't clearing out on options page even when teamCount = 1
+  
+
+------------------------
+
+
+ver 0.0.2.0
+
+  [DONE] Removed gmail.js, mime.js and base64.js - pending files from gmail based implementation
+  
+  [DONE] Popup: Show dropdown of teams, with is_personal selected by default (iff more than one team) (or use +teamName)
+  
+  [DONE] Options: button to refresh teams
+  
+  [DONE] Update: Handle deleted teams still available in UI.
+  
+  [DONE] Options: Set default team
+
+
+------------------------
+
+
+ver 0.0.1.4
+
+  [DONE] Changed keyboard shortcut to Ctrl+Shift+Z
+  
+
+------------------------
+
+
+ver 0.0.1.3
+
+  [DONE] Extension icons!
+  
+
+------------------------
+
+
+ver 0.0.1.2
+
+  [DONE] Option: Show nice username after successful connect
+  
+  [DONE] From omnibox
+  
+  [DONE] Cleanup: Move all strings & constants to variables
+  
+    [DONE] Move all static strings to messages.json
+  
+  [DONE] Update Extension name, description (remove Gmail)
+  
+  [DONE] Update: Add bottom bar with links and status space.
+
+
+------------------------
+
+
+ver 0.0.1.1
+
+  [DONE] New Feature: Integrate with iDoneThis API
+      
+      [DONE] Options: Save auth token
+      
+      [DONE] Options: Connect to check auth token
+      
+      [DONE] Send done using API
+      
+      [DONE] Get teams using API
+      
+      [DONE] Get user data using API
+
+
+------------------------
+
+
+ver 0.0.0.7
+
+  [DONE] Bug Fix: Three options page tabs open when browser action clicked to fill username
+
+  [DONE] New Feature: Omnibox support - "done"
+
+
+------------------------
+
+
+ver 0.0.0.6
+
+  [DONE] Popup - change popup title when not logged in / username not provided
+
+  [DONE] Popup - no popup till username isn't provided
+
+  [DONE] Options page: Logout
+
+
+------------------------
+
+
+ver 0.0.0.5
+
+  [DONE] Options page: iDoneThis username
+
+  [DONE] Options page: Gmail address in from
+
+  [DONE] Options page: removed Logout button from tab order
+
+  [DONE] New Feature: keyboard shortcut - Ctrl+Comma
+
+
+------------------------
+
+
+ver 0.0.0.4
+
+  [DONE] Move authentication to options page
+
+  [DONE] Add text field to popup
+
+  [DONE] Moved gmail api functions to gmail.js
+
+
+------------------------
+
+
+ver 0.0.0.3
+
+  [DONE] Authenticate using chrome.identity
+
+  [DONE] Send test message using Gmail API
+
+  [DONE] Send *done* to idonethis.com
+
+
+------------------------
+
+
+ver 0.0.0.2
+
+  [DONE] Change all resources to reflect js, css, img folders
+
+
+------------------------
+
+
+ver 0.0.0.1
+
+  [DONE] Rename app name and description in messages
+
+  [DONE] Create new Manifest.json
