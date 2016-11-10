@@ -15,7 +15,7 @@ var iDoneThis = {
   errorStatus: "",
   
   isLoggedIn: function(checkremote, callback){
-    if(checkremote !== true){
+    if(!checkremote){
       if(localStorage.username && localStorage.username !== ""){
         if(callback) callback(true);
       } else {
@@ -64,8 +64,9 @@ var iDoneThis = {
               console.log("connected.");
               localStorage.username = response.user;
               iDoneThis.getUserDetails(function(){
-                iDoneThis.getTeams(callback);
-                iDoneThis.getDones();
+                iDoneThis.getTeams(function(){
+                  iDoneThis.getDones(null, callback);
+                });
               });
             }
           } else {
@@ -237,6 +238,7 @@ var iDoneThis = {
   },
   
   getTeams: function(callback){
+    console.log("inteams");
     if(localStorage.username && localStorage.username !== ""){
       
       var xhr = new XMLHttpRequest();
@@ -314,6 +316,8 @@ var iDoneThis = {
    * @return {none} none
    */
   getDones: function(listDate, callback){
+    console.log("inteams", callback);
+    
     if(localStorage.username && localStorage.username !== ""){
       
       var xhr = new XMLHttpRequest();
@@ -329,7 +333,7 @@ var iDoneThis = {
             var response = JSON.parse(xhr.responseText);
             
             if(response.ok === true){
-              ls.set({dones: response.results}, function(){
+              ls.set({"dones": response.results}, function(){
                 localStorage.since = Date.now();
                 chrome.alarms.create(DONE_CHECKER_ALARM, {
                   periodInMinutes: parseInt(localStorage.doneFrequency)

@@ -53,15 +53,6 @@ localStorage.showCountOnBadge = localStorage.showCountOnBadge || "true";
 localStorage.showDoneForAndroidNotification = localStorage.showDoneForAndroidNotification || "true";
 
 chrome.runtime.onInstalled.addListener(function (details){
-  /* Disabled for end of line update */
-  // if(details.reason === "install"){
-  //   chrome.tabs.create({
-  //     url: chrome.extension.getURL("options.html?install=true"),
-  //     active: true
-  //   },function(tab){
-  //     console.log("First boot, opened settings to log in");
-  //   });
-  // }
   
   if(details.reason === "update"){
     console.log('previousVersion', details.previousVersion);
@@ -86,15 +77,21 @@ chrome.runtime.onInstalled.addListener(function (details){
     // }
   }
   
-  if(details.reason !== "chrome_update"){
-    chrome.runtime.setUninstallURL(UNINSTALL_URL);
-    chrome.tabs.create({"url": "http://goo.gl/WXoVmz"});
+  if(details.reason === "install"){
+    chrome.tabs.create({
+      url: chrome.extension.getURL("options.html?install=true"),
+      active: true
+    },function(tab){
+      console.log("First boot, opened settings to log in");
+    });
+    
+    chrome.management.getSelf(function(e){
+      if(e.installType !== "development"){
+        chrome.runtime.setUninstallURL(UNINSTALL_URL);
+        chrome.tabs.create({"url": "http://goo.gl/WXoVmz"});
+      }
+    });
   }
-  
-  // For options dev/testing only
-  // if(details.reason === "update")
-  //   chrome.runtime.openOptionsPage();
-  // End Testing
 });
 
 
@@ -167,12 +164,15 @@ chrome.alarms.onAlarm.addListener(alarmHandler);
 
 chrome.notifications.onClicked.addListener(notificationClickHandler);
 
+
 chrome.notifications.onButtonClicked.addListener(notificationButtonClickHandler);
+
 
 chrome.notifications.onClosed.addListener(function(id, byUser){
   if(byUser)
     localStorage.showDoneForAndroidNotification = "false";
 });
+
 
 window.addEventListener("online", function(e){
   console.log("we are ONLINE, syncing offline items");
@@ -191,18 +191,16 @@ window.addEventListener("online", function(e){
 
 function setupExtensionState(loggedIn){
   chrome.browserAction.onClicked.removeListener(openOptions);
-  // chrome.omnibox.onInputEntered.removeListener(sendFromCommand);
   
   if(loggedIn){
     
-    chrome.browserAction.setTitle({title: messageStrings.shortName});
-    chrome.browserAction.setBadgeText({text: ""});
-    chrome.browserAction.setBadgeBackgroundColor({color: BUTTON_GREEN});
+    updateBadgeText();
+    // chrome.browserAction.setTitle({title: messageStrings.shortName});
+    // chrome.browserAction.setBadgeBackgroundColor({color: BUTTON_GREEN});
     chrome.browserAction.setPopup({popup: "popup.html"});
     chrome.omnibox.setDefaultSuggestion({
       description: messageStrings.promptMessage
     });
-    // chrome.omnibox.onInputEntered.addListener(sendFromCommand);
     
   } else {
     
@@ -433,6 +431,7 @@ function notificationClickHandler(id){
   }
 }
 
+
 function openDoneForAndroidTab(id){
   chrome.tabs.create({
     url: DONE_FOR_ANDROID_URL,
@@ -441,6 +440,7 @@ function openDoneForAndroidTab(id){
   chrome.notifications.clear(id);
   localStorage.showDoneForAndroidNotification = "false";
 }
+
 
 function notificationButtonClickHandler(notificationId, buttonIndex){
   console.log("buttonIndex: ", buttonIndex);
@@ -452,8 +452,11 @@ function notificationButtonClickHandler(notificationId, buttonIndex){
 
 function updateBadgeText(){
   if(localStorage.showCountOnBadge === "true")
-    ls.get(["dones", "offlineList"], function(st){
-      var totalDones = st ? ((st.dones && st.dones.length > 0 ? st.dones.length : 0) + (st.offlineList && st.offlineList.length > 0 ? st.offlineList.length : 0)) : 0;
+    ls.get({
+      "dones": [], 
+      "offlineList": []
+    }, function(st){
+      var totalDones = st.dones.length + st.offlineList.length;
       if(totalDones > 0){
         chrome.browserAction.setBadgeText({text: totalDones.toLocaleString()});
         chrome.browserAction.setTitle({title: totalDones.toLocaleString() + messageStrings.nonZeroDoneBadgeTitle});
